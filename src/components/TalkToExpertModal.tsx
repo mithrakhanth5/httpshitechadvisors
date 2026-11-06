@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  X, 
-  Sparkles, 
-  CheckCircle2, 
-  Send, 
-  Phone, 
-  Mail, 
-  Lock
-} from 'lucide-react';
-import { OFFICE_CONTACT } from '../data/siteData';
+import { X, Send, CheckCircle2, ShieldCheck, Clock, Sparkles } from 'lucide-react';
 
 interface TalkToExpertModalProps {
   isOpen: boolean;
@@ -21,18 +12,24 @@ export const TalkToExpertModal: React.FC<TalkToExpertModalProps> = ({
   onClose,
   initialTopic = '',
 }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [company, setCompany] = useState('');
-  const [service, setService] = useState('Cloud & Security Architecture');
-  const [timeline, setTimeline] = useState('Immediate (< 30 days)');
-  const [notes, setNotes] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    workEmail: '',
+    company: '',
+    role: '',
+    solutionArea: 'CRM, ERP & Business Applications',
+    message: '',
+  });
+
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (initialTopic) {
-      setNotes((prev) => prev ? prev : `Referenced Topic: ${initialTopic}`);
+      setFormData((prev) => ({
+        ...prev,
+        solutionArea: initialTopic,
+      }));
     }
   }, [initialTopic]);
 
@@ -40,220 +37,178 @@ export const TalkToExpertModal: React.FC<TalkToExpertModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate instantaneous enterprise submission
+    setLoading(true);
+
     setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+      setLoading(false);
+      setSubmitted(true);
     }, 700);
   };
 
   const handleReset = () => {
-    setIsSubmitted(false);
-    setName('');
-    setEmail('');
-    setCompany('');
-    setNotes('');
+    setSubmitted(false);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-      <div className="bg-slate-950 border border-slate-800 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+      <div 
+        className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-3xl shadow-2xl p-6 sm:p-10 overflow-hidden text-slate-800"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full bg-slate-900 text-slate-400 hover:text-white border border-slate-800"
-          aria-label="Close modal"
+          className="absolute top-6 right-6 p-2 rounded-full text-slate-400 hover:text-[#0B1F33] hover:bg-slate-100 transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {!isSubmitted ? (
+        {submitted ? (
+          <div className="text-center py-10 space-y-4">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-8 h-8" />
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-bold text-[#0B1F33] tracking-tight font-serif">
+              Challenge Received
+            </h3>
+            <p className="text-slate-600 text-sm max-w-md mx-auto leading-relaxed">
+              Thank you, <span className="text-[#0B1F33] font-bold">{formData.fullName}</span>. A senior Hitech consultant will review your challenge and reach out within 24 hours with questions worth answering.
+            </p>
+            <div className="pt-4">
+              <button
+                onClick={handleReset}
+                className="px-8 py-3 rounded-full bg-[#D2232A] hover:bg-[#B71C22] text-white font-bold text-sm transition shadow-md shadow-red-900/20"
+              >
+                Close &amp; Return to Site
+              </button>
+            </div>
+          </div>
+        ) : (
           <div>
-            {/* Header */}
-            <div className="mb-6">
-              <div className="inline-flex items-center space-x-2 text-xs font-mono text-rose-400 uppercase tracking-widest mb-2">
-                <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-                <span>Executive Advisory Consultation</span>
+            <div className="space-y-2 mb-6">
+              <div className="inline-flex items-center space-x-2 text-[#D2232A] text-xs font-mono uppercase tracking-wider font-bold">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Executive Intake</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                Talk to a Hitech Advisor
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                Connect directly with a Senior Practice Leader. Confidential, NDA-protected strategic assessment of your architecture and talent objectives.
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#0B1F33] tracking-tight font-serif">
+                Discuss a Challenge
+              </h2>
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal">
+                A senior consultant will respond within 24 hours — with questions worth answering, not a sales pitch.
               </p>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1.5">
-                    Full Name *
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Your Name *
                   </label>
                   <input
                     type="text"
                     required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="e.g. Sarah Jenkins"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-rose-500 transition"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-sm text-[#0B1F33] placeholder-slate-400 focus:outline-none focus:border-[#D2232A] transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1.5">
-                    Corporate Email *
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Business Email *
                   </label>
                   <input
                     type="email"
                     required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={formData.workEmail}
+                    onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
                     placeholder="sarah@company.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-rose-500 transition"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-sm text-[#0B1F33] placeholder-slate-400 focus:outline-none focus:border-[#D2232A] transition"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
                     Company / Organization *
                   </label>
                   <input
                     type="text"
                     required
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                    placeholder="Company, Inc."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-rose-500 transition"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    placeholder="Company name"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-sm text-[#0B1F33] placeholder-slate-400 focus:outline-none focus:border-[#D2232A] transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono text-slate-300 mb-1.5">
-                    Primary Service Area
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Solution Area of Interest
                   </label>
                   <select
-                    value={service}
-                    onChange={(e) => setService(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs sm:text-sm focus:outline-none focus:border-rose-500 transition"
+                    value={formData.solutionArea}
+                    onChange={(e) => setFormData({ ...formData, solutionArea: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-sm text-[#0B1F33] focus:outline-none focus:border-[#D2232A] transition"
                   >
-                    <option value="Cloud & Security Architecture">Cloud &amp; Security Architecture</option>
-                    <option value="Product & AI Engineering">Product &amp; AI Engineering</option>
-                    <option value="IT Systems & Autonomous Operations">IT Systems &amp; Autonomous Operations</option>
-                    <option value="Talent Solutions & Embedded Teams">Talent Solutions &amp; Embedded Teams</option>
-                    <option value="Growth Acceleration & Market Strategy">Growth Acceleration &amp; GTM</option>
-                    <option value="M&A Tech Carve-Out & Separation">M&amp;A Tech Carve-Out &amp; Separation</option>
-                    <option value="Executive Advisory & Strategy">Executive Advisory / Fractional CTO</option>
+                    <option value="CRM, ERP & Business Applications">CRM, ERP &amp; Business Applications</option>
+                    <option value="Data & Customer Intelligence">Data &amp; Customer Intelligence</option>
+                    <option value="Cybersecurity & Risk">Cybersecurity &amp; Risk</option>
+                    <option value="IT Operations & Cloud">IT Operations &amp; Cloud</option>
+                    <option value="AI Adoption & Agents">AI Adoption &amp; Agents</option>
+                    <option value="Strategy & Architecture Advisory">Strategy &amp; Architecture Advisory</option>
+                    <option value="Talent & Managed Teams">Talent &amp; Managed Teams</option>
                   </select>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-slate-300 mb-1.5">
-                  Deployment Timeline
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {[
-                    'Immediate (< 30 days)',
-                    'Within 60-90 days',
-                    'Exploratory / Planning',
-                  ].map((time) => (
-                    <button
-                      type="button"
-                      key={time}
-                      onClick={() => setTimeline(time)}
-                      className={`px-3 py-2 rounded-xl text-[11px] font-medium border text-center transition ${
-                        timeline === time
-                          ? 'bg-rose-950/60 border-rose-500 text-white'
-                          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      {time}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-mono text-slate-300 mb-1.5">
-                  Scope Overview or Key Objectives
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  Describe Your Challenge or Objective *
                 </label>
                 <textarea
                   rows={3}
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Outline key systems, challenges, or goals..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-rose-500 transition"
+                  required
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder="What systems, operational bottlenecks, or strategic outcomes are you addressing?"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-sm text-[#0B1F33] placeholder-slate-400 focus:outline-none focus:border-[#D2232A] transition"
                 ></textarea>
               </div>
 
-              {/* Privacy / Security Notice */}
-              <div className="flex items-center text-[11px] text-slate-400 space-x-1.5">
-                <Lock className="w-3.5 h-3.5 text-slate-500 flex-shrink-0" />
-                <span>Information is strictly confidential and protected by mutual NDA.</span>
+              {/* Trust & Response Guarantee Note */}
+              <div className="flex items-center justify-between pt-2 text-[11px] text-slate-500 font-medium">
+                <div className="flex items-center space-x-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Confidential. We never share your data.</span>
+                </div>
+                <div className="flex items-center space-x-1 font-bold text-[#D2232A]">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Guaranteed 24h Response</span>
+                </div>
               </div>
 
               {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 shadow-xl shadow-rose-950/50 flex items-center justify-center transition"
-              >
-                {isSubmitting ? (
-                  <span>Securing Calendar Slot...</span>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4 mr-2" />
-                    <span>Request Executive Consultation</span>
-                  </>
-                )}
-              </button>
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-white bg-[#D2232A] hover:bg-[#B71C22] shadow-md shadow-red-900/20 text-sm transition"
+                >
+                  {loading ? (
+                    <span>Submitting Challenge...</span>
+                  ) : (
+                    <>
+                      <span>Submit Challenge to Senior Practice</span>
+                      <Send className="w-4 h-4 ml-2" />
+                    </>
+                  )}
+                </button>
+              </div>
             </form>
-
-            {/* Direct Contact Bar */}
-            <div className="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-              <span className="flex items-center">
-                <Phone className="w-3.5 h-3.5 mr-1 text-rose-500" />
-                <span>{OFFICE_CONTACT.phone}</span>
-              </span>
-              <span className="flex items-center">
-                <Mail className="w-3.5 h-3.5 mr-1 text-rose-500" />
-                <span>{OFFICE_CONTACT.email}</span>
-              </span>
-            </div>
-          </div>
-        ) : (
-          /* Confirmation State */
-          <div className="text-center py-8 space-y-5 animate-fadeIn">
-            <div className="w-16 h-16 rounded-full bg-emerald-950/80 border border-emerald-600/50 flex items-center justify-center text-emerald-400 mx-auto">
-              <CheckCircle2 className="w-9 h-9" />
-            </div>
-
-            <div>
-              <h3 className="text-2xl font-bold text-white tracking-tight">
-                Briefing Request Received
-              </h3>
-              <p className="mt-2 text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                Thank you, <strong className="text-white">{name}</strong>. A Hitech Principal Advisor specializing in <strong className="text-rose-400">{service}</strong> will contact you at <strong className="text-white">{email}</strong> within 1 business day.
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 text-xs text-slate-400 max-w-sm mx-auto text-left space-y-1.5 font-mono">
-              <div>• Reference: HTA-{Math.floor(100000 + Math.random() * 900000)}</div>
-              <div>• Organization: {company}</div>
-              <div>• Priority Level: Executive Expedited</div>
-            </div>
-
-            <button
-              onClick={handleReset}
-              className="px-6 py-2.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold border border-slate-700"
-            >
-              Close Window
-            </button>
           </div>
         )}
       </div>

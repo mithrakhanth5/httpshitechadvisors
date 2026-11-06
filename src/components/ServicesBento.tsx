@@ -155,12 +155,12 @@ export const ServicesBento: React.FC<ServicesBentoProps> = ({ onOpenConsultation
               <div>
                 <div className="text-xs font-mono text-slate-400 uppercase mb-3">Technologies &amp; Frameworks</div>
                 <div className="flex flex-wrap gap-2">
-                  {activeService.techStack.map((tech, idx) => (
+                  {activeService.examples.split(',').map((tech: string, idx: number) => (
                     <span
                       key={idx}
                       className="px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs font-medium text-slate-200"
                     >
-                      {tech}
+                      {tech.trim()}
                     </span>
                   ))}
                 </div>

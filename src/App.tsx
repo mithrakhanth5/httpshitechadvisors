@@ -17,15 +17,15 @@ export function App() {
   const [consultationTopic, setConsultationTopic] = useState<string>('');
 
   const handleOpenConsultation = (topic?: string) => {
-    setConsultationTopic(topic || 'General Strategic Briefing');
+    setConsultationTopic(topic || 'Strategic Challenge Intake');
     setIsConsultationOpen(true);
   };
 
   return (
     <HashRouter>
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-rose-600 selection:text-white">
+      <div className="min-h-screen bg-white text-slate-800 flex flex-col font-sans selection:bg-[#D2232A] selection:text-white">
         {/* Navigation */}
-        <Navbar onOpenConsultation={() => handleOpenConsultation('Header Talk to Expert')} />
+        <Navbar onOpenConsultation={() => handleOpenConsultation('Header Discuss a Challenge')} />
 
         {/* Dynamic Route View */}
         <main className="flex-grow">
@@ -34,6 +34,10 @@ export function App() {
             <Route path="/about" element={<AboutPage onOpenConsultation={handleOpenConsultation} />} />
             <Route path="/what-we-do" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
             <Route path="/what-we-do/:serviceId" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
+            <Route path="/solutions" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
+            <Route path="/solutions/:serviceId" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
+            <Route path="/capabilities" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
+            <Route path="/capabilities/:serviceId" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
             <Route path="/services" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
             <Route path="/events" element={<EventsPage onOpenConsultation={handleOpenConsultation} />} />
             <Route path="/blog" element={<BlogPage onOpenConsultation={handleOpenConsultation} />} />

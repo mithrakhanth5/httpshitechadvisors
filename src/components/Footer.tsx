@@ -8,7 +8,8 @@ import {
   ArrowUp, 
   Sparkles
 } from 'lucide-react';
-import { OFFICE_CONTACT, SERVICES } from '../data/siteData';
+import { OFFICE_CONTACT, SOLUTIONS, CAPABILITIES } from '../data/siteData';
+import { HitechLogo } from './HitechLogo';
 
 interface FooterProps {
   onOpenConsultation: () => void;
@@ -20,21 +21,21 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
   };
 
   return (
-    <footer id="contact-footer" className="bg-slate-950 border-t border-slate-900 text-slate-400 text-xs relative overflow-hidden">
-      {/* Pre-footer Call to Action Banner */}
-      <div className="relative border-b border-slate-900 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 py-16">
+    <footer id="contact-footer" className="bg-[#06121E] border-t border-slate-900 text-slate-400 text-xs relative overflow-hidden">
+      {/* Pre-footer Call to Action Banner (Final CTA Band) */}
+      <div className="relative border-b border-slate-900 bg-gradient-to-r from-slate-950 via-[#0B1F33] to-slate-950 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="glass-panel rounded-3xl p-8 sm:p-12 border border-slate-800 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+          <div className="rounded-3xl p-8 sm:p-12 bg-slate-900/80 border border-slate-800 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden backdrop-blur-md">
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center space-x-2 text-rose-400 font-mono text-xs uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Ready to Modernize Your Systems?</span>
+                <span>Next Steps</span>
               </div>
               <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                Transform Complex Tech Investments Into Measurable Business Value
+                What are you trying to solve?
               </h3>
               <p className="text-slate-300 text-sm leading-relaxed">
-                Connect with our senior architects to evaluate your architecture, scale cloud performance, or embed senior technical teams.
+                Share your challenge. A senior consultant will come back to you within 24 hours — with questions worth answering, not a sales pitch.
               </p>
             </div>
 
@@ -43,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
                 onClick={onOpenConsultation}
                 className="w-full sm:w-auto px-8 py-4 rounded-full font-semibold text-white bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 shadow-xl shadow-rose-950/60 text-sm transition text-center"
               >
-                Schedule Strategic Briefing
+                Discuss a Challenge
               </button>
               <a
                 href={OFFICE_CONTACT.phoneRaw}
@@ -61,19 +62,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
           {/* Brand Info */}
           <div className="lg:col-span-4 space-y-4">
-            <Link to="/" className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-black border border-slate-700/80 flex items-center justify-center">
-                <span className="text-white font-black text-lg tracking-tighter">H</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-600 absolute bottom-1.5 right-1.5"></span>
-              </div>
-              <div className="flex items-center">
-                <span className="text-lg font-bold tracking-tight text-white">HITECH</span>
-                <span className="text-lg font-light tracking-widest text-rose-500 ml-1.5">ADVISORS</span>
-              </div>
+            <Link to="/" className="inline-block">
+              <HitechLogo size="md" variant="dark" />
             </Link>
 
+            {/* Brand Signature Line from Section 2 */}
+            <p className="text-rose-400 text-xs font-serif italic">
+              "Meaningful problems deserve meaningful solutions."
+            </p>
+
             <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
-              We are experts at engaging experts on behalf of our clients. A premier Seattle-area technology and talent advisory firm embedding world-class expertise to accelerate digital transformation.
+              Hitech Advisors is a business and technology solutions firm that connects strategy to execution. Headquartered in Kirkland, WA, we advise, architect and deliver measurable enterprise results.
             </p>
 
             <div className="pt-2 text-slate-400 text-[11px] font-mono">
@@ -81,138 +80,145 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConsultation }) => {
             </div>
           </div>
 
-          {/* Core Navigation */}
-          <div className="lg:col-span-2 space-y-3">
+          {/* Solutions Column */}
+          <div className="lg:col-span-3 space-y-3">
             <div className="text-xs font-mono uppercase tracking-wider text-white font-bold">
-              Navigation
+              Solutions
             </div>
             <ul className="space-y-2">
-              {[
-                { path: '/', label: 'Home' },
-                { path: '/about', label: 'About Hitech' },
-                { path: '/what-we-do', label: 'Advisory Services' },
-                { path: '/ai-assessment', label: 'AI Diagnostic' },
-                { path: '/events', label: 'Executive 2030 Events' },
-                { path: '/blog', label: 'Research & Blog' },
-                { path: '/contact', label: 'Contact Office' },
-              ].map((link) => (
-                <li key={link.path}>
+              {SOLUTIONS.map((sol) => (
+                <li key={sol.id}>
                   <Link
-                    to={link.path}
-                    className="hover:text-rose-400 transition"
+                    to={`/what-we-do/${sol.slug}`}
+                    className="hover:text-white transition-colors duration-150 flex items-center group text-xs"
                   >
-                    {link.label}
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-rose-500 mr-2 transition-colors"></span>
+                    <span>{sol.title}</span>
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Services Pillar Directory */}
-          <div className="lg:col-span-3 space-y-3">
+          {/* Capabilities Column */}
+          <div className="lg:col-span-2 space-y-3">
             <div className="text-xs font-mono uppercase tracking-wider text-white font-bold">
-              Practice Areas
+              Capabilities
             </div>
             <ul className="space-y-2">
-              {SERVICES.map((s) => (
-                <li key={s.id}>
+              {CAPABILITIES.map((cap) => (
+                <li key={cap.id}>
                   <Link
-                    to={`/what-we-do/${s.id}`}
-                    className="hover:text-rose-400 transition text-left block"
+                    to={`/capabilities/${cap.slug}`}
+                    className="hover:text-white transition-colors duration-150 flex items-center group text-xs"
                   >
-                    {s.title}
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-[#D2232A] mr-2 transition-colors"></span>
+                    <span>{cap.title}</span>
                   </Link>
                 </li>
               ))}
               <li>
                 <Link
-                  to="/what-we-do"
-                  className="hover:text-rose-400 transition text-left block"
+                  to="/ai-assessment"
+                  className="hover:text-white transition-colors duration-150 flex items-center group text-xs text-rose-400"
                 >
-                  M&amp;A Divestiture &amp; MDM Separations
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mr-2"></span>
+                  <span>AI Maturity Diagnostic</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/events"
+                  className="hover:text-white transition-colors duration-150 flex items-center group text-xs text-slate-300"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#D2232A] mr-2 transition-colors"></span>
+                  <span>Executive Events</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/blog"
+                  className="hover:text-white transition-colors duration-150 flex items-center group text-xs text-slate-300"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-[#D2232A] mr-2 transition-colors"></span>
+                  <span>Blog &amp; Insights</span>
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Contact Details */}
+          {/* Contact Details Column */}
           <div className="lg:col-span-3 space-y-3">
             <div className="text-xs font-mono uppercase tracking-wider text-white font-bold">
-              Contact &amp; Location
+              Headquarters
             </div>
-            <div className="space-y-2.5">
+            <div className="space-y-2.5 text-xs text-slate-400">
               <a
                 href={OFFICE_CONTACT.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start hover:text-white transition"
+                className="flex items-start hover:text-white transition-colors"
               >
-                <MapPin className="w-4 h-4 text-rose-500 mr-2 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 mr-2 text-rose-500 flex-shrink-0 mt-0.5" />
                 <span>
-                  {OFFICE_CONTACT.addressLine1}
-                  <br />
+                  {OFFICE_CONTACT.addressLine1}<br />
                   {OFFICE_CONTACT.addressLine2}
                 </span>
               </a>
 
               <a
-                href={`mailto:${OFFICE_CONTACT.email}`}
-                className="flex items-center hover:text-white transition"
+                href={OFFICE_CONTACT.phoneRaw}
+                className="flex items-center hover:text-white transition-colors"
               >
-                <Mail className="w-4 h-4 text-rose-500 mr-2 flex-shrink-0" />
+                <Phone className="w-4 h-4 mr-2 text-rose-500 flex-shrink-0" />
+                <span>{OFFICE_CONTACT.phone}</span>
+              </a>
+
+              <a
+                href={`mailto:${OFFICE_CONTACT.email}`}
+                className="flex items-center hover:text-white transition-colors"
+              >
+                <Mail className="w-4 h-4 mr-2 text-rose-500 flex-shrink-0" />
                 <span>{OFFICE_CONTACT.email}</span>
               </a>
 
-              <a
-                href={OFFICE_CONTACT.phoneRaw}
-                className="flex items-center hover:text-white transition"
-              >
-                <Phone className="w-4 h-4 text-rose-500 mr-2 flex-shrink-0" />
-                <span>{OFFICE_CONTACT.phone}</span>
-              </a>
-            </div>
-
-            <div className="pt-3 flex space-x-3">
-              <a
-                href={OFFICE_CONTACT.linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition"
-                aria-label="LinkedIn"
-              >
-                LinkedIn <ExternalLink className="w-3 h-3 inline ml-1" />
-              </a>
-
-              <a
-                href={OFFICE_CONTACT.youtubeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition"
-                aria-label="YouTube"
-              >
-                YouTube <ExternalLink className="w-3 h-3 inline ml-1" />
-              </a>
+              <div className="pt-2">
+                <a
+                  href={OFFICE_CONTACT.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center space-x-1.5 text-xs text-rose-400 hover:text-rose-300 transition"
+                >
+                  <span>Connect on LinkedIn</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-14 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-400 text-[11px]">
+        {/* Bottom Legal Strip */}
+        <div className="mt-12 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-4">
           <div>
-            Copyright © {new Date().getFullYear()} Hitech Advisors. All Rights Reserved.
+            © {new Date().getFullYear()} Hitech Advisors. All rights reserved. • Strategy That Connects to Execution.
           </div>
 
           <div className="flex items-center space-x-6">
-            <span>Enterprise Cloud &amp; AI Advisory</span>
-            <span>•</span>
-            <span>Zero Vendor Lock-In</span>
-            <span>•</span>
+            <Link to="/contact" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/contact" className="hover:text-white transition-colors">
+              Terms of Use
+            </Link>
+            <Link to="/contact" className="hover:text-white transition-colors">
+              Accessibility
+            </Link>
             <button
               onClick={scrollToTop}
-              className="flex items-center hover:text-white text-rose-400 font-semibold"
+              className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors ml-4"
+              title="Return to top"
             >
-              <span>Back to Top</span>
-              <ArrowUp className="w-3 h-3 ml-1" />
+              <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
