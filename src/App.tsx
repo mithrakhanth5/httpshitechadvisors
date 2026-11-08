@@ -1,65 +1,142 @@
-import { useState } from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
-import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { TalkToExpertModal } from './components/TalkToExpertModal';
-import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ServicesPage } from './pages/ServicesPage';
-import { EventsPage } from './pages/EventsPage';
-import { BlogPage } from './pages/BlogPage';
-import { ContactPage } from './pages/ContactPage';
-import { AiAssessmentPage } from './pages/AiAssessmentPage';
-import './App.css';
+import { useState, useEffect } from 'react';
+import Lenis from 'lenis';
+import { gsap, ScrollTrigger } from './lib/gsap';
+import { CursorFollower } from './components/ui/CursorFollower';
+import { Navbar } from './components/layout/Navbar';
+import { HeroSection } from './components/sections/HeroSection';
+import { ProblemStatementSection } from './components/sections/ProblemStatementSection';
+import { PropositionSection } from './components/sections/PropositionSection';
+import { ServicesGrid } from './components/sections/ServicesGrid';
+import { RoleSelectorSection } from './components/sections/RoleSelectorSection';
+import { CapabilitiesSection } from './components/sections/CapabilitiesSection';
+import { WhyHitechSection } from './components/sections/WhyHitechSection';
+import { MethodologyShowcase } from './components/sections/MethodologyShowcase';
+import { TestimonialsSection } from './components/sections/TestimonialsSection';
+import { IndustriesSection } from './components/sections/IndustriesSection';
+import { RoundtableSection } from './components/sections/RoundtableSection';
+import { CtaBanner } from './components/sections/CtaBanner';
+import { Footer } from './components/layout/Footer';
+import { DiscussChallengeModal } from './components/hitech/DiscussChallengeModal';
+import { DemoModal } from './components/DemoModal';
 
 export function App() {
-  const [isConsultationOpen, setIsConsultationOpen] = useState<boolean>(false);
-  const [consultationTopic, setConsultationTopic] = useState<string>('');
+  const [isDiscussOpen, setIsDiscussOpen] = useState(false);
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [selectedHelpArea, setSelectedHelpArea] = useState<string>('not-sure');
 
-  const handleOpenConsultation = (topic?: string) => {
-    setConsultationTopic(topic || 'Strategic Challenge Intake');
-    setIsConsultationOpen(true);
+  // Initialize Lenis Smooth Inertia Scrolling & sync with GSAP ScrollTrigger
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true,
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const tickerCallback = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(tickerCallback);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(tickerCallback);
+      lenis.destroy();
+    };
+  }, []);
+
+  const handleOpenDiscuss = (area?: string) => {
+    setSelectedHelpArea(area || 'not-sure');
+    setIsDiscussOpen(true);
   };
 
   return (
-    <HashRouter>
-      <div className="min-h-screen bg-white text-slate-800 flex flex-col font-sans selection:bg-[#D2232A] selection:text-white">
-        {/* Navigation */}
-        <Navbar onOpenConsultation={() => handleOpenConsultation('Header Discuss a Challenge')} />
+    <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
+      {/* Feel-Good Custom Cursor Follower */}
+      <CursorFollower />
 
-        {/* Dynamic Route View */}
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<HomePage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/about" element={<AboutPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/what-we-do" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/what-we-do/:serviceId" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/solutions" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/solutions/:serviceId" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/capabilities" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/capabilities/:serviceId" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/services" element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/events" element={<EventsPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/blog" element={<BlogPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/talk-to-an-expert" element={<ContactPage />} />
-            <Route path="/ai-assessment" element={<AiAssessmentPage onOpenConsultation={handleOpenConsultation} />} />
-            <Route path="*" element={<HomePage onOpenConsultation={handleOpenConsultation} />} />
-          </Routes>
-        </main>
+      {/* 1. Header & Navigation (Blurs on scroll with Sticky Announcement) */}
+      <Navbar
+        onOpenDiscuss={() => handleOpenDiscuss('not-sure')}
+        onOpenBriefing={() => setIsDemoOpen(true)}
+      />
 
-        {/* Footer */}
-        <Footer onOpenConsultation={() => handleOpenConsultation('Footer Consultation')} />
-
-        {/* Modal Consultation Form */}
-        <TalkToExpertModal
-          isOpen={isConsultationOpen}
-          onClose={() => setIsConsultationOpen(false)}
-          initialTopic={consultationTopic}
+      {/* Main Page Flow (Feel-Good End-to-End Animation) */}
+      <main className="relative w-full">
+        {/* 2. Hero Section (Staggered Word Reveal, Ambient Blobs, Magnetic CTAs) */}
+        <HeroSection
+          onOpenDiscuss={() => handleOpenDiscuss('not-sure')}
+          onOpenBriefing={() => setIsDemoOpen(true)}
         />
-      </div>
-    </HashRouter>
+
+        {/* 4. Problem Statement (The hardest business problems don't fit inside one technology category) */}
+        <ProblemStatementSection />
+
+        {/* 5. Proposition (One partner from the decision to the delivery + 3 Value Pillars) */}
+        <PropositionSection />
+
+        {/* 6. Solution Areas (Five canonical solutions: CRM/ERP, Data, Cyber, IT/Cloud, AI) */}
+        <ServicesGrid
+          onSelectDiscipline={(area) => handleOpenDiscuss(area)}
+        />
+
+        {/* 7. Role Selector ("Start with your role" - 6 Executive roles) */}
+        <RoleSelectorSection
+          onSelectRole={(area) => handleOpenDiscuss(area)}
+        />
+
+        {/* 8. Capabilities (How we deliver - Strategy, Product, Growth, Talent) */}
+        <CapabilitiesSection
+          onSelectCapability={(area) => handleOpenDiscuss(area)}
+        />
+
+        {/* 9. Why Hitech (Why clients work with us - 4 differentiator reasons) */}
+        <WhyHitechSection />
+
+        {/* 10. How It Works (Engagement timeline: Discover, Frame, Deliver, Optimize) */}
+        <MethodologyShowcase />
+
+        {/* 11. Results & Testimonial (99.99%, 5,000+, 60% + David Vance quote) */}
+        <TestimonialsSection />
+
+        {/* 12. Industries (Across the industries we serve - 6 sectors) */}
+        <IndustriesSection
+          onOpenContact={() => handleOpenDiscuss('not-sure')}
+        />
+
+        {/* 13. Events & Insights (Executive Roundtable Seattle + 2 Latest Articles) */}
+        <RoundtableSection
+          onOpenBriefing={() => setIsDemoOpen(true)}
+        />
+
+        {/* 14. Final CTA Band (What are you trying to solve? + 1-day response commitment) */}
+        <CtaBanner
+          onOpenDiscuss={() => handleOpenDiscuss('not-sure')}
+        />
+      </main>
+
+      {/* 11. Minimal Footer (Kirkland WA Headquarters, Contact, Verified Links) */}
+      <Footer
+        onOpenDiscuss={() => handleOpenDiscuss('not-sure')}
+        onOpenBriefing={() => setIsDemoOpen(true)}
+      />
+
+      {/* Interactive Modals */}
+      <DiscussChallengeModal
+        isOpen={isDiscussOpen}
+        onClose={() => setIsDiscussOpen(false)}
+        presetHelpArea={selectedHelpArea}
+      />
+      <DemoModal
+        isOpen={isDemoOpen}
+        onClose={() => setIsDemoOpen(false)}
+      />
+    </div>
   );
 }
 
 export default App;
+

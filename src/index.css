@@ -2,93 +2,273 @@
 
 @layer base {
   :root {
-    --font-serif: 'Source Serif 4', Georgia, Cambria, serif;
-    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --color-ink: #0B1F33;
-    --color-ink-deep: #06121E;
-    --color-body: #3A4A5A;
-    --color-crimson: #D2232A;
-    --color-crimson-hover: #B71C22;
-    --color-paper: #FFFFFF;
-    --color-mist: #F8FAFC;
-    --color-mist-dark: #F1F5F9;
-    --color-line: #E2E8F0;
+    /* Hitech Advisors Official Color Palette (from live https://hitechadvisors.com/ and PDF Section 6) */
+    --ink: #020626;
+    --dark: #020626;
+    --body: #3a4a5a;
+    --accent: #d22931;
+    --accent-hover: #b71c24;
+    --blue: #d22931;
+    --red: #d22931;
+    --red-hover: #b71c24;
+    --paper: #ffffff;
+    --white: #ffffff;
+    --mist: #f4f6f8;
+    --surface: #f4f6f8;
+    --line: #eaedf1;
+    --line-strong: #d9e0e6;
+    --beige: #edecea;
+    --beige-soft: #f4f6f8;
+    --green: #40aa4a;
+    --yellow: #fac344;
+    --tint-blue: rgba(210, 41, 49, 0.08);
+    --tint-red: #fdecee;
+    --tint-green: #e2f9e9;
+    --tint-yellow: #fcf1d8;
+    --tint-pink: #f9e2f3;
+    --tint-cream: #f9f2e2;
+    --muted: rgba(58, 74, 90, 0.75);
+    --muted-soft: rgba(58, 74, 90, 0.55);
+
+    /* Authentic Typography (Plus Jakarta Sans & Inter per Feel-Good specification) */
+    --display: "Plus Jakarta Sans", "Google Sans", "Helvetica Neue", Arial, sans-serif;
+    --text: "Inter", "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-display: var(--display);
+    --font-body: var(--text);
+
+    /* Feel-Good Animation Curve (cubic-bezier(0.22, 1, 0.36, 1)) */
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-sym: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
   }
 
   body {
-    font-family: var(--font-sans);
-    background-color: #FFFFFF;
-    color: var(--color-body);
-    overflow-x: hidden;
+    font-family: var(--text);
+    background-color: var(--white);
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
   }
 
-  h1, h2 {
-    font-family: var(--font-serif);
-    color: var(--color-ink);
-    letter-spacing: -0.02em;
+  h1, h2, h3, .display, .font-display {
+    font-family: var(--display);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
   }
 
-  h3, h4, h5, h6 {
-    font-family: var(--font-sans);
-    color: var(--color-ink);
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  button {
+    font: inherit;
+    border: 0;
+    background: none;
+    cursor: pointer;
   }
 }
 
-/* Custom Editorial Scrollbar */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: var(--surface);
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
+  background: #bac7d1;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D2232A;
+  background: #020626;
 }
 
-/* Subtle connecting lines motif pattern */
-.bg-subtle-grid {
-  background-size: 40px 40px;
+/* Navbar Links: No underline per previous validation */
+.Nav_link__ceKep,
+.Nav_item__G6Pss,
+.Nav_links__EDUcS a {
+  text-decoration: none !important;
+}
+
+.Nav_rule__OPWki {
+  display: none !important;
+}
+
+/* Feel-Good Card Hover Lift and Glow (cubic-bezier(0.22, 1, 0.36, 1)) */
+.card-hover-feelgood {
+  transition: transform 0.4s var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+              box-shadow 0.4s var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+              border-color 0.3s ease;
+  will-change: transform;
+}
+
+.card-hover-feelgood:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(2, 6, 38, 0.08);
+}
+
+/* Ambient Gradient Blob Keyframes */
+@keyframes ambientBlob1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(45px, -35px) scale(1.08);
+  }
+  66% {
+    transform: translate(-30px, 25px) scale(0.95);
+  }
+}
+
+@keyframes ambientBlob2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-40px, 30px) scale(1.05);
+  }
+  66% {
+    transform: translate(35px, -20px) scale(0.92);
+  }
+}
+
+.animate-ambient-blob-1 {
+  animation: ambientBlob1 18s ease-in-out infinite;
+}
+
+.animate-ambient-blob-2 {
+  animation: ambientBlob2 22s ease-in-out infinite;
+}
+
+/* Smooth Marquee Keyframes */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Glassmorphism Blur */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(234, 237, 241, 0.8);
+}
+
+.glass-panel-dark {
+  background: rgba(2, 6, 38, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* High-Tech Laser Border Beam Keyframes */
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+/* High-Tech Radar / Lidar Scanline */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+@keyframes radarSweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cyberPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+.animate-border-beam {
+  animation: border-beam var(--duration, 8s) infinite linear;
+}
+
+.animate-scanline {
+  animation: scanline 4s linear infinite;
+}
+
+.animate-radar-sweep {
+  animation: radarSweep 6s linear infinite;
+}
+
+.animate-cyber-pulse {
+  animation: cyberPulse 3s ease-in-out infinite;
+}
+
+/* High-Tech Cyber Grid Pattern */
+.bg-cyber-grid {
+  background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(11, 31, 51, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(11, 31, 51, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(2, 6, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(2, 6, 38, 0.04) 1px, transparent 1px);
 }
 
-.bg-dot-pattern {
-  background-image: radial-gradient(rgba(11, 31, 51, 0.08) 1px, transparent 1px);
-  background-size: 24px 24px;
+.bg-cyber-grid-dark {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
-/* Editorial Glass & Card Panels */
-.editorial-card {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  box-shadow: 0 1px 3px 0 rgba(11, 31, 51, 0.04), 0 1px 2px -1px rgba(11, 31, 51, 0.02);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.editorial-card:hover {
-  border-color: #CBD5E1;
-  box-shadow: 0 10px 25px -5px rgba(11, 31, 51, 0.08), 0 8px 10px -6px rgba(11, 31, 51, 0.04);
-  transform: translateY(-2px);
-}
-
-/* Editorial CTA Button */
-.btn-primary-crimson {
-  background-color: #D2232A;
-  color: #FFFFFF;
-  border-radius: 9999px;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 14px 0 rgba(210, 35, 42, 0.25);
-}
-
-.btn-primary-crimson:hover {
-  background-color: #B71C22;
-  box-shadow: 0 6px 20px 0 rgba(210, 35, 42, 0.35);
-  transform: translateY(-1px);
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

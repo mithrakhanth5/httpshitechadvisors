@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640.00" height="640.00" viewBox="0 0 640.000 640.000" fill="none"><defs><mask id="mask1_58_939" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="575" y="226" width="1300" height="600">
+<rect x="575" y="226" width="1300" height="600" fill="url(#paint1_radial_58_939)" />
+</mask>
+<radialGradient id="paint1_radial_58_939" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1066 564.5) rotate(-105.32) scale(328.5 711.75)">
+<stop stop-color="white" />
+<stop offset="1" stop-color="white" stop-opacity="0" />
+</radialGradient>
+</defs><g transform="translate(-660.000 -93.000)"><g><g>
+<mask id="mask1_58_939" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="575" y="226" width="1300" height="600">
+<rect x="575" y="226" width="1300" height="600" fill="url(#paint1_radial_58_939)" />
+</mask>
+<g mask="url(#mask1_58_939)">
+<g>
+<g>
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 312.434 511.503)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 373.035 552.205)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 433.633 592.906)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 494.234 633.608)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 554.836 674.309)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 615.434 715.011)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 676.035 755.713)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 736.633 796.414)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 797.234 837.116)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 857.836 877.817)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 918.434 918.519)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 979.035 959.22)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 1039.64 999.922)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 1100.23 1040.62)" fill="#2E2926" fill-opacity="0.2" />
+<rect width="980" height="1" transform="matrix(0.83205 -0.5547 0.830139 0.557556 1160.84 1081.33)" fill="#2E2926" fill-opacity="0.2" />
+</g>
+</g>
+</g>
+</g>
+</g></g></svg>
