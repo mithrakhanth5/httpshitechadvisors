@@ -1,0 +1,38 @@
+# Hitech Advisors
+
+> Hitech Advisors is a business and technology solutions firm based in Kirkland, Washington.
+
+We help organizations make the right technology decisions and carry them through to working results — across business applications, data, cybersecurity, IT operations, AI, product engineering, go-to-market and talent.
+
+## Positioning & Core Philosophy
+- **Brand Line:** Meaningful problems deserve meaningful solutions.
+- **Brand Promise:** Clarity in the decision. Accountability in the delivery.
+- **Value Proposition:**
+  1. Right answer, not the default answer (platform-neutral).
+  2. Strategy and delivery in one team (no hand-off gap).
+  3. Senior expertise on demand (experienced consultants and specialists).
+
+## Solution Areas
+- **CRM, ERP & Business Applications:** Choose, implement and connect the systems that run your business — and make sure people use them.
+- **Data & Customer Intelligence:** Bring your data together into one trusted view of customers and operations, ready for decisions and AI.
+- **Cybersecurity & Risk:** Find your real exposure, fix what matters most, and show the board it's handled.
+- **IT Operations & Cloud:** Run IT that's reliable, efficient and ready to scale — from the service desk to the cloud.
+- **AI Adoption & Agents:** Move AI from pilots to production — agents and automation that do real work, safely.
+
+## Capabilities
+- **Strategy & Advisory:** Technology strategy, architecture and platform decisions you can stand behind.
+- **Product & Engineering:** Product strategy, application development, modernization and quality engineering.
+- **Growth & Go-to-Market:** Go-to-market strategy, revenue operations and the technology behind growth.
+- **Talent & Managed Teams:** Specialist experts, embedded leaders and managed teams that scale with you.
+
+## Engagement Model (How We Work)
+1. **Discover:** Listen first, learn the business problem, systems in place, and success criteria.
+2. **Frame:** Define outcomes and lay out options with cost, risk, and trade-offs.
+3. **Deliver:** Build, implement, and integrate with working results in production.
+4. **Optimize:** Drive adoption, measure outcomes, and continuously improve.
+
+## Contact Information
+- **Headquarters:** 608 State Street South, Kirkland, WA 98033
+- **Phone:** (425) 284-3315
+- **Email:** hello@hitechadvisors.com
+- **Website:** https://hitechadvisors.com/
