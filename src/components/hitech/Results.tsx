@@ -104,14 +104,14 @@ export const Results: React.FC<ResultsProps> = ({ onSelectStory }) => {
           {results.stories.map((story) => (
             <div
               key={story.title}
-              className="story-card-anim p-8 rounded-2xl bg-[#F8FAFC] border border-[#EAEDF1] flex flex-col justify-between hover:border-[#D22931]/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
+              className="story-card-anim p-8 rounded-2xl bg-[#EBF2F7] border border-[#DCE4EC] flex flex-col justify-between hover:border-[#D22931]/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-bold text-[#D22931] uppercase tracking-wider">
                     {story.industry}
                   </span>
-                  <span className="text-[11px] font-medium text-[#556070] bg-white px-2.5 py-1 rounded-md border border-[#EAEDF1]">
+                  <span className="text-[11px] font-medium text-[#556070] bg-white px-2.5 py-1 rounded-md border border-[#DCE4EC]">
                     Verified Result
                   </span>
                 </div>

@@ -108,7 +108,7 @@ export const MethodologyShowcase: React.FC = () => {
     <section
       ref={containerRef}
       id="methodology"
-      className="py-28 bg-[#F8FAFC] border-t border-[#EAEDF1] relative overflow-hidden"
+      className="py-28 bg-[#EBF2F7] border-t border-[#DCE4EC] relative overflow-hidden"
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Header */}
@@ -135,7 +135,7 @@ export const MethodologyShowcase: React.FC = () => {
                 <button
                   key={step.step}
                   onClick={() => setActiveStep(idx)}
-                  className={`w-full flex-1 p-5 rounded-2xl text-left transition-all duration-300 flex items-center gap-4 cursor-pointer border border-[#EAEDF1] hover:border-[#D22931] ${
+                  className={`w-full flex-1 p-5 rounded-2xl text-left transition-all duration-300 flex items-center gap-4 cursor-pointer border border-[#DCE4EC] hover:border-[#D22931] ${
                     isSelected
                       ? 'bg-white shadow-md'
                       : 'bg-white/70 hover:bg-white shadow-2xs'
@@ -145,7 +145,7 @@ export const MethodologyShowcase: React.FC = () => {
                     className={`font-mono font-bold text-sm px-3 py-1.5 rounded-xl flex-shrink-0 transition-colors ${
                       isSelected
                         ? 'bg-[#020626] text-white shadow-xs'
-                        : 'bg-[#EAEDF1] text-[#556070]'
+                        : 'bg-[#DCE4EC] text-[#556070]'
                     }`}
                   >
                     {step.step}
@@ -166,7 +166,7 @@ export const MethodologyShowcase: React.FC = () => {
           {/* Deep-Dive Showcase Card with Mask Reveal (7 cols) */}
           <div
             ref={imagePanelRef}
-            className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-[#EAEDF1] shadow-xl relative overflow-hidden flex flex-col justify-between h-full"
+            className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-[#DCE4EC] shadow-xl relative overflow-hidden flex flex-col justify-between h-full"
           >
             {/* Soft Ambient Blob Inside Showcase */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-[#D22931]/8 to-transparent rounded-full blur-3xl pointer-events-none" />
@@ -195,13 +195,13 @@ export const MethodologyShowcase: React.FC = () => {
               </p>
 
               {/* Deliverables Grid */}
-              <div className="pt-4 border-t border-[#EAEDF1] space-y-2.5">
+              <div className="pt-4 border-t border-[#DCE4EC] space-y-2.5">
                 <div className="text-xs font-bold uppercase tracking-wider text-[#020626]">
                   Key Deliverables
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {current.deliverables.map((item) => (
-                    <div key={item} className="flex items-center gap-2 text-xs text-[#020626] font-medium bg-[#F8FAFC] p-2.5 rounded-xl border border-[#EAEDF1]">
+                    <div key={item} className="flex items-center gap-2 text-xs text-[#020626] font-medium bg-[#EBF2F7] p-2.5 rounded-xl border border-[#DCE4EC]">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] flex-shrink-0" />
                       <span>{item}</span>
                     </div>

@@ -122,7 +122,7 @@ export const LogoMarquee: React.FC = () => {
   const marqueeItems = [...BRAND_LOGOS, ...BRAND_LOGOS];
 
   return (
-    <div className="w-full bg-[#F8FAFC] py-12 border-y border-[#EAEDF1] overflow-hidden">
+    <div className="w-full bg-[#EBF2F7] py-12 border-y border-[#DCE4EC] overflow-hidden">
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10 mb-7 text-center">
         <p className="text-xs font-mono font-bold uppercase tracking-widest text-[#556070] flex items-center justify-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
@@ -136,7 +136,7 @@ export const LogoMarquee: React.FC = () => {
           {marqueeItems.map((item, index) => (
             <div
               key={`${item.name}-${index}`}
-              className="flex items-center gap-3.5 px-5 py-3 rounded-xl bg-white border border-[#EAEDF1] shadow-2xs hover:border-[#D22931]/40 hover:shadow-sm transition-all duration-300 flex-shrink-0 group cursor-default"
+              className="flex items-center gap-3.5 px-5 py-3 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs hover:border-[#D22931]/40 hover:shadow-sm transition-all duration-300 flex-shrink-0 group cursor-default"
             >
               {/* Single-Theme Logo Icon Container */}
               <div className="w-7 h-7 rounded-lg bg-[#020626]/5 border border-[#020626]/10 flex items-center justify-center text-[#020626] group-hover:text-[#D22931] group-hover:bg-[#D22931]/10 group-hover:border-[#D22931]/30 transition-all duration-300 flex-shrink-0">
@@ -149,7 +149,7 @@ export const LogoMarquee: React.FC = () => {
               </span>
 
               {/* Capability Tag */}
-              <span className="text-[10px] font-mono font-semibold text-[#556070] bg-[#F8FAFC] px-2 py-0.5 rounded border border-[#EAEDF1] whitespace-nowrap">
+              <span className="text-[10px] font-mono font-semibold text-[#556070] bg-[#EBF2F7] px-2 py-0.5 rounded border border-[#DCE4EC] whitespace-nowrap">
                 {item.tag}
               </span>
             </div>

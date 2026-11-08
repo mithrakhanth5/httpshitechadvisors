@@ -106,7 +106,7 @@ export const StatsSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 sm:py-32 bg-[#F8FAFC] border-y border-[#EAEDF1] overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[#EBF2F7] border-y border-[#DCE4EC] overflow-hidden"
     >
       {/* Subtle ambient blur */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
@@ -116,7 +116,7 @@ export const StatsSection: React.FC = () => {
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <div className="stats-header max-w-3xl mb-16 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#EAEDF1] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
             <span>Verified Track Record</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
@@ -132,13 +132,13 @@ export const StatsSection: React.FC = () => {
           {METRICS.map((item, index) => (
             <div
               key={item.label}
-              className="stat-card card-hover-feelgood bg-white p-7 rounded-2xl border border-[#EAEDF1] shadow-xs relative flex flex-col justify-between group"
+              className="stat-card card-hover-feelgood bg-white p-7 rounded-2xl border border-[#DCE4EC] shadow-xs relative flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between mb-6">
-                <div className="w-10 h-10 rounded-xl bg-[#F8FAFC] border border-[#EAEDF1] flex items-center justify-center group-hover:scale-110 group-hover:border-[#D22931]/30 transition-all duration-300">
+                <div className="w-10 h-10 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center group-hover:scale-110 group-hover:border-[#D22931]/30 transition-all duration-300">
                   {item.icon}
                 </div>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#EAEDF1] group-hover:bg-[#D22931] transition-colors" />
+                <div className="w-1.5 h-1.5 rounded-full bg-[#DCE4EC] group-hover:bg-[#D22931] transition-colors" />
               </div>
 
               <div>

@@ -63,7 +63,7 @@ export const PropositionSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Proposition Narrative */}
           <div className="prop-narrative lg:col-span-5 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F8FAFC] border border-[#EAEDF1] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-2 shadow-2xs">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-2 shadow-2xs">
               <span>The Hitech Model</span>
             </div>
             <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
@@ -88,10 +88,10 @@ export const PropositionSection: React.FC = () => {
             {proposition.pillars.map((pillar, idx) => (
               <div
                 key={pillar.title}
-                className="pillar-card card-hover-feelgood p-6 sm:p-7 rounded-2xl border border-[#EAEDF1] bg-[#F8FAFC] hover:border-[#D22931] hover:bg-white shadow-2xs hover:shadow-md transition-all duration-300"
+                className="pillar-card card-hover-feelgood p-6 sm:p-7 rounded-2xl border border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931] hover:bg-white shadow-2xs hover:shadow-md transition-all duration-300"
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-2.5 rounded-xl bg-white border border-[#EAEDF1] shadow-2xs">
+                  <div className="p-2.5 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs">
                     {pillarIcons[idx]}
                   </div>
                   <div className="space-y-1.5 flex-1">

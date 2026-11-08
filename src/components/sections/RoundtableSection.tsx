@@ -54,12 +54,12 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenBrie
     <section
       ref={sectionRef}
       id="roundtable"
-      className="relative py-24 sm:py-32 bg-[#F8FAFC] border-t border-[#EAEDF1] overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[#EBF2F7] border-t border-[#DCE4EC] overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <div className="roundtable-header max-w-3xl mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#EAEDF1] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
             <span>Executive Community &middot; Since 2018</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
@@ -135,7 +135,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenBrie
           {/* Perspective Articles Column */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-6">
             {/* Article 1 */}
-            <div className="roundtable-card card-hover-feelgood bg-white p-7 rounded-2xl border border-[#EAEDF1] shadow-2xs flex flex-col justify-between group">
+            <div className="roundtable-card card-hover-feelgood bg-white p-7 rounded-2xl border border-[#DCE4EC] shadow-2xs flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between text-xs text-[#556070] mb-3">
                   <span className="font-bold uppercase tracking-wider text-[#D22931]">
@@ -153,7 +153,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenBrie
                   How enterprise leadership teams separate generative AI marketing hype from durable, governed workflow automation that actually delivers ROI.
                 </p>
               </div>
-              <div className="mt-5 pt-4 border-t border-[#EAEDF1] flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
+              <div className="mt-5 pt-4 border-t border-[#DCE4EC] flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
                 <span className="flex items-center gap-1.5">
                   <BookOpen className="w-3.5 h-3.5 text-[#D22931]" />
                   Read Executive Perspective
@@ -163,7 +163,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenBrie
             </div>
 
             {/* Article 2 */}
-            <div className="roundtable-card card-hover-feelgood bg-white p-7 rounded-2xl border border-[#EAEDF1] shadow-2xs flex flex-col justify-between group">
+            <div className="roundtable-card card-hover-feelgood bg-white p-7 rounded-2xl border border-[#DCE4EC] shadow-2xs flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between text-xs text-[#556070] mb-3">
                   <span className="font-bold uppercase tracking-wider text-[#D22931]">
@@ -181,7 +181,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenBrie
                   Why CDPs and lakehouses solve distinct operational jobs, and how to architect the simplest data foundation that doesn&rsquo;t blow out your cloud budget.
                 </p>
               </div>
-              <div className="mt-5 pt-4 border-t border-[#EAEDF1] flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
+              <div className="mt-5 pt-4 border-t border-[#DCE4EC] flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
                 <span className="flex items-center gap-1.5">
                   <BookOpen className="w-3.5 h-3.5 text-[#D22931]" />
                   Read Executive Perspective

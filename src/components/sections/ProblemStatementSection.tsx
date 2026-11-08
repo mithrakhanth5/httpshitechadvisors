@@ -57,11 +57,11 @@ export const ProblemStatementSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="problems"
-      className="relative py-24 sm:py-32 bg-[#F8FAFC] border-y border-[#EAEDF1] overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[#EBF2F7] border-y border-[#DCE4EC] overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         <div className="problem-header max-w-3xl mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#EAEDF1] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
             <span>The Reality of Enterprise Technology</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
@@ -73,17 +73,17 @@ export const ProblemStatementSection: React.FC = () => {
           {problemStatement.cards.map((card, index) => (
             <div
               key={card.id}
-              className="problem-card card-hover-feelgood p-8 rounded-2xl bg-white border border-[#EAEDF1] hover:border-[#D22931] shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
+              className="problem-card card-hover-feelgood p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931] shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
-                <div className="w-12 h-12 rounded-xl bg-[#F8FAFC] border border-[#EAEDF1] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#F8FAFC] transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#EBF2F7] transition-all duration-300">
                   {cardIcons[index]}
                 </div>
                 <h3 className="font-display font-bold text-xl text-[#020626] leading-snug tracking-tight mb-4 group-hover:text-[#D22931] transition-colors">
                   {card.title}
                 </h3>
               </div>
-              <p className="text-sm text-[#556070] leading-relaxed pt-5 border-t border-[#EAEDF1]">
+              <p className="text-sm text-[#556070] leading-relaxed pt-5 border-t border-[#DCE4EC]">
                 {card.body}
               </p>
             </div>

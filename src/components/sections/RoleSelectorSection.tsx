@@ -58,11 +58,11 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
     <section
       ref={sectionRef}
       id="role-selector"
-      className="relative py-24 sm:py-32 bg-[#F8FAFC] border-t border-[#EAEDF1] overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[#EBF2F7] border-t border-[#DCE4EC] overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         <div className="role-header max-w-3xl mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#EAEDF1] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
             <span>Executive Routing</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
@@ -81,7 +81,7 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
               <div
                 key={item.role}
                 onClick={() => setActiveRoleIndex(index)}
-                className={`role-card card-hover-feelgood p-7 rounded-2xl text-left transition-all duration-300 border border-[#EAEDF1] hover:border-[#D22931] cursor-pointer flex flex-col justify-between bg-white ${
+                className={`role-card card-hover-feelgood p-7 rounded-2xl text-left transition-all duration-300 border border-[#DCE4EC] hover:border-[#D22931] cursor-pointer flex flex-col justify-between bg-white ${
                   isSelected ? 'shadow-md' : 'shadow-2xs'
                 }`}
               >
@@ -100,7 +100,7 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#EAEDF1] flex items-center justify-between text-xs">
+                <div className="mt-6 pt-4 border-t border-[#DCE4EC] flex items-center justify-between text-xs">
                   <span className="font-medium text-[#556070]">
                     Links to <strong className="text-[#020626]">{item.linksTo}</strong>
                   </span>

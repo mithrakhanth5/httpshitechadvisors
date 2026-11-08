@@ -70,7 +70,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                       className={`p-3 rounded-xl text-xs font-medium border text-left transition-all cursor-pointer ${
                         selectedSlot === slot
                           ? 'border-[#D22931] bg-[#D22931]/8 font-semibold text-[#020626] shadow-xs'
-                          : 'border-[#eaedf1] text-[#3a4a5a] hover:border-[#D22931]/40'
+                          : 'border-[#DCE4EC] text-[#3a4a5a] hover:border-[#D22931]/40'
                       }`}
                     >
                       {slot}
@@ -89,7 +89,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                   placeholder="executive@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-[#f8fafc] border border-[#eaedf1] text-[#020626] text-sm focus:outline-none focus:ring-2 focus:ring-[#D22931]"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] text-[#020626] text-sm focus:outline-none focus:ring-2 focus:ring-[#D22931]"
                 />
               </div>
 
@@ -100,7 +100,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ isOpen, onClose }) => {
                 <select
                   value={teamSize}
                   onChange={(e) => setTeamSize(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-[#f8fafc] border border-[#eaedf1] text-[#020626] text-sm focus:outline-none focus:ring-2 focus:ring-[#D22931]"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] text-[#020626] text-sm focus:outline-none focus:ring-2 focus:ring-[#D22931]"
                 >
                   <option value="1-50">1 - 50 employees</option>
                   <option value="51-200">51 - 200 employees</option>

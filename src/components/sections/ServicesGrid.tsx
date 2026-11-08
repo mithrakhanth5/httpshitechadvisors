@@ -116,7 +116,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">
-          <div className="services-header-anim inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F8FAFC] border border-[#EAEDF1] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+          <div className="services-header-anim inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
             <span>Solution Areas</span>
           </div>
           <h2 className="services-header-anim font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
@@ -138,11 +138,11 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
             >
               <div
                 onClick={() => onSelectDiscipline(service.id)}
-                className="relative h-full p-8 rounded-2xl bg-[#F8FAFC] border border-[#EAEDF1] hover:border-[#D22931] flex flex-col justify-between group cursor-pointer overflow-hidden transition-all duration-300 shadow-2xs hover:shadow-xl"
+                className="relative h-full p-8 rounded-2xl bg-[#EBF2F7] border border-[#DCE4EC] hover:border-[#D22931] flex flex-col justify-between group cursor-pointer overflow-hidden transition-all duration-300 shadow-2xs hover:shadow-xl"
               >
                 <div>
                   <div className="mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-white border border-[#EAEDF1] shadow-2xs flex items-center justify-center group-hover:scale-110 group-hover:border-gray-300 transition-all duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs flex items-center justify-center group-hover:scale-110 group-hover:border-gray-300 transition-all duration-300">
                       {service.icon}
                     </div>
                   </div>
@@ -156,7 +156,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                   </p>
 
                   {/* Deliverables Checklist */}
-                  <div className="mt-5 space-y-2 border-t border-[#EAEDF1] pt-4">
+                  <div className="mt-5 space-y-2 border-t border-[#DCE4EC] pt-4">
                     {service.deliverables.map((del) => (
                       <div key={del} className="flex items-start gap-2 text-xs text-[#020626] font-medium">
                         <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] mt-0.5 flex-shrink-0" />
@@ -167,7 +167,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                 </div>
 
                 {/* Bottom Card Footer */}
-                <div className="mt-7 pt-4 border-t border-[#EAEDF1] flex items-center justify-between">
+                <div className="mt-7 pt-4 border-t border-[#DCE4EC] flex items-center justify-between">
                   <div className="text-[11px] text-[#556070] pr-2">
                     <span className="font-semibold text-[#020626]">Platforms: </span>
                     <span>{service.tools.join(', ')}</span>

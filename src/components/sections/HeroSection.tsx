@@ -87,7 +87,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
 
       <div className="relative z-10 max-w-[1240px] mx-auto px-6 sm:px-10 flex flex-col items-center">
         {/* Eyebrow Pill - Sleek High-Tech Badge */}
-        <div className="hero-eyebrow inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/95 border border-[#EAEDF1] shadow-xs mb-8 backdrop-blur-md">
+        <div className="hero-eyebrow inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-xs mb-8 backdrop-blur-md">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D22931] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D22931]"></span>
@@ -146,7 +146,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
 
           <a
             href="#solutions"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[#020626] hover:text-[#D22931] bg-white border border-[#EAEDF1] hover:border-[#D22931]/40 py-4 px-7 rounded-xl transition-all duration-300 shadow-2xs hover:shadow-md cursor-pointer"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#020626] hover:text-[#D22931] bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 py-4 px-7 rounded-xl transition-all duration-300 shadow-2xs hover:shadow-md cursor-pointer"
           >
             <span>Explore Our Solutions</span>
           </a>

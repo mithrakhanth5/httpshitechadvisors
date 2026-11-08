@@ -75,7 +75,7 @@ export const EventsAndInsights: React.FC<EventsAndInsightsProps> = ({ onOpenEven
   }, []);
 
   return (
-    <section ref={rootRef} id="roundtable" className="py-24 bg-[#F8FAFC] border-t border-[#EAEDF1] relative overflow-hidden">
+    <section ref={rootRef} id="roundtable" className="py-24 bg-[#EBF2F7] border-t border-[#DCE4EC] relative overflow-hidden">
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         <div className="max-w-3xl mb-16">
           <div className="events-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D22931]/10 text-[#D22931] text-xs font-semibold uppercase tracking-wider mb-3">

@@ -119,7 +119,7 @@ export const TestimonialsSection: React.FC = () => {
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <div className="cases-header max-w-3xl mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F8FAFC] border border-[#EAEDF1] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
             <span>Client Impact</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
@@ -135,11 +135,11 @@ export const TestimonialsSection: React.FC = () => {
           {CASE_STORIES.map((item, index) => (
             <div
               key={item.id}
-              className="case-card card-hover-feelgood p-8 rounded-2xl border border-[#EAEDF1] hover:border-[#D22931] bg-white shadow-2xs hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col justify-between"
+              className="case-card card-hover-feelgood p-8 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931] bg-white shadow-2xs hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#EAEDF1] text-xs font-bold text-[#020626]">
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold text-[#020626]">
                     {item.icon}
                     <span>{item.industry}</span>
                   </div>
@@ -164,7 +164,7 @@ export const TestimonialsSection: React.FC = () => {
               </div>
 
               <div>
-                <div className="space-y-2 border-t border-[#EAEDF1] pt-4 mb-6">
+                <div className="space-y-2 border-t border-[#DCE4EC] pt-4 mb-6">
                   {item.outcomes.map((outcome) => (
                     <div key={outcome} className="flex items-center gap-2 text-xs font-medium text-[#020626]">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] flex-shrink-0" />

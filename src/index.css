@@ -13,10 +13,10 @@
     --red-hover: #b71c24;
     --paper: #ffffff;
     --white: #ffffff;
-    --mist: #f4f6f8;
-    --surface: #f4f6f8;
-    --line: #eaedf1;
-    --line-strong: #d9e0e6;
+    --mist: #ebf2f7;
+    --surface: #ebf2f7;
+    --line: #dce4ec;
+    --line-strong: #cfd8e3;
     --beige: #edecea;
     --beige-soft: #f4f6f8;
     --green: #40aa4a;
@@ -186,7 +186,7 @@
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(234, 237, 241, 0.8);
+  border: 1px solid rgba(220, 228, 236, 0.8);
 }
 
 .glass-panel-dark {

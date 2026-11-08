@@ -47,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss, onOpenBriefing })
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/85 backdrop-blur-md shadow-sm border-b border-[#EAEDF1] py-3.5'
+          ? 'bg-white/85 backdrop-blur-md shadow-sm border-b border-[#DCE4EC] py-3.5'
           : 'bg-transparent py-5'
       }`}
     >
@@ -98,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss, onOpenBriefing })
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="lg:hidden p-2 rounded-lg text-[#020626] hover:bg-[#EAEDF1]/60 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-[#020626] hover:bg-[#EBF2F7] transition-colors"
             aria-label="Toggle Navigation"
           >
             {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -107,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss, onOpenBriefing })
 
         {/* Mobile Dropdown Panel */}
         {isMobileOpen && (
-          <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-[#EAEDF1] px-6 py-6 space-y-4 shadow-xl animate-in slide-in-from-top-4 duration-300">
+          <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-[#DCE4EC] px-6 py-6 space-y-4 shadow-xl animate-in slide-in-from-top-4 duration-300">
             <nav className="flex flex-col space-y-3">
               {navLinks.map((link) => (
                 <a
@@ -120,13 +120,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss, onOpenBriefing })
                 </a>
               ))}
             </nav>
-            <div className="pt-4 border-t border-[#EAEDF1] flex flex-col gap-3">
+            <div className="pt-4 border-t border-[#DCE4EC] flex flex-col gap-3">
               <button
                 onClick={() => {
                   setIsMobileOpen(false);
                   onOpenBriefing();
                 }}
-                className="w-full py-3 rounded-full border border-[#EAEDF1] text-sm font-semibold text-[#020626] hover:bg-[#F8FAFC]"
+                className="w-full py-3 rounded-full border border-[#DCE4EC] text-sm font-semibold text-[#020626] hover:bg-[#EBF2F7]"
               >
                 Book Executive Briefing
               </button>
