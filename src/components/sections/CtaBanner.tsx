@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { MagneticButton } from '../ui/MagneticButton';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { CardSpotlight } from '../ui/CardSpotlight';
 
 interface CtaBannerProps {
   onOpenDiscuss: () => void;
@@ -40,7 +41,11 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
       className="relative py-24 sm:py-32 bg-white overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
-        <div className="cta-inner relative rounded-3xl bg-gradient-to-br from-[#020626] via-[#040C38] to-[#020626] text-white p-10 sm:p-16 lg:p-20 overflow-hidden shadow-2xl border border-white/10 text-center flex flex-col items-center">
+        <CardSpotlight
+          spotlightColor="rgba(210, 41, 49, 0.15)"
+          borderColor="rgba(250, 195, 68, 0.4)"
+          className="cta-inner relative rounded-3xl bg-gradient-to-br from-[#020626] via-[#040C38] to-[#020626] text-white p-10 sm:p-16 lg:p-20 overflow-hidden shadow-2xl border border-white/10 text-center flex flex-col items-center"
+        >
           {/* Cyber Grid Background */}
           <div className="absolute inset-0 bg-cyber-grid-dark opacity-35 pointer-events-none" />
 
@@ -82,7 +87,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
               <span>Explore All Solutions</span>
             </a>
           </div>
-        </div>
+        </CardSpotlight>
       </div>
     </section>
   );

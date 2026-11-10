@@ -10,12 +10,17 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress((window.scrollY / totalScroll) * 100);
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
@@ -50,7 +55,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
           : 'bg-transparent py-5'
       }`}
     >
-        <div className="w-full px-6 sm:px-10 lg:px-12 flex items-center justify-between">
+      {/* Interactive Global Scroll Reading Progress Bar */}
+      <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-transparent overflow-hidden pointer-events-none">
+        <div
+          className="h-full bg-gradient-to-r from-[#D22931] via-[#FAC344] to-[#D22931] transition-all duration-75 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
+      <div className="w-full px-6 sm:px-10 lg:px-12 flex items-center justify-between">
           {/* Brand Logo Monogram */}
           <a
             href="#top"

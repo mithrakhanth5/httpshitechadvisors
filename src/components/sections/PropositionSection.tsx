@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
+import { CardSpotlight } from '../ui/CardSpotlight';
 
 export const PropositionSection: React.FC = () => {
   const { proposition } = hitechContent;
@@ -86,8 +87,10 @@ export const PropositionSection: React.FC = () => {
           {/* Right Column: Three Value Pillars */}
           <div className="prop-pillars lg:col-span-7 space-y-5">
             {proposition.pillars.map((pillar, idx) => (
-              <div
+              <CardSpotlight
                 key={pillar.title}
+                spotlightColor="rgba(210, 41, 49, 0.08)"
+                borderColor="rgba(210, 41, 49, 0.45)"
                 className="pillar-card card-hover-feelgood p-6 sm:p-7 rounded-2xl border border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931] hover:bg-white shadow-2xs hover:shadow-md transition-all duration-300"
               >
                 <div className="flex items-start gap-4">
@@ -103,7 +106,7 @@ export const PropositionSection: React.FC = () => {
                     </p>
                   </div>
                 </div>
-              </div>
+              </CardSpotlight>
             ))}
           </div>
         </div>

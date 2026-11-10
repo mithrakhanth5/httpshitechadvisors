@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
+import { CardSpotlight } from '../ui/CardSpotlight';
 
 interface IndustriesSectionProps {
   onOpenContact: () => void;
@@ -90,8 +91,10 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenCont
         {/* 6 Industry Tiles Grid */}
         <div className="ind-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {industries.items.map((ind, idx) => (
-            <div
+            <CardSpotlight
               key={ind.name}
+              spotlightColor="rgba(210, 41, 49, 0.08)"
+              borderColor="rgba(210, 41, 49, 0.45)"
               className="ind-card card-hover-feelgood p-8 rounded-2xl bg-[#EBF2F7] border border-[#DCE4EC] hover:border-[#D22931] hover:bg-white shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
@@ -107,7 +110,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenCont
                   <strong className="text-[#020626] font-semibold">Typical challenges:</strong> {ind.challenges}
                 </p>
               </div>
-            </div>
+            </CardSpotlight>
           ))}
         </div>
 
