@@ -40,6 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
   }, []);
 
   const navLinks = [
+    { label: 'Home', path: '/' },
     { label: 'Solutions', path: '/solutions' },
     { label: 'Role Focus', path: '/role-focus' },
     { label: 'Capabilities', path: '/capabilities' },
@@ -54,8 +55,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/85 backdrop-blur-md shadow-sm border-b border-[#DCE4EC] py-3.5'
-          : 'bg-transparent py-5'
+          ? 'bg-white/92 backdrop-blur-md shadow-sm border-b border-[#DCE4EC]'
+          : 'bg-white/85 backdrop-blur-sm'
       }`}
     >
       {/* Interactive Global Scroll Reading Progress Bar */}
@@ -66,7 +67,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
         />
       </div>
 
-      <div className="w-full px-6 sm:px-10 lg:px-12 flex items-center justify-between">
+      {/* Top Announcement Bar per Section 8.1 (Only when event is upcoming) */}
+      {!isScrolled && (
+        <div className="w-full bg-[#020626] text-white text-xs py-2 px-6 border-b border-white/10 hidden md:flex items-center justify-between transition-all duration-300">
+          <div className="flex items-center gap-2.5 mx-auto">
+            <span className="font-semibold text-[#FAC344] uppercase tracking-wider text-[10px] bg-white/10 px-2.5 py-0.5 rounded-full">
+              Executive Event
+            </span>
+            <span className="text-white/85">
+              Executive Roundtable: Production AI &amp; Governance in the Enterprise &mdash; Seattle, WA &middot; Spring 2026.
+            </span>
+            <button
+              onClick={onOpenDiscuss}
+              className="text-[#FAC344] hover:text-white font-semibold underline underline-offset-2 ml-1 cursor-pointer transition-colors"
+            >
+              Request an invitation &rarr;
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="w-full px-6 sm:px-10 lg:px-12 flex items-center justify-between py-3.5">
         {/* Brand Logo Monogram */}
         <Link
           to="/"
@@ -80,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
         </Link>
 
         {/* Desktop Nav Links with Synchronized Red Locked Indicator */}
-        <nav className="hidden lg:flex items-center gap-7" aria-label="Primary Navigation">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-7" aria-label="Primary Navigation">
           {navLinks.map((link) => {
             const isActive = location.pathname === link.path;
             return (
@@ -130,17 +151,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
       {isMobileOpen && (
         <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-[#DCE4EC] px-6 py-6 space-y-4 shadow-xl animate-in slide-in-from-top-4 duration-300">
           <nav className="flex flex-col space-y-2">
-            <Link
-              to="/"
-              onClick={() => setIsMobileOpen(false)}
-              className={`text-base font-semibold transition-colors py-2 px-3 rounded-xl flex items-center justify-between ${
-                location.pathname === '/'
-                  ? 'bg-[#D22931]/10 text-[#D22931] border-l-4 border-[#D22931]'
-                  : 'text-[#020626] hover:text-[#D22931] hover:bg-[#EBF2F7]'
-              }`}
-            >
-              <span>Home Overview</span>
-            </Link>
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (

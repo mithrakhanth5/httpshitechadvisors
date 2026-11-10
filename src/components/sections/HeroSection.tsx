@@ -71,11 +71,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
       </div>
 
       <div className="relative z-10 max-w-[1240px] mx-auto px-6 sm:px-10 flex flex-col items-center">
-        {/* Eyebrow Pill - Sleek High-Tech Badge */}
+        {/* Eyebrow Pill - Sleek High-Tech Badge per Section 8.1 */}
         <div className="hero-eyebrow inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-xs mb-8 backdrop-blur-md">
           <Zap className="w-3.5 h-3.5 text-[#D22931]" />
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#020626]">
-            Enterprise Systems &amp; AI Engineering &middot; Seattle &amp; Global
+            Business &amp; Technology Solutions
           </span>
         </div>
 
