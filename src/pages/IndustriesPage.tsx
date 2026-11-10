@@ -14,7 +14,7 @@ export const IndustriesPage: React.FC<IndustriesPageProps> = ({ onOpenDiscuss })
       <PageHero
         badge="Sector Relevance &middot; Cross-Industry Experience"
         title="Deep Sector Context for Complex"
-        highlightTitle="Enterprises."
+        highlightTitle="Industries."
         description="We bring cross-industry perspective combined with senior specialists who know your sector's systems, regulatory guardrails, and customer demands."
         onOpenDiscuss={() => onOpenDiscuss('industries')}
         ctaText="Discuss Your Industry"

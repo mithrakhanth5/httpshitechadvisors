@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
 import { TiltCard } from '../ui/TiltCard';
@@ -77,17 +78,13 @@ export const PropositionSection: React.FC = () => {
               {proposition.body}
             </p>
             <div className="pt-2">
-              <a
-                href="#methodology"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById('methodology')?.scrollIntoView({ behavior: 'smooth' });
-                }}
+              <Link
+                to="/methodology"
                 className="inline-flex items-center gap-2 font-display font-bold text-sm text-[#020626] hover:text-[#D22931] transition-colors group cursor-pointer"
               >
                 <span>See how an engagement works</span>
                 <ArrowRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-1 transition-transform" />
-              </a>
+              </Link>
             </div>
           </div>
 

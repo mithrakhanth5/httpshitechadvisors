@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRight, Layers, Users, Zap, Compass, CheckCircle2, Building2, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { TiltCard } from '../ui/TiltCard';
-import { TextShimmer } from '../ui/TextShimmer';
 
 export const HomePathways: React.FC = () => {
   const pathways = [
@@ -73,7 +72,10 @@ export const HomePathways: React.FC = () => {
             <span>Explore Hitech Advisors</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Dedicated Practices. <TextShimmer>One Accountable Partner</TextShimmer>.
+            Dedicated Practices.{' '}
+            <span className="text-[#D22931] font-display font-extrabold inline-block">
+              One Accountable Partner.
+            </span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             Choose the area most relevant to your current mandate, or explore how our advisory, architecture, and engineering practices connect.

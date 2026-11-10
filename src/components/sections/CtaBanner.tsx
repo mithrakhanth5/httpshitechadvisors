@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { MagneticButton } from '../ui/MagneticButton';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { CardSpotlight } from '../ui/CardSpotlight';
@@ -87,16 +88,12 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
               <ArrowRight className="w-4 h-4" />
             </MagneticButton>
 
-            <a
-              href="#solutions"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+            <Link
+              to="/solutions"
               className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-sm font-semibold text-white/90 hover:text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all duration-300 hover:scale-105 cursor-pointer"
             >
               <span>Explore All Solutions</span>
-            </a>
+            </Link>
           </div>
         </CardSpotlight>
       </div>

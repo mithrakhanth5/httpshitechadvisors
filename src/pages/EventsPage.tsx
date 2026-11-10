@@ -14,7 +14,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onOpenDiscuss }) => {
       <PageHero
         badge="Executive Community &middot; Thought Leadership"
         title="Convening Technology Leaders on the"
-        highlightTitle="Future."
+        highlightTitle="Frontier."
         description="Hitech convenes technology executives, founders, and engineering leaders across the Seattle ecosystem on how AI and emerging technologies reshape industries."
         onOpenDiscuss={() => onOpenDiscuss('roundtable')}
         ctaText="Request Roundtable Invitation"
