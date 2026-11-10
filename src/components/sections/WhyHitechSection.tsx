@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { Scale, Rocket, Award, Network } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
-import { CardSpotlight } from '../ui/CardSpotlight';
+import { TiltCard } from '../ui/TiltCard';
+import { TextShimmer } from '../ui/TextShimmer';
 
 export const WhyHitechSection: React.FC = () => {
   const { whyHitech } = hitechContent;
@@ -67,30 +68,33 @@ export const WhyHitechSection: React.FC = () => {
             <span>Differentiation</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            {whyHitech.headline}
+            <TextShimmer>{whyHitech.headline}</TextShimmer>
           </h2>
         </div>
 
         <div className="why-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {whyHitech.reasons.map((item, idx) => (
-            <CardSpotlight
-              key={item.title}
-              spotlightColor="rgba(210, 41, 49, 0.08)"
-              borderColor="rgba(210, 41, 49, 0.45)"
-              className="why-card p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931] shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#EBF2F7] transition-all duration-300">
-                  {reasonIcons[idx]}
+            <div key={item.title} className="why-card h-full">
+              <TiltCard
+                maxTilt={7}
+                scale={1.02}
+                showBorderBeam={idx === 1}
+                borderBeamDuration={10}
+                spotlightColor="rgba(210, 41, 49, 0.08)"
+                borderColor="rgba(210, 41, 49, 0.45)"
+                className="p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full"
+              >
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+                    {reasonIcons[idx]}
+                  </div>
+                  <h3 className="font-display font-bold text-lg text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-[#556070] leading-relaxed">{item.body}</p>
                 </div>
-                <h3 className="font-display font-bold text-lg text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-[#556070] leading-relaxed">
-                  {item.body}
-                </p>
-              </div>
-            </CardSpotlight>
+              </TiltCard>
+            </div>
           ))}
         </div>
       </div>

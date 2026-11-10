@@ -3,7 +3,8 @@ import { ArrowRight, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
-import { CardSpotlight } from '../ui/CardSpotlight';
+import { TiltCard } from '../ui/TiltCard';
+import { TextShimmer } from '../ui/TextShimmer';
 
 export const PropositionSection: React.FC = () => {
   const { proposition } = hitechContent;
@@ -69,7 +70,7 @@ export const PropositionSection: React.FC = () => {
               <span>The Hitech Model</span>
             </div>
             <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-              {proposition.headline}
+              <TextShimmer>{proposition.headline}</TextShimmer>
             </h2>
             <p className="text-base sm:text-lg text-[#556070] leading-relaxed">
               {proposition.body}
@@ -85,29 +86,34 @@ export const PropositionSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Three Value Pillars */}
+          {/* Right Column: Three Value Pillars with 3D Tilt */}
           <div className="prop-pillars lg:col-span-7 space-y-5">
             {proposition.pillars.map((pillar, idx) => (
-              <CardSpotlight
-                key={pillar.title}
-                spotlightColor="rgba(210, 41, 49, 0.08)"
-                borderColor="rgba(210, 41, 49, 0.45)"
-                className="pillar-card card-hover-feelgood p-6 sm:p-7 rounded-2xl border border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931] hover:bg-white shadow-2xs hover:shadow-md transition-all duration-300"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-2.5 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs">
-                    {pillarIcons[idx]}
+              <div key={pillar.title} className="pillar-card">
+                <TiltCard
+                  maxTilt={5}
+                  scale={1.015}
+                  showBorderBeam={idx === 0}
+                  borderBeamDuration={10}
+                  spotlightColor="rgba(210, 41, 49, 0.08)"
+                  borderColor="rgba(210, 41, 49, 0.45)"
+                  className="p-6 sm:p-7 rounded-2xl border border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931]/60 hover:bg-white shadow-2xs hover:shadow-2xl transition-all duration-300"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="p-2.5 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs">
+                      {pillarIcons[idx]}
+                    </div>
+                    <div className="space-y-1.5 flex-1">
+                      <h3 className="font-display font-bold text-lg text-[#020626]">
+                        {pillar.title}
+                      </h3>
+                      <p className="text-sm text-[#556070] leading-relaxed">
+                        {pillar.body}
+                      </p>
+                    </div>
                   </div>
-                  <div className="space-y-1.5 flex-1">
-                    <h3 className="font-display font-bold text-lg text-[#020626]">
-                      {pillar.title}
-                    </h3>
-                    <p className="text-sm text-[#556070] leading-relaxed">
-                      {pillar.body}
-                    </p>
-                  </div>
-                </div>
-              </CardSpotlight>
+                </TiltCard>
+              </div>
             ))}
           </div>
         </div>

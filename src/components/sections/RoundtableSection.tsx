@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { Calendar, MapPin, Lock, ArrowRight, BookOpen, Clock } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { MagneticButton } from '../ui/MagneticButton';
-import { CardSpotlight } from '../ui/CardSpotlight';
+import { TiltCard } from '../ui/TiltCard';
+import { TextShimmer } from '../ui/TextShimmer';
 
 interface RoundtableSectionProps {
   onOpenDiscuss: (area?: string) => void;
@@ -64,7 +65,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
             <span>Executive Community &middot; Since **FIRST EVENT YEAR**</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Where technology leaders compare notes.
+            Where technology leaders <TextShimmer>compare notes</TextShimmer>.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             Since **FIRST EVENT YEAR**, our closed-door executive roundtables have brought Pacific Northwest CIOs, CTOs, and CISOs together to discuss real enterprise outcomes under Chatham House Rules.
@@ -73,22 +74,26 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
 
         {/* 2-Column Bento: Featured Event Left, Perspective Articles Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Featured Roundtable Event Card */}
+          {/* Featured Roundtable Event Card with 3D Tilt and Border Beam */}
           <div className="roundtable-card lg:col-span-7 h-full">
-            <CardSpotlight
+            <TiltCard
+              maxTilt={6}
+              scale={1.015}
+              showBorderBeam={true}
+              borderBeamDuration={12}
               spotlightColor="rgba(210, 41, 49, 0.15)"
-              borderColor="rgba(250, 195, 68, 0.45)"
+              borderColor="rgba(250, 195, 68, 0.5)"
               className="bg-[#020626] text-white rounded-3xl p-8 sm:p-12 relative overflow-hidden flex flex-col justify-between shadow-2xl border border-white/10 group h-full"
             >
               {/* Cyber Grid Background */}
               <div className="absolute inset-0 bg-cyber-grid-dark opacity-35 pointer-events-none" />
 
               {/* Ambient Red Glow */}
-              <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#D22931]/20 blur-[100px] pointer-events-none" />
+              <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#D22931]/20 blur-[100px] pointer-events-none animate-ambient-blob-1" />
 
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
-                  <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#FAC344] text-xs font-bold uppercase tracking-wider border border-white/15">
+                  <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#FAC344] text-xs font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md">
                     <span className="w-2 h-2 rounded-full bg-[#D22931] animate-ping" />
                     Next Executive Roundtable
                   </span>
@@ -127,7 +132,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                 <MagneticButton
                   variant="primary"
                   onClick={() => onOpenDiscuss('ai')}
-                  className="text-xs font-bold uppercase tracking-wider !py-3.5 !px-6 shadow-xl"
+                  className="text-xs font-bold uppercase tracking-wider !py-3.5 !px-6 shadow-xl hover:shadow-2xl"
                 >
                   <span>Request an Invitation</span>
                   <ArrowRight className="w-4 h-4" />
@@ -136,17 +141,19 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                   Limited to VP, CIO, CTO, &amp; CISO roles
                 </span>
               </div>
-            </CardSpotlight>
+            </TiltCard>
           </div>
 
           {/* Perspective Articles Column */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-6">
             {/* Article 1 */}
             <div className="roundtable-card h-full">
-              <CardSpotlight
+              <TiltCard
+                maxTilt={6}
+                scale={1.02}
                 spotlightColor="rgba(210, 41, 49, 0.08)"
                 borderColor="rgba(210, 41, 49, 0.4)"
-                className="bg-white p-7 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group h-full hover:-translate-y-1 cursor-pointer"
+                className="bg-white p-7 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer"
               >
                 <div>
                   <div className="flex items-center justify-between text-xs text-[#556070] mb-3">
@@ -172,15 +179,17 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                   </span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
                 </div>
-              </CardSpotlight>
+              </TiltCard>
             </div>
 
             {/* Article 2 */}
             <div className="roundtable-card h-full">
-              <CardSpotlight
+              <TiltCard
+                maxTilt={6}
+                scale={1.02}
                 spotlightColor="rgba(210, 41, 49, 0.08)"
                 borderColor="rgba(210, 41, 49, 0.4)"
-                className="bg-white p-7 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group h-full hover:-translate-y-1 cursor-pointer"
+                className="bg-white p-7 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer"
               >
                 <div>
                   <div className="flex items-center justify-between text-xs text-[#556070] mb-3">
@@ -206,7 +215,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                   </span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
                 </div>
-              </CardSpotlight>
+              </TiltCard>
             </div>
           </div>
         </div>

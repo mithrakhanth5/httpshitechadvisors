@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap, EDITORIAL_EASE, animateCounterRoll } from '../../lib/gsap';
 import { ArrowUpRight, Quote, ShieldCheck, ShoppingCart, Server, CheckCircle2 } from 'lucide-react';
-import { CardSpotlight } from '../ui/CardSpotlight';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { TiltCard } from '../ui/TiltCard';
+import { BorderBeam } from '../ui/BorderBeam';
+import { TextShimmer } from '../ui/TextShimmer';
+import { AnimatedCounter } from '../ui/AnimatedCounter';
 
 interface CaseStory {
   id: string;
@@ -104,21 +107,6 @@ export const TestimonialsSection: React.FC = () => {
         }
       );
 
-      // Numeric counter odometer animations
-      const counters = section.querySelectorAll<HTMLElement>('.metric-counter');
-      counters.forEach((el) => {
-        const targetVal = parseFloat(el.getAttribute('data-target') || '0');
-        const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
-        const suffix = el.getAttribute('data-suffix') || '';
-
-        animateCounterRoll(el, targetVal, {
-          duration: 2.0,
-          decimals,
-          suffix,
-          trigger: el,
-        });
-      });
-
       // Quote card reveal
       gsap.fromTo(
         section.querySelector('.testimonial-quote-box'),
@@ -153,24 +141,25 @@ export const TestimonialsSection: React.FC = () => {
             <span>Client Impact</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Results our clients can measure
+            Results our clients can <TextShimmer>measure</TextShimmer>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             Real enterprise transformations delivered by senior practitioners — no theoretical frameworks, just operational proof.
           </p>
         </div>
 
-        {/* 3 Quantified Case Studies Grid */}
+        {/* 3 Quantified Case Studies Grid with 3D Tilt & Specular Glare */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {CASE_STORIES.map((item, index) => (
-            <div
-              key={item.id}
-              className="case-card h-full"
-            >
-              <CardSpotlight
+            <div key={item.id} className="case-card h-full">
+              <TiltCard
+                maxTilt={7}
+                scale={1.02}
+                showBorderBeam={index === 0}
+                borderBeamDuration={9}
                 spotlightColor="rgba(210, 41, 49, 0.08)"
                 borderColor="rgba(210, 41, 49, 0.45)"
-                className="p-8 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 bg-white shadow-2xs hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full hover:-translate-y-1"
+                className="p-8 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 bg-white shadow-2xs hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
@@ -184,14 +173,12 @@ export const TestimonialsSection: React.FC = () => {
                   </div>
 
                   <div className="font-display font-extrabold text-4xl sm:text-5xl text-[#020626] tracking-tight mb-1">
-                    <span
-                      className="metric-counter inline-block tabular-nums"
-                      data-target={item.rawNum}
-                      data-decimals={item.decimals}
-                      data-suffix={item.suffix}
-                    >
-                      {item.stat}
-                    </span>
+                    <AnimatedCounter
+                      value={item.rawNum}
+                      decimals={item.decimals}
+                      suffix={item.suffix}
+                      duration={2.0}
+                    />
                   </div>
                   <div className="text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
                     {item.metric}
@@ -220,14 +207,14 @@ export const TestimonialsSection: React.FC = () => {
                     <ArrowUpRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </div>
-              </CardSpotlight>
+              </TiltCard>
             </div>
           ))}
         </div>
 
-        {/* Executive Testimonial Quote Card per Section 8.1 / Section 12 Specification */}
+        {/* Executive Testimonial Quote Card with Border Beam & Ambient Motion */}
         <div className="testimonial-quote-box relative rounded-3xl bg-[#020626] text-white p-8 sm:p-12 overflow-hidden shadow-2xl border border-white/10 group">
-          {/* Ambient Gold Glow & Dark Grid */}
+          <BorderBeam size={260} duration={14} colorFrom="#FAC344" colorTo="#D22931" />
           <div className="absolute inset-0 bg-cyber-grid-dark opacity-20 pointer-events-none" />
           <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-[#FAC344]/15 blur-[90px] pointer-events-none animate-ambient-blob-1" />
 

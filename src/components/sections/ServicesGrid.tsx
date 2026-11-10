@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2 } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
-import { CardSpotlight } from '../ui/CardSpotlight';
+import { TiltCard } from '../ui/TiltCard';
+import { TextShimmer } from '../ui/TextShimmer';
 
 interface ServicesGridProps {
   onSelectDiscipline: (key: string) => void;
@@ -14,6 +15,7 @@ interface ServiceCard {
   description: string;
   deliverables: string[];
   tools: string[];
+  featured?: boolean;
 }
 
 const SERVICES: ServiceCard[] = [
@@ -56,6 +58,7 @@ const SERVICES: ServiceCard[] = [
     description: 'Move AI from pilots to production — agents and automation that do real work, safely.',
     deliverables: ['AI Strategy & Readiness Assessment', 'AI Agents & Multi-Step Workflows', 'Enterprise AI Governance & Safety'],
     tools: ['OpenAI', 'Anthropic Claude', 'Google Gemini', 'LangChain'],
+    featured: true,
   },
 ];
 
@@ -120,31 +123,40 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
             <span>Solution Areas</span>
           </div>
           <h2 className="services-header-anim font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            What we solve
+            What we <TextShimmer>solve</TextShimmer>
           </h2>
           <p className="services-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
             Five areas where business and technology meet. Most engagements touch more than one.
           </p>
         </div>
 
-        {/* 6-Card Services Bento Grid with interactive mouse-tracking spotlight */}
+        {/* 5-Card Services Bento Grid with 3D Tilt & Dynamic Specular Glare */}
         <div className="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SERVICES.map((service) => (
             <div
               key={service.id}
               className="service-card-anim rounded-2xl h-full"
             >
-              <CardSpotlight
+              <TiltCard
                 onClick={() => onSelectDiscipline(service.id)}
-                spotlightColor="rgba(210, 41, 49, 0.08)"
+                maxTilt={7}
+                scale={1.02}
+                showBorderBeam={service.featured}
+                borderBeamDuration={10}
+                spotlightColor="rgba(210, 41, 49, 0.09)"
                 borderColor="rgba(210, 41, 49, 0.45)"
-                className="relative h-full p-8 rounded-2xl bg-[#EBF2F7] border border-[#DCE4EC] hover:border-[#D22931]/50 flex flex-col justify-between group cursor-pointer transition-all duration-300 shadow-2xs hover:shadow-xl hover:-translate-y-1"
+                className="relative h-full p-8 rounded-2xl bg-[#EBF2F7] border border-[#DCE4EC] hover:border-[#D22931]/60 flex flex-col justify-between group cursor-pointer transition-all duration-300 shadow-2xs hover:shadow-2xl"
               >
                 <div>
-                  <div className="mb-6">
+                  <div className="mb-6 flex items-center justify-between">
                     <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs flex items-center justify-center group-hover:scale-110 group-hover:-translate-y-1 group-hover:shadow-md transition-all duration-300">
                       {service.icon}
                     </div>
+                    {service.featured && (
+                      <span className="text-[10px] font-mono font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-[#D22931]/10 text-[#D22931] border border-[#D22931]/20">
+                        High Demand
+                      </span>
+                    )}
                   </div>
 
                   <h3 className="font-display font-bold text-xl text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug">
@@ -176,7 +188,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                     Discuss &rarr;
                   </span>
                 </div>
-              </CardSpotlight>
+              </TiltCard>
             </div>
           ))}
         </div>

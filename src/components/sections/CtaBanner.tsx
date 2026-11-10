@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { MagneticButton } from '../ui/MagneticButton';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { CardSpotlight } from '../ui/CardSpotlight';
+import { BorderBeam } from '../ui/BorderBeam';
 
 interface CtaBannerProps {
   onOpenDiscuss: () => void;
@@ -47,6 +48,9 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
           borderColor="rgba(250, 195, 68, 0.4)"
           className="cta-inner relative rounded-3xl bg-gradient-to-br from-[#020626] via-[#040C38] to-[#020626] text-white p-10 sm:p-16 lg:p-20 overflow-hidden shadow-2xl border border-white/10 text-center flex flex-col items-center"
         >
+          {/* Magic UI Border Beam */}
+          <BorderBeam size={280} duration={14} colorFrom="#D22931" colorTo="#FAC344" />
+
           {/* Cyber Grid Background */}
           <div className="absolute inset-0 bg-cyber-grid-dark opacity-35 pointer-events-none" />
 
@@ -55,8 +59,8 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
           <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-[#FAC344]/20 blur-[120px] pointer-events-none animate-ambient-blob-2" />
 
           {/* Eyebrow */}
-          <div className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-xs font-bold uppercase tracking-wider text-[#FAC344] border border-white/15 mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-[#D22931]" />
+          <div className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-xs font-bold uppercase tracking-wider text-[#FAC344] border border-white/15 mb-6 backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5 text-[#D22931] animate-pulse" />
             <span>Start the Conversation</span>
           </div>
 
@@ -83,7 +87,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
 
             <Link
               to="/solutions"
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-sm font-semibold text-white/90 hover:text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-sm font-semibold text-white/90 hover:text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all duration-300 hover:scale-105"
             >
               <span>Explore All Solutions</span>
             </Link>

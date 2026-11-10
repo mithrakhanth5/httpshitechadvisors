@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { FileSpreadsheet, Bot, ShieldAlert } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
-import { CardSpotlight } from '../ui/CardSpotlight';
+import { TiltCard } from '../ui/TiltCard';
+import { TextShimmer } from '../ui/TextShimmer';
 
 export const ProblemStatementSection: React.FC = () => {
   const { problemStatement } = hitechContent;
@@ -66,30 +67,35 @@ export const ProblemStatementSection: React.FC = () => {
             <span>The Reality of Enterprise Technology</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            {problemStatement.headline}
+            <TextShimmer>{problemStatement.headline}</TextShimmer>
           </h2>
         </div>
 
         <div className="problem-cards-grid grid grid-cols-1 md:grid-cols-3 gap-8">
           {problemStatement.cards.map((card, index) => (
-            <CardSpotlight
-              key={card.id}
-              spotlightColor="rgba(210, 41, 49, 0.08)"
-              borderColor="rgba(210, 41, 49, 0.45)"
-              className="problem-card p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931] shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#EBF2F7] transition-all duration-300">
-                  {cardIcons[index]}
+            <div key={card.id} className="problem-card h-full">
+              <TiltCard
+                maxTilt={7}
+                scale={1.02}
+                showBorderBeam={index === 0}
+                borderBeamDuration={10}
+                spotlightColor="rgba(210, 41, 49, 0.08)"
+                borderColor="rgba(210, 41, 49, 0.45)"
+                className="p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full"
+              >
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+                    {cardIcons[index]}
+                  </div>
+                  <h3 className="font-display font-bold text-xl text-[#020626] leading-snug tracking-tight mb-4 group-hover:text-[#D22931] transition-colors">
+                    {card.title}
+                  </h3>
                 </div>
-                <h3 className="font-display font-bold text-xl text-[#020626] leading-snug tracking-tight mb-4 group-hover:text-[#D22931] transition-colors">
-                  {card.title}
-                </h3>
-              </div>
-              <p className="text-sm text-[#556070] leading-relaxed pt-5 border-t border-[#DCE4EC]">
-                {card.body}
-              </p>
-            </CardSpotlight>
+                <p className="text-sm text-[#556070] leading-relaxed pt-5 border-t border-[#DCE4EC]">
+                  {card.body}
+                </p>
+              </TiltCard>
+            </div>
           ))}
         </div>
       </div>
