@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Compass, Code2, TrendingUp, Users2, ArrowRight } from 'lucide-react';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
 
 interface CapabilitiesSectionProps {
@@ -23,7 +23,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
           opacity: 1,
           y: 0,
           duration: 0.8,
-          ease: SYMMETRY_EASE,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
             start: 'top 85%',

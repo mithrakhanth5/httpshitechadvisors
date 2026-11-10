@@ -301,11 +301,10 @@ export const hitechContent = {
       },
     ] as CaseStoryItem[],
     testimonial: {
-      quote:
-        "Hitech framed our architecture options with absolute clarity, chose the right stack on the merits, and stayed with our engineering team until the new platform delivered in production.",
-      author: "David Vance",
-      title: "VP of Technology Operations",
-      company: "Omnichannel Retail Group",
+      quote: "**APPROVED QUOTE**",
+      author: "**NAME**",
+      title: "**TITLE**",
+      company: "**COMPANY**",
     },
   },
 
@@ -344,7 +343,7 @@ export const hitechContent = {
   eventsAndInsights: {
     headline: "Where technology leaders compare notes",
     subhead:
-      "Since 2018, our executive roundtables and panels have brought Seattle-area leaders together to talk honestly about what AI and technology are changing in their industries.",
+      "Since **FIRST EVENT YEAR**, our executive roundtables and panels have brought Seattle-area leaders together to talk honestly about what AI and technology are changing in their industries.",
     event: {
       tag: "Next Executive Roundtable",
       title: "Production AI & Governance in the Enterprise",
@@ -372,7 +371,7 @@ export const hitechContent = {
 
   finalCta: {
     headline: "What are you trying to solve?",
-    line: "Share the challenge. A senior consultant will come back to you within one business day — with questions worth answering, not a sales pitch.",
+    line: "Share the challenge. A senior consultant will come back to you within **RESPONSE TIME** — with questions worth answering, not a sales pitch.",
     button: "Discuss a Challenge",
   },
 
@@ -380,7 +379,7 @@ export const hitechContent = {
     address: "608 State Street South, Kirkland, WA 98033",
     phone: "(425) 284-3315",
     email: "hello@hitechadvisors.com",
-    responseTime: "one business day",
+    responseTime: "**RESPONSE TIME**",
     linkedIn: "https://www.linkedin.com/company/hitech-advisors/",
     youtube: "https://www.youtube.com/@hitechadvisors",
   },

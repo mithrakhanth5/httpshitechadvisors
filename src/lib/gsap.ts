@@ -7,9 +7,9 @@ if (typeof window !== 'undefined') {
 }
 
 /**
- * Custom GreenSock ease matching Symmetry's signature smooth inertia curve
+ * Editorial ease per Section 6: Subtle and purposeful (fade-and-rise on scroll)
  */
-export const SYMMETRY_EASE = 'power4.out'; // cubic-bezier(0.16, 1, 0.3, 1)
+export const EDITORIAL_EASE = 'power3.out';
 
 /**
  * Creates a masked text reveal animation on an element when scrolled into view
@@ -23,7 +23,7 @@ export function animateMaskedText(
     trigger?: gsap.DOMTarget;
   } = {}
 ) {
-  const { delay = 0, duration = 0.9, stagger = 0.1, trigger } = options;
+  const { delay = 0, duration = 0.8, stagger = 0.08, trigger } = options;
 
   return gsap.fromTo(
     targets,
@@ -37,7 +37,7 @@ export function animateMaskedText(
       duration,
       delay,
       stagger,
-      ease: SYMMETRY_EASE,
+      ease: EDITORIAL_EASE,
       scrollTrigger: trigger
         ? {
             trigger,
@@ -62,7 +62,7 @@ export function animateFadeUp(
     stagger?: number;
   } = {}
 ) {
-  const { delay = 0, duration = 0.8, y = 30, trigger, stagger = 0.08 } = options;
+  const { delay = 0, duration = 0.7, y = 24, trigger, stagger = 0.08 } = options;
 
   return gsap.fromTo(
     targets,
@@ -76,35 +76,15 @@ export function animateFadeUp(
       duration,
       delay,
       stagger,
-      ease: SYMMETRY_EASE,
+      ease: EDITORIAL_EASE,
       scrollTrigger: trigger
         ? {
             trigger,
             start: 'top 85%',
-            once: true,
           }
         : undefined,
     }
   );
-}
-
-/**
- * Continuous floating physics on cards
- */
-export function animateFloating(
-  target: gsap.DOMTarget,
-  options: { y?: number; duration?: number; delay?: number } = {}
-) {
-  const { y = 10, duration = 4, delay = 0 } = options;
-
-  return gsap.to(target, {
-    y: `-=${y}`,
-    duration,
-    delay,
-    repeat: -1,
-    yoyo: true,
-    ease: 'sine.inOut',
-  });
 }
 
 export { gsap, ScrollTrigger };

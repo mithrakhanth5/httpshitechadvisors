@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Scale, Rocket, Award, Network } from 'lucide-react';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
 
 export const WhyHitechSection: React.FC = () => {
@@ -19,7 +19,7 @@ export const WhyHitechSection: React.FC = () => {
           opacity: 1,
           y: 0,
           duration: 0.8,
-          ease: SYMMETRY_EASE,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
             start: 'top 85%',

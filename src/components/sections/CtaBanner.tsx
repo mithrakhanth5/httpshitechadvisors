@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Clock, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { MagneticButton } from '../ui/MagneticButton';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 
 interface CtaBannerProps {
   onOpenDiscuss: () => void;
@@ -22,7 +22,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
           opacity: 1,
           y: 0,
           duration: 0.9,
-          ease: SYMMETRY_EASE,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: banner,
             start: 'top 85%',
@@ -61,7 +61,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
 
           {/* Subtext */}
           <p className="relative z-10 mt-6 max-w-2xl text-base sm:text-lg text-white/80 leading-relaxed">
-            Share the challenge. A senior consultant will come back to you within one business day — with questions worth answering, not a sales pitch.
+            Share the challenge. A senior consultant will come back to you within **RESPONSE TIME** — with questions worth answering, not a sales pitch.
           </p>
 
           {/* CTA Buttons */}
@@ -81,22 +81,6 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
             >
               <span>Explore All Solutions</span>
             </a>
-          </div>
-
-          {/* Trust Guarantees */}
-          <div className="relative z-10 mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-semibold text-white/60 uppercase tracking-wider">
-            <span className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#FAC344]" />
-              1 Business Day Response
-            </span>
-            <span className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#FAC344]" />
-              NDA Protected by Default
-            </span>
-            <span className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#FAC344]" />
-              Direct Senior Consultant Review
-            </span>
           </div>
         </div>
       </div>

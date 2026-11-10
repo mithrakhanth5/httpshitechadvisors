@@ -1,13 +1,12 @@
 import React from 'react';
-import { MapPin, Phone, Mail, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
 import { HitechLogo } from '../ui/HitechLogo';
 
 interface FooterProps {
   onOpenDiscuss: () => void;
-  onOpenBriefing: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss, onOpenBriefing }) => {
+export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
   return (
     <footer className="w-full bg-[#020626] text-white border-t border-white/10 pt-20 pb-12 overflow-hidden">
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
@@ -72,10 +71,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss, onOpenBriefing })
                   <path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73Z" />
                 </svg>
               </a>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-white/60">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#FAC344]" />
-                <span>SOC 2 Type II Audited</span>
-              </div>
             </div>
           </div>
 
@@ -164,13 +159,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss, onOpenBriefing })
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <button
-                  onClick={onOpenBriefing}
-                  className="hover:text-white transition-colors text-left cursor-pointer flex items-center gap-1 text-[#FAC344]"
+                <a
+                  href="#roundtable"
+                  className="hover:text-white transition-colors text-left flex items-center gap-1 text-[#FAC344]"
                 >
                   <span>Seattle Executive Roundtable</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
+                </a>
               </li>
               <li>
                 <a href="#roundtable" className="hover:text-white transition-colors">
@@ -188,14 +183,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss, onOpenBriefing })
                   className="hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Discuss an Enterprise Challenge
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={onOpenBriefing}
-                  className="hover:text-white transition-colors text-left cursor-pointer"
-                >
-                  Book Executive 1:1 Briefing
                 </button>
               </li>
             </ul>

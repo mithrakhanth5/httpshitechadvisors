@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
 
 export const PropositionSection: React.FC = () => {
@@ -19,7 +19,7 @@ export const PropositionSection: React.FC = () => {
           opacity: 1,
           x: 0,
           duration: 0.85,
-          ease: SYMMETRY_EASE,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
             start: 'top 85%',

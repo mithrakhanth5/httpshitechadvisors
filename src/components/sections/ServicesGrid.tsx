@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2 } from 'lucide-react';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
-import { TiltCard } from '../ui/TiltCard';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 
 interface ServicesGridProps {
   onSelectDiscipline: (key: string) => void;
@@ -76,7 +75,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
           y: 0,
           duration: 0.8,
           stagger: 0.1,
-          ease: SYMMETRY_EASE,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
             start: 'top 82%',
@@ -94,7 +93,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
           y: 0,
           duration: 0.85,
           stagger: 0.1,
-          ease: SYMMETRY_EASE,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section.querySelector('.services-grid'),
             start: 'top 82%',
@@ -127,14 +126,12 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
           </p>
         </div>
 
-        {/* 6-Card Services Bento Grid with 3D Tilt Perspective & Border Beam */}
+        {/* 6-Card Services Bento Grid with subtle hover interactions */}
         <div className="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SERVICES.map((service) => (
-            <TiltCard
+            <div
               key={service.id}
-              tiltMaxAngleX={6}
-              tiltMaxAngleY={6}
-              className="service-card-anim rounded-2xl"
+              className="service-card-anim rounded-2xl h-full"
             >
               <div
                 onClick={() => onSelectDiscipline(service.id)}
@@ -177,7 +174,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                   </span>
                 </div>
               </div>
-            </TiltCard>
+            </div>
           ))}
         </div>
       </div>

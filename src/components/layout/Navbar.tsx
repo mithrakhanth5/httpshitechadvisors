@@ -2,14 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
 import { MagneticButton } from '../ui/MagneticButton';
 import { HitechLogo } from '../ui/HitechLogo';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 
 interface NavbarProps {
   onOpenDiscuss: () => void;
-  onOpenBriefing: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss, onOpenBriefing }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
@@ -25,7 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss, onOpenBriefing })
       gsap.fromTo(
         navRef.current,
         { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.9, ease: SYMMETRY_EASE }
+        { opacity: 1, y: 0, duration: 0.9, ease: EDITORIAL_EASE }
       );
     }
 
@@ -79,12 +78,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss, onOpenBriefing })
 
           {/* Right Action Buttons */}
           <div className="hidden sm:flex items-center gap-4">
-            <button
-              onClick={onOpenBriefing}
-              className="text-sm font-medium text-[#3A4A5A] hover:text-[#020626] transition-colors px-3 py-2 cursor-pointer"
-            >
-              Book Briefing
-            </button>
             <MagneticButton
               variant="primary"
               onClick={onOpenDiscuss}
@@ -120,16 +113,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss, onOpenBriefing })
                 </a>
               ))}
             </nav>
-            <div className="pt-4 border-t border-[#DCE4EC] flex flex-col gap-3">
-              <button
-                onClick={() => {
-                  setIsMobileOpen(false);
-                  onOpenBriefing();
-                }}
-                className="w-full py-3 rounded-full border border-[#DCE4EC] text-sm font-semibold text-[#020626] hover:bg-[#EBF2F7]"
-              >
-                Book Executive Briefing
-              </button>
+            <div className="pt-4 border-t border-[#DCE4EC]">
               <button
                 onClick={() => {
                   setIsMobileOpen(false);

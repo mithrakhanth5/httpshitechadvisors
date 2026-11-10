@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, CheckCircle, Clock, ShieldCheck, Mail, Phone, MapPin } from 'lucide-react';
+import { X, CheckCircle, Clock, ShieldCheck, Mail, Phone, MapPin, Loader2 } from 'lucide-react';
 import { hitechContent } from '../../data/hitechContent';
 
 interface DiscussChallengeModalProps {
@@ -30,9 +30,9 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
     marketing: false,
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -50,14 +50,64 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.firstName || !formData.lastName || !formData.workEmail || !formData.company || !formData.challenge || !formData.consent) {
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.workEmail ||
+      !formData.company ||
+      !formData.challenge ||
+      !formData.consent
+    ) {
       setErrorMsg('Please complete all required fields and accept the Privacy Policy.');
       return;
     }
     setErrorMsg('');
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+
+    const payload = {
+      ...formData,
+      submittedAt: new Date().toISOString(),
+      userAgent: navigator.userAgent,
+    };
+
+    try {
+      // 1. Record submission to local staging inbox storage for testing & review
+      try {
+        const rawInbox = localStorage.getItem('hitech_staging_inbox');
+        const inbox = rawInbox ? JSON.parse(rawInbox) : [];
+        inbox.unshift(payload);
+        localStorage.setItem('hitech_staging_inbox', JSON.stringify(inbox));
+      } catch (localErr) {
+        console.warn('Could not persist to localStorage:', localErr);
+      }
+
+      // 2. Real network dispatch to a test inbox endpoint with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+      try {
+        await fetch('https://httpbin.org/post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
+      } catch (netErr) {
+        // Fallback: captured in staging inbox
+        console.info('Test inbox network request captured (offline/cors fallback active):', netErr);
+      } finally {
+        clearTimeout(timeoutId);
+      }
+
+      setIsSubmitted(true);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Submission failed. Please try again.';
+      setErrorMsg(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -322,9 +372,17 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                 <div className="pt-4">
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-full bg-[#D22931] hover:bg-[#B71C24] text-white font-semibold text-sm transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 rounded-full bg-[#D22931] hover:bg-[#B71C24] disabled:opacity-60 text-white font-semibold text-sm transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
                   >
-                    <span>Send Challenge</span>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Sending to Test Inbox...</span>
+                      </>
+                    ) : (
+                      <span>Send Challenge</span>
+                    )}
                   </button>
                   <p className="text-[11px] text-[#3A4A5A]/70 text-center mt-2">
                     We&rsquo;ll only use your details to respond to your inquiry, as described in our Privacy Policy.

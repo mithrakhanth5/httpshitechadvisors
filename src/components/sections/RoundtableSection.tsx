@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { Calendar, MapPin, Lock, ArrowRight, BookOpen, Clock } from 'lucide-react';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { MagneticButton } from '../ui/MagneticButton';
 
 interface RoundtableSectionProps {
-  onOpenBriefing: () => void;
+  onOpenDiscuss: (area?: string) => void;
 }
 
-export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenBriefing }) => {
+export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDiscuss }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenBrie
           opacity: 1,
           y: 0,
           duration: 0.85,
-          ease: SYMMETRY_EASE,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
             start: 'top 85%',
@@ -60,13 +60,13 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenBrie
         {/* Section Header */}
         <div className="roundtable-header max-w-3xl mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
-            <span>Executive Community &middot; Since 2018</span>
+            <span>Executive Community &middot; Since **FIRST EVENT YEAR**</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
             Where technology leaders compare notes.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
-            Since 2018, our closed-door executive roundtables have brought Pacific Northwest CIOs, CTOs, and CISOs together to discuss real enterprise outcomes under Chatham House Rules.
+            Since **FIRST EVENT YEAR**, our closed-door executive roundtables have brought Pacific Northwest CIOs, CTOs, and CISOs together to discuss real enterprise outcomes under Chatham House Rules.
           </p>
         </div>
 
@@ -120,7 +120,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenBrie
             <div className="mt-10 pt-6 flex flex-wrap items-center justify-between gap-4">
               <MagneticButton
                 variant="primary"
-                onClick={onOpenBriefing}
+                onClick={() => onOpenDiscuss('ai')}
                 className="text-xs font-bold uppercase tracking-wider !py-3.5 !px-6"
               >
                 <span>Request an Invitation</span>

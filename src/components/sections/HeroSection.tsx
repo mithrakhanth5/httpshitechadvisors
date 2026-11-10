@@ -2,11 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Zap } from 'lucide-react';
 import { MagneticButton } from '../ui/MagneticButton';
 import { gsap } from '../../lib/gsap';
-import { CyberCanvas } from '../ui/CyberCanvas';
 
 interface HeroSectionProps {
   onOpenDiscuss: () => void;
-  onOpenBriefing?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
@@ -72,9 +70,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
       id="top"
       className="relative min-h-[88vh] pt-36 pb-20 flex flex-col justify-center items-center text-center overflow-hidden bg-white"
     >
-      {/* Interactive High-Tech Cyber Particle Matrix Canvas */}
-      <CyberCanvas className="opacity-80" particleCount={60} connectDistance={125} />
-
       {/* Subtle Cyber Grid Background Overlay */}
       <div className="absolute inset-0 bg-cyber-grid opacity-60 pointer-events-none" />
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, UserCheck, CheckCircle2 } from 'lucide-react';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
 
 interface RoleSelectorSectionProps {
@@ -26,7 +26,7 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
           opacity: 1,
           y: 0,
           duration: 0.8,
-          ease: SYMMETRY_EASE,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
             start: 'top 85%',

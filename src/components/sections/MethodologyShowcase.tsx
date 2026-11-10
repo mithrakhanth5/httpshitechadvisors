@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Compass, GitMerge, Rocket, Award, CheckCircle2 } from 'lucide-react';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 
 interface Step {
   step: string;
@@ -28,7 +28,7 @@ const STEPS: Step[] = [
     subtitle: 'Design the target state before spending capital.',
     description: 'We architect vendor-neutral systems across cloud, data, and applications. Every integration is mapped with security guardrails, data contracts, and disaster recovery specifications.',
     icon: <GitMerge className="w-6 h-6 text-[#D22931]" />,
-    deliverables: ['Production System Blueprints', 'Security & SOC 2 Threat Model', 'Milestone-Based Execution Roadmap'],
+    deliverables: ['Production System Blueprints', 'Security & Compliance Threat Model', 'Milestone-Based Execution Roadmap'],
     takeaway: 'Board and executive alignment on budget, scope, and technical direction.',
   },
   {
@@ -70,7 +70,7 @@ export const MethodologyShowcase: React.FC = () => {
           y: 0,
           duration: 0.8,
           stagger: 0.1,
-          ease: SYMMETRY_EASE,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: container,
             start: 'top 80%',

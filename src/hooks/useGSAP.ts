@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { gsap, ScrollTrigger, SYMMETRY_EASE } from '../lib/gsap';
+import { gsap, ScrollTrigger, EDITORIAL_EASE } from '../lib/gsap';
 
 export interface UseGSAPRevealOptions {
   y?: number;
@@ -37,7 +37,7 @@ export function useGSAPReveal({
       duration,
       delay,
       stagger,
-      ease: SYMMETRY_EASE,
+      ease: EDITORIAL_EASE,
       scrollTrigger: {
         trigger: el,
         start: 'top 88%',

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap, SYMMETRY_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { ArrowUpRight, Quote, ShieldCheck, ShoppingCart, Server, CheckCircle2 } from 'lucide-react';
 
 interface CaseStory {
@@ -13,39 +13,40 @@ interface CaseStory {
   outcomes: string[];
 }
 
+// Case studies strictly rebuilt from verified figures in Section 8.15 & Section 12 (no unverified claims)
 const CASE_STORIES: CaseStory[] = [
   {
     id: 'retail',
     stat: '99.99%',
-    metric: 'Uptime Through Peak Flash Sales',
-    title: 'Zero downtime during 10x traffic surges for high-volume retail',
+    metric: 'Uptime at Peak',
+    title: 'Keeping a high-volume retailer online through flash-sale traffic',
     industry: 'Retail & E-commerce',
     icon: <ShoppingCart className="w-5 h-5 text-[#D22931]" />,
     detail:
-      'Engineered an auto-scaling cloud microservices architecture with multi-region failover. Cut peak page load times by 50% and unlocked a 40% year-over-year revenue surge during Black Friday traffic.',
-    outcomes: ['50% faster checkout latency', '40% surge revenue secured', 'Auto-scaling Kubernetes cluster'],
+      'High-volume e-commerce retailer: maintained 99.99% uptime with 50% faster page loads at peak and a 40% revenue increase.',
+    outcomes: ['99.99% uptime through flash sales', '50% faster page loads at peak', '40% revenue increase'],
   },
   {
     id: 'divestiture',
     stat: '5,000+',
-    metric: 'Users Migrated Without Disruption',
-    title: 'Separating 5,000+ corporate users from parent enterprise in 90 days',
-    industry: 'Technology & Cloud',
+    metric: 'Users Migrated',
+    title: 'Separating 5,000+ users from a parent company without disruption',
+    industry: 'IT Operations & Cloud',
     icon: <Server className="w-5 h-5 text-[#D22931]" />,
     detail:
-      'Orchestrated clean carve-out of Active Directory, Microsoft 365, NetSuite ERP, and cloud infrastructure following an M&A divestiture. Zero business downtime with 30% higher asset utilization.',
-    outcomes: ['30% higher asset utilization', '25% increase in user CSAT', 'Zero data loss across systems'],
+      'Global SaaS company (divestiture): 5,000+ users migrated with no critical downtime, 30% higher asset utilization, and 25% higher user satisfaction.',
+    outcomes: ['5,000+ users migrated', 'No critical downtime', '30% higher asset utilization', '25% higher user satisfaction'],
   },
   {
     id: 'security',
     stat: '60%',
-    metric: 'Faster Remediation Time',
-    title: 'Prioritizing vulnerability backlogs by business risk for financial services',
-    industry: 'Financial Services & Risk',
+    metric: 'Remediation Reduction',
+    title: 'Cutting time to remediation across a global security estate',
+    industry: 'Cybersecurity & Risk',
     icon: <ShieldCheck className="w-5 h-5 text-[#D22931]" />,
     detail:
-      'Shifted security operations from drowning in 12,000 unranked alerts to automated risk scoring. Established an actionable 3-year security roadmap passing SOC 2 Type II audit on first review.',
-    outcomes: ['60% faster Mean Time to Remediate', 'SOC 2 Type II certified', 'Audited threat governance'],
+      'Global enterprise moving to SaaS: achieved 60% reduction in time to remediation and established a 3-year security plan.',
+    outcomes: ['60% reduction in time to remediation', '3-year security plan established'],
   },
 ];
 
@@ -60,12 +61,12 @@ export const TestimonialsSection: React.FC = () => {
       // Header reveal
       gsap.fromTo(
         section.querySelector('.cases-header'),
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 25 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.85,
-          ease: SYMMETRY_EASE,
+          duration: 0.8,
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
             start: 'top 85%',
@@ -73,32 +74,33 @@ export const TestimonialsSection: React.FC = () => {
         }
       );
 
-      // Staggered cards reveal
+      // Quantified Story Cards reveal
       gsap.fromTo(
         section.querySelectorAll('.case-card'),
         { opacity: 0, y: 35 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.15,
+          duration: 0.85,
+          stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: section,
-            start: 'top 80%',
+            trigger: section.querySelector('.case-card'),
+            start: 'top 85%',
           },
         }
       );
 
-      // Testimonial quote reveal
+      // Quote card reveal
       gsap.fromTo(
         section.querySelector('.testimonial-quote-box'),
-        { opacity: 0, scale: 0.96 },
+        { opacity: 0, scale: 0.98, y: 30 },
         {
           opacity: 1,
           scale: 1,
+          y: 0,
           duration: 0.9,
-          ease: 'power3.out',
+          ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section.querySelector('.testimonial-quote-box'),
             start: 'top 85%',
@@ -123,7 +125,7 @@ export const TestimonialsSection: React.FC = () => {
             <span>Client Impact</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Results our clients can measure in revenue and uptime.
+            Results our clients can measure
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             Real enterprise transformations delivered by senior practitioners — no theoretical frameworks, just operational proof.
@@ -174,7 +176,7 @@ export const TestimonialsSection: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
-                  <span>Explore Architecture</span>
+                  <span>Read the story &rarr;</span>
                   <ArrowUpRight className="w-4 h-4 text-[#D22931]" />
                 </div>
               </div>
@@ -182,45 +184,27 @@ export const TestimonialsSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Executive Testimonial Quote Card */}
+        {/* Executive Testimonial Quote Card per Section 8.1 / Section 12 Specification */}
         <div className="testimonial-quote-box relative rounded-3xl bg-[#020626] text-white p-8 sm:p-12 overflow-hidden shadow-xl border border-white/10">
-
-          {/* Subtle Ambient Background Blob */}
-          <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#D22931]/20 blur-[80px] pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-[#FAC344]/15 blur-[80px] pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center gap-8 justify-between">
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-2 text-[#FAC344] mb-4">
-                <Quote className="w-8 h-8 opacity-75" />
-                <span className="text-xs font-bold uppercase tracking-widest text-white/70">
-                  Client Perspective &middot; VP Technology Operations
-                </span>
-              </div>
-              <blockquote className="font-display font-medium text-xl sm:text-2xl text-white/95 leading-relaxed">
-                &ldquo;Hitech framed our architecture options with absolute clarity, chose the right stack on the merits, and stayed with our engineering team until the new platform delivered in production.&rdquo;
-              </blockquote>
-              <div className="mt-6 flex items-center gap-4">
-                <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#D22931] to-[#FAC344] flex items-center justify-center font-display font-bold text-white shadow-sm">
-                  DV
-                </div>
-                <div>
-                  <div className="font-display font-bold text-base text-white">David Vance</div>
-                  <div className="text-xs text-white/60">
-                    VP of Technology Operations &middot; Omnichannel Retail Group
-                  </div>
-                </div>
-              </div>
+          <div className="relative z-10 max-w-3xl">
+            <div className="flex items-center gap-2 text-[#FAC344] mb-4">
+              <Quote className="w-8 h-8 opacity-75" />
+              <span className="text-xs font-bold uppercase tracking-widest text-white/70">
+                Client Perspective &middot; Testimonial
+              </span>
             </div>
-
-            <div className="border-t md:border-t-0 md:border-l border-white/15 pt-6 md:pt-0 md:pl-10 flex flex-col gap-3 flex-shrink-0">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#FAC344]">
-                Engagement Scope
+            <blockquote className="font-display font-medium text-xl sm:text-2xl text-white/95 leading-relaxed">
+              &ldquo;**APPROVED QUOTE**&rdquo;
+            </blockquote>
+            <div className="mt-6 flex items-center gap-4">
+              <div className="w-11 h-11 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-mono font-bold text-xs text-white/80">
+                **
               </div>
-              <div className="text-sm text-white/80 space-y-1">
-                <div>&bull; Multi-Cloud Architecture</div>
-                <div>&bull; E-commerce Peak Traffic</div>
-                <div>&bull; Production Engineering</div>
+              <div>
+                <div className="font-display font-bold text-base text-white">**NAME**</div>
+                <div className="text-xs text-white/60 font-mono">
+                  **TITLE**, **COMPANY**
+                </div>
               </div>
             </div>
           </div>
