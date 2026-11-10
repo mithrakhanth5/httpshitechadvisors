@@ -17,7 +17,6 @@ import { RoundtableSection } from './components/sections/RoundtableSection';
 import { CtaBanner } from './components/sections/CtaBanner';
 import { Footer } from './components/layout/Footer';
 import { DiscussChallengeModal } from './components/hitech/DiscussChallengeModal';
-import { StagingGate } from './components/StagingGate';
 
 export function App() {
   const [isDiscussOpen, setIsDiscussOpen] = useState(false);
@@ -53,8 +52,7 @@ export function App() {
   };
 
   return (
-    <StagingGate>
-      <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
+    <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
         {/* Feel-Good Custom Cursor Follower */}
         <CursorFollower />
 
@@ -128,7 +126,6 @@ export function App() {
           presetHelpArea={selectedHelpArea}
         />
       </div>
-    </StagingGate>
   );
 }
 
