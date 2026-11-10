@@ -2,14 +2,8 @@ import React from 'react';
 import { HeroSection } from '../components/sections/HeroSection';
 import { ProblemStatementSection } from '../components/sections/ProblemStatementSection';
 import { PropositionSection } from '../components/sections/PropositionSection';
-import { ServicesGrid } from '../components/sections/ServicesGrid';
-import { RoleSelectorSection } from '../components/sections/RoleSelectorSection';
-import { CapabilitiesSection } from '../components/sections/CapabilitiesSection';
 import { WhyHitechSection } from '../components/sections/WhyHitechSection';
-import { MethodologyShowcase } from '../components/sections/MethodologyShowcase';
-import { TestimonialsSection } from '../components/sections/TestimonialsSection';
-import { IndustriesSection } from '../components/sections/IndustriesSection';
-import { RoundtableSection } from '../components/sections/RoundtableSection';
+import { HomePathways } from '../components/sections/HomePathways';
 import { CtaBanner } from '../components/sections/CtaBanner';
 
 interface HomePageProps {
@@ -19,17 +13,22 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({ onOpenDiscuss }) => {
   return (
     <>
+      {/* 1. Hero: Positioning & Brand Promise */}
       <HeroSection onOpenDiscuss={() => onOpenDiscuss('not-sure')} />
+
+      {/* 2. Problem Statement: The Enterprise Reality */}
       <ProblemStatementSection />
+
+      {/* 3. The Hitech Model: One Partner from Decision to Delivery */}
       <PropositionSection />
-      <ServicesGrid onSelectDiscipline={(area) => onOpenDiscuss(area)} />
-      <RoleSelectorSection onSelectRole={(role) => onOpenDiscuss(role)} />
-      <CapabilitiesSection onSelectCapability={(cap) => onOpenDiscuss(cap)} />
+
+      {/* 4. Why Hitech: Four Differentiators */}
       <WhyHitechSection />
-      <MethodologyShowcase />
-      <TestimonialsSection />
-      <IndustriesSection onOpenContact={() => onOpenDiscuss('not-sure')} />
-      <RoundtableSection onOpenDiscuss={(area) => onOpenDiscuss(area || 'roundtable')} />
+
+      {/* 5. Practice Directory & Routing Pathways to Dedicated Pages */}
+      <HomePathways />
+
+      {/* 6. Conversion CTA Band */}
       <CtaBanner onOpenDiscuss={() => onOpenDiscuss('not-sure')} />
     </>
   );
