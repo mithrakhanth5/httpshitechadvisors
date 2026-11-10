@@ -1,22 +1,53 @@
 import { useState, useEffect } from 'react';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'motion/react';
 import Lenis from 'lenis';
 import { gsap, ScrollTrigger } from './lib/gsap';
 import { CursorFollower } from './components/ui/CursorFollower';
+import { ScrollToTop } from './components/ui/ScrollToTop';
 import { Navbar } from './components/layout/Navbar';
-import { HeroSection } from './components/sections/HeroSection';
-import { ProblemStatementSection } from './components/sections/ProblemStatementSection';
-import { PropositionSection } from './components/sections/PropositionSection';
-import { ServicesGrid } from './components/sections/ServicesGrid';
-import { RoleSelectorSection } from './components/sections/RoleSelectorSection';
-import { CapabilitiesSection } from './components/sections/CapabilitiesSection';
-import { WhyHitechSection } from './components/sections/WhyHitechSection';
-import { MethodologyShowcase } from './components/sections/MethodologyShowcase';
-import { TestimonialsSection } from './components/sections/TestimonialsSection';
-import { IndustriesSection } from './components/sections/IndustriesSection';
-import { RoundtableSection } from './components/sections/RoundtableSection';
-import { CtaBanner } from './components/sections/CtaBanner';
 import { Footer } from './components/layout/Footer';
 import { DiscussChallengeModal } from './components/hitech/DiscussChallengeModal';
+
+// Dedicated Route Pages
+import { HomePage } from './pages/HomePage';
+import { SolutionsPage } from './pages/SolutionsPage';
+import { RoleFocusPage } from './pages/RoleFocusPage';
+import { CapabilitiesPage } from './pages/CapabilitiesPage';
+import { MethodologyPage } from './pages/MethodologyPage';
+import { ResultsPage } from './pages/ResultsPage';
+import { IndustriesPage } from './pages/IndustriesPage';
+import { EventsPage } from './pages/EventsPage';
+
+function AnimatedAppRoutes({ onOpenDiscuss }: { onOpenDiscuss: (area?: string) => void }) {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.main
+        key={location.pathname}
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -14 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        className="relative w-full"
+      >
+        <Routes location={location}>
+          <Route path="/" element={<HomePage onOpenDiscuss={onOpenDiscuss} />} />
+          <Route path="/solutions" element={<SolutionsPage onOpenDiscuss={onOpenDiscuss} />} />
+          <Route path="/role-focus" element={<RoleFocusPage onOpenDiscuss={onOpenDiscuss} />} />
+          <Route path="/capabilities" element={<CapabilitiesPage onOpenDiscuss={onOpenDiscuss} />} />
+          <Route path="/methodology" element={<MethodologyPage onOpenDiscuss={onOpenDiscuss} />} />
+          <Route path="/results" element={<ResultsPage onOpenDiscuss={onOpenDiscuss} />} />
+          <Route path="/industries" element={<IndustriesPage onOpenDiscuss={onOpenDiscuss} />} />
+          <Route path="/events" element={<EventsPage onOpenDiscuss={onOpenDiscuss} />} />
+          {/* Fallback to Home */}
+          <Route path="*" element={<HomePage onOpenDiscuss={onOpenDiscuss} />} />
+        </Routes>
+      </motion.main>
+    </AnimatePresence>
+  );
+}
 
 export function App() {
   const [isDiscussOpen, setIsDiscussOpen] = useState(false);
@@ -52,72 +83,20 @@ export function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
+    <HashRouter>
+      <ScrollToTop />
+      <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
         {/* Feel-Good Custom Cursor Follower */}
         <CursorFollower />
 
-        {/* 1. Header & Navigation (Blurs on scroll with Sticky Announcement) */}
-        <Navbar
-          onOpenDiscuss={() => handleOpenDiscuss('not-sure')}
-        />
+        {/* 1. Header & Navigation (Blurs on scroll with Sticky Announcement & Red Locked Indicator) */}
+        <Navbar onOpenDiscuss={() => handleOpenDiscuss('not-sure')} />
 
-        {/* Main Page Flow (Feel-Good End-to-End Animation) */}
-        <main className="relative w-full">
-          {/* 2. Hero Section (Staggered Word Reveal, Ambient Blobs, Magnetic CTAs) */}
-          <HeroSection
-            onOpenDiscuss={() => handleOpenDiscuss('not-sure')}
-          />
+        {/* Animated Routed Pages */}
+        <AnimatedAppRoutes onOpenDiscuss={handleOpenDiscuss} />
 
-          {/* 4. Problem Statement (The hardest business problems don't fit inside one technology category) */}
-          <ProblemStatementSection />
-
-          {/* 5. Proposition (One partner from the decision to the delivery + 3 Value Pillars) */}
-          <PropositionSection />
-
-          {/* 6. Solution Areas (Five canonical solutions: CRM/ERP, Data, Cyber, IT/Cloud, AI) */}
-          <ServicesGrid
-            onSelectDiscipline={(area) => handleOpenDiscuss(area)}
-          />
-
-          {/* 7. Role Selector ("Start with your role" - 6 Executive roles) */}
-          <RoleSelectorSection
-            onSelectRole={(area) => handleOpenDiscuss(area)}
-          />
-
-          {/* 8. Capabilities (How we deliver - Strategy, Product, Growth, Talent) */}
-          <CapabilitiesSection
-            onSelectCapability={(area) => handleOpenDiscuss(area)}
-          />
-
-          {/* 9. Why Hitech (Why clients work with us - 4 differentiator reasons) */}
-          <WhyHitechSection />
-
-          {/* 10. How It Works (Engagement timeline: Discover, Frame, Deliver, Optimize) */}
-          <MethodologyShowcase />
-
-          {/* 11. Results & Testimonial (Section 12 Document-compliant verified metrics & quote placeholder) */}
-          <TestimonialsSection />
-
-          {/* 12. Industries (Across the industries we serve - 6 sectors) */}
-          <IndustriesSection
-            onOpenContact={() => handleOpenDiscuss('not-sure')}
-          />
-
-          {/* 13. Events & Insights (Executive Roundtable Seattle + 2 Latest Articles) */}
-          <RoundtableSection
-            onOpenDiscuss={(area) => handleOpenDiscuss(area)}
-          />
-
-          {/* 14. Final CTA Band (What are you trying to solve? + response commitment) */}
-          <CtaBanner
-            onOpenDiscuss={() => handleOpenDiscuss('not-sure')}
-          />
-        </main>
-
-        {/* 15. Minimal Footer (Kirkland WA Headquarters, Contact, Verified Links) */}
-        <Footer
-          onOpenDiscuss={() => handleOpenDiscuss('not-sure')}
-        />
+        {/* Minimal Footer */}
+        <Footer onOpenDiscuss={() => handleOpenDiscuss('not-sure')} />
 
         {/* Interactive Modals */}
         <DiscussChallengeModal
@@ -126,8 +105,8 @@ export function App() {
           presetHelpArea={selectedHelpArea}
         />
       </div>
+    </HashRouter>
   );
 }
 
 export default App;
-

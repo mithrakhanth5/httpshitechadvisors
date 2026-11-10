@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { MagneticButton } from '../ui/MagneticButton';
 import { gsap, animate3DTextReveal } from '../../lib/gsap';
 
@@ -114,12 +115,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
             <ArrowRight className="w-4 h-4" />
           </MagneticButton>
 
-          <a
-            href="#solutions"
+          <Link
+            to="/solutions"
             className="inline-flex items-center gap-2 text-sm font-semibold text-[#020626] hover:text-[#D22931] bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 py-4 px-7 rounded-xl transition-all duration-300 shadow-2xs hover:shadow-md cursor-pointer"
           >
             <span>Explore Our Solutions</span>
-          </a>
+          </Link>
         </div>
       </div>
     </section>

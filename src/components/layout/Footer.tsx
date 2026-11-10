@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { HitechLogo } from '../ui/HitechLogo';
 
 interface FooterProps {
@@ -13,7 +14,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           {/* Column 1: Brand & Contact Info */}
           <div className="lg:col-span-2 space-y-6">
-            <a href="#top" className="flex items-center gap-3 group text-decoration-none">
+            <Link to="/" className="flex items-center gap-3 group text-decoration-none">
               <HitechLogo className="w-10 h-10 group-hover:scale-105 transition-transform duration-300" />
               <div className="flex flex-col">
                 <span className="font-display font-bold text-lg leading-tight tracking-tight text-white group-hover:text-[#FAC344] transition-colors">
@@ -23,7 +24,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
                   Business &amp; Technology Solutions
                 </span>
               </div>
-            </a>
+            </Link>
 
             <p className="text-sm text-white/75 leading-relaxed max-w-sm">
               &ldquo;Meaningful problems deserve meaningful solutions.&rdquo; Clarity in the strategic decision, accountability through production delivery.
@@ -81,34 +82,34 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <a href="#solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="hover:text-white transition-colors">
                   AI Adoption &amp; Autonomous Agents
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="hover:text-white transition-colors">
                   Cloud Architecture &amp; Migration
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="hover:text-white transition-colors">
                   Cybersecurity &amp; Risk Governance
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="hover:text-white transition-colors">
                   Data &amp; Customer Intelligence
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="hover:text-white transition-colors">
                   ERP &amp; CRM Business Applications
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="hover:text-white transition-colors">
                   Product Modernization &amp; Engineering
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -120,34 +121,34 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <a href="#methodology" className="hover:text-white transition-colors">
+                <Link to="/methodology" className="hover:text-white transition-colors">
                   01. Strategic Diagnosis
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#methodology" className="hover:text-white transition-colors">
+                <Link to="/methodology" className="hover:text-white transition-colors">
                   02. Target Architecture
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#methodology" className="hover:text-white transition-colors">
+                <Link to="/methodology" className="hover:text-white transition-colors">
                   03. Hands-On Delivery
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#methodology" className="hover:text-white transition-colors">
+                <Link to="/methodology" className="hover:text-white transition-colors">
                   04. Operational Handover
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#capabilities" className="hover:text-white transition-colors">
+                <Link to="/capabilities" className="hover:text-white transition-colors">
                   Senior Embedded Practitioners
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#capabilities" className="hover:text-white transition-colors">
+                <Link to="/capabilities" className="hover:text-white transition-colors">
                   Zero Handoff Loss Doctrine
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -159,23 +160,23 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <a
-                  href="#roundtable"
+                <Link
+                  to="/events"
                   className="hover:text-white transition-colors text-left flex items-center gap-1 text-[#FAC344]"
                 >
                   <span>Seattle Executive Roundtable</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#roundtable" className="hover:text-white transition-colors">
+                <Link to="/events" className="hover:text-white transition-colors">
                   Perspectives &amp; Insights
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#results" className="hover:text-white transition-colors">
+                <Link to="/results" className="hover:text-white transition-colors">
                   Verified Client Case Studies
-                </a>
+                </Link>
               </li>
               <li>
                 <button
