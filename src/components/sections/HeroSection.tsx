@@ -122,31 +122,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
             <span>Explore Our Solutions</span>
           </Link>
         </div>
-
-        {/* Enterprise Trust Strip: Fills the gap with relevant high-value credentials */}
-        <div className="mt-12 pt-8 border-t border-[#DCE4EC] w-full max-w-4xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-6 sm:gap-8">
-            <div className="flex items-center gap-2">
-              <span className="font-display font-extrabold text-base sm:text-lg text-[#020626]">99.99%</span>
-              <span className="text-[11px] sm:text-xs text-[#556070] font-medium leading-tight text-left">Peak Uptime<br />Production</span>
-            </div>
-            <div className="h-6 w-px bg-[#DCE4EC]" />
-            <div className="flex items-center gap-2">
-              <span className="font-display font-extrabold text-base sm:text-lg text-[#020626]">5,000+</span>
-              <span className="text-[11px] sm:text-xs text-[#556070] font-medium leading-tight text-left">Migrated Safely<br />Zero Disruption</span>
-            </div>
-            <div className="h-6 w-px bg-[#DCE4EC]" />
-            <div className="flex items-center gap-2">
-              <span className="font-display font-extrabold text-base sm:text-lg text-[#D22931]">Zero</span>
-              <span className="text-[11px] sm:text-xs text-[#556070] font-medium leading-tight text-left">Handoff<br />Loss</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 bg-[#EBF2F7] px-3.5 py-1.5 rounded-full border border-[#DCE4EC] text-[11px] font-mono font-bold uppercase tracking-wider text-[#3A4A5A]">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Platform Neutral &middot; AWS, Azure, Snowflake, Salesforce</span>
-          </div>
-        </div>
       </div>
     </section>
   );
