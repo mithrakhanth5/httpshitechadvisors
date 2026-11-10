@@ -79,7 +79,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={style}
-      className={`relative group rounded-2xl will-change-transform transform-gpu [transform-style:preserve-3d] ${className}`}
+      className={`relative group rounded-2xl overflow-hidden will-change-transform transform-gpu ${className}`}
       {...props}
     >
       {/* Dynamic Specular Glare Reflection */}

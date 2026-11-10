@@ -3,7 +3,6 @@ import { Calendar, MapPin, Lock, ArrowRight, BookOpen, Clock } from 'lucide-reac
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { MagneticButton } from '../ui/MagneticButton';
 import { TiltCard } from '../ui/TiltCard';
-import { TextShimmer } from '../ui/TextShimmer';
 
 interface RoundtableSectionProps {
   onOpenDiscuss: (area?: string) => void;
@@ -17,6 +16,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
     if (!section) return;
 
     const ctx = gsap.context(() => {
+      // Header entrance with bi-directional scroll
       gsap.fromTo(
         section.querySelector('.roundtable-header'),
         { opacity: 0, y: 30 },
@@ -27,23 +27,27 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
 
+      // Cards entrance with bi-directional scroll
       gsap.fromTo(
         section.querySelectorAll('.roundtable-card'),
-        { opacity: 0, y: 35 },
+        { opacity: 0, y: 40, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
+          scale: 1,
           duration: 0.8,
           stagger: 0.15,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 80%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -65,7 +69,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
             <span>Executive Community &middot; Since **FIRST EVENT YEAR**</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Where technology leaders <TextShimmer>compare notes</TextShimmer>.
+            Where technology leaders <span className="text-[#D22931]">compare notes</span>.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             Since **FIRST EVENT YEAR**, our closed-door executive roundtables have brought Pacific Northwest CIOs, CTOs, and CISOs together to discuss real enterprise outcomes under Chatham House Rules.
@@ -77,7 +81,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
           {/* Featured Roundtable Event Card with 3D Tilt and Border Beam */}
           <div className="roundtable-card lg:col-span-7 h-full">
             <TiltCard
-              maxTilt={6}
+              maxTilt={5}
               scale={1.015}
               showBorderBeam={true}
               borderBeamDuration={12}
@@ -149,7 +153,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
             {/* Article 1 */}
             <div className="roundtable-card h-full">
               <TiltCard
-                maxTilt={6}
+                maxTilt={5}
                 scale={1.02}
                 spotlightColor="rgba(210, 41, 49, 0.08)"
                 borderColor="rgba(210, 41, 49, 0.4)"
@@ -185,7 +189,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
             {/* Article 2 */}
             <div className="roundtable-card h-full">
               <TiltCard
-                maxTilt={6}
+                maxTilt={5}
                 scale={1.02}
                 spotlightColor="rgba(210, 41, 49, 0.08)"
                 borderColor="rgba(210, 41, 49, 0.4)"

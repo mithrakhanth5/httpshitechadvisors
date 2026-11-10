@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 import { MagneticButton } from './MagneticButton';
-import { TextShimmer } from './TextShimmer';
 
 interface PageHeroProps {
   badge: string;
@@ -44,7 +43,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
           <span>{badge}</span>
         </motion.div>
 
-        {/* Display Headline with Stagger & Text Shimmer */}
+        {/* Display Headline with Stagger */}
         <motion.h1
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
@@ -53,9 +52,9 @@ export const PageHero: React.FC<PageHeroProps> = ({
         >
           {title}{' '}
           {highlightTitle && (
-            <TextShimmer className="text-[#D22931] font-display font-extrabold">
+            <span className="text-[#D22931] font-display font-extrabold inline-block">
               {highlightTitle}
-            </TextShimmer>
+            </span>
           )}
         </motion.h1>
 

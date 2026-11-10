@@ -3,7 +3,6 @@ import { ArrowRight, UserCheck, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { TiltCard } from '../ui/TiltCard';
-import { TextShimmer } from '../ui/TextShimmer';
 import { BorderBeam } from '../ui/BorderBeam';
 import { hitechContent } from '../../data/hitechContent';
 
@@ -25,7 +24,7 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
     const ctx = gsap.context(() => {
       gsap.fromTo(
         section.querySelector('.role-header'),
-        { opacity: 0, y: 25 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
@@ -33,23 +32,26 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
 
       gsap.fromTo(
         section.querySelectorAll('.role-card'),
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 35, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
+          scale: 1,
           duration: 0.8,
           stagger: 0.08,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section.querySelector('.roles-grid'),
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -70,7 +72,7 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
             <span>Executive Routing</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Solutions framed by <TextShimmer>mandate</TextShimmer>
+            Solutions framed by <span className="text-[#D22931]">mandate</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             {roleSelector.subhead}

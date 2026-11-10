@@ -3,7 +3,6 @@ import { ArrowUpRight, Quote, ShieldCheck, ShoppingCart, Server, CheckCircle2 } 
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { TiltCard } from '../ui/TiltCard';
 import { BorderBeam } from '../ui/BorderBeam';
-import { TextShimmer } from '../ui/TextShimmer';
 import { AnimatedCounter } from '../ui/AnimatedCounter';
 
 interface CaseStory {
@@ -74,10 +73,10 @@ export const TestimonialsSection: React.FC = () => {
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      // Header reveal
+      // Header reveal with bi-directional scroll
       gsap.fromTo(
         section.querySelector('.cases-header'),
-        { opacity: 0, y: 25 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
@@ -85,32 +84,35 @@ export const TestimonialsSection: React.FC = () => {
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
 
-      // Quantified Story Cards reveal
+      // Quantified Story Cards reveal with bi-directional scroll
       gsap.fromTo(
         section.querySelectorAll('.case-card'),
-        { opacity: 0, y: 35 },
+        { opacity: 0, y: 40, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
+          scale: 1,
           duration: 0.85,
           stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section.querySelector('.case-card'),
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
 
-      // Quote card reveal
+      // Quote card reveal with bi-directional scroll
       gsap.fromTo(
         section.querySelector('.testimonial-quote-box'),
-        { opacity: 0, scale: 0.98, y: 30 },
+        { opacity: 0, scale: 0.97, y: 35 },
         {
           opacity: 1,
           scale: 1,
@@ -119,7 +121,8 @@ export const TestimonialsSection: React.FC = () => {
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section.querySelector('.testimonial-quote-box'),
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -141,7 +144,7 @@ export const TestimonialsSection: React.FC = () => {
             <span>Client Impact</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Results our clients can <TextShimmer>measure</TextShimmer>
+            Results our clients can <span className="text-[#D22931]">measure</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             Real enterprise transformations delivered by senior practitioners — no theoretical frameworks, just operational proof.
@@ -153,7 +156,7 @@ export const TestimonialsSection: React.FC = () => {
           {CASE_STORIES.map((item, index) => (
             <div key={item.id} className="case-card h-full">
               <TiltCard
-                maxTilt={7}
+                maxTilt={6}
                 scale={1.02}
                 showBorderBeam={index === 0}
                 borderBeamDuration={9}

@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { Compass, Code2, TrendingUp, Users2, ArrowRight } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { TiltCard } from '../ui/TiltCard';
-import { TextShimmer } from '../ui/TextShimmer';
 import { hitechContent } from '../../data/hitechContent';
 
 interface CapabilitiesSectionProps {
@@ -20,7 +19,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
     const ctx = gsap.context(() => {
       gsap.fromTo(
         section.querySelector('.cap-header'),
-        { opacity: 0, y: 25 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
@@ -28,23 +27,26 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
 
       gsap.fromTo(
         section.querySelectorAll('.cap-card'),
-        { opacity: 0, y: 35 },
+        { opacity: 0, y: 40, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
+          scale: 1,
           duration: 0.85,
           stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section.querySelector('.cap-grid'),
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -72,7 +74,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
             <span>Delivery Engine</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            How we <TextShimmer>deliver</TextShimmer>
+            How we <span className="text-[#D22931]">deliver</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             {capabilities.subhead}
@@ -84,7 +86,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
           {capabilities.cards.map((cap, idx) => (
             <div key={cap.title} className="cap-card h-full">
               <TiltCard
-                maxTilt={8}
+                maxTilt={6}
                 scale={1.02}
                 showBorderBeam={idx === 1} // Engineering & Architecture gets dynamic beam
                 borderBeamDuration={10}

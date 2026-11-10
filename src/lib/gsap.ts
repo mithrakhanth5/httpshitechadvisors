@@ -13,6 +13,15 @@ export const EDITORIAL_EASE = 'power3.out';
 export const SMOOTH_SPRING_EASE = 'expo.out';
 
 /**
+ * Continuous bi-directional scroll entrance config (plays on scroll down and re-engages on scroll up)
+ */
+export const BIDIRECTIONAL_SCROLL_CONFIG = {
+  start: 'top 88%',
+  end: 'bottom 12%',
+  toggleActions: 'play reverse play reverse',
+};
+
+/**
  * High-end 3D kinetic text reveal: words rotate and rise with power4 deceleration
  */
 export function animate3DTextReveal(
@@ -45,46 +54,7 @@ export function animate3DTextReveal(
       scrollTrigger: trigger
         ? {
             trigger,
-            start: 'top 85%',
-            once: true,
-          }
-        : undefined,
-    }
-  );
-}
-
-/**
- * Creates a masked text reveal animation on an element when scrolled into view
- */
-export function animateMaskedText(
-  targets: gsap.DOMTarget,
-  options: {
-    delay?: number;
-    duration?: number;
-    stagger?: number;
-    trigger?: gsap.DOMTarget;
-  } = {}
-) {
-  const { delay = 0, duration = 0.8, stagger = 0.08, trigger } = options;
-
-  return gsap.fromTo(
-    targets,
-    {
-      yPercent: 110,
-      opacity: 0,
-    },
-    {
-      yPercent: 0,
-      opacity: 1,
-      duration,
-      delay,
-      stagger,
-      ease: EDITORIAL_EASE,
-      scrollTrigger: trigger
-        ? {
-            trigger,
-            start: 'top 85%',
-            once: true,
+            ...BIDIRECTIONAL_SCROLL_CONFIG,
           }
         : undefined,
     }
@@ -104,17 +74,19 @@ export function animateFadeUp(
     stagger?: number;
   } = {}
 ) {
-  const { delay = 0, duration = 0.7, y = 24, trigger, stagger = 0.08 } = options;
+  const { delay = 0, duration = 0.75, y = 28, trigger, stagger = 0.08 } = options;
 
   return gsap.fromTo(
     targets,
     {
       opacity: 0,
       y,
+      scale: 0.98,
     },
     {
       opacity: 1,
       y: 0,
+      scale: 1,
       duration,
       delay,
       stagger,
@@ -122,7 +94,7 @@ export function animateFadeUp(
       scrollTrigger: trigger
         ? {
             trigger,
-            start: 'top 85%',
+            ...BIDIRECTIONAL_SCROLL_CONFIG,
           }
         : undefined,
     }
@@ -130,7 +102,7 @@ export function animateFadeUp(
 }
 
 /**
- * Rolling odometer counter animation for metrics
+ * Rolling odometer counter animation for metrics with bi-directional replay
  */
 export function animateCounterRoll(
   target: HTMLElement,
@@ -153,8 +125,8 @@ export function animateCounterRoll(
     scrollTrigger: trigger
       ? {
           trigger,
-          start: 'top 85%',
-          once: true,
+          start: 'top 88%',
+          toggleActions: 'restart none none reverse',
         }
       : undefined,
     onUpdate: () => {

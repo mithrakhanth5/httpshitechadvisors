@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { LaserCircuit } from '../ui/LaserCircuit';
 import { BorderBeam } from '../ui/BorderBeam';
-import { TextShimmer } from '../ui/TextShimmer';
 
 interface Step {
   step: string;
@@ -64,10 +63,10 @@ export const MethodologyShowcase: React.FC = () => {
     if (!container) return;
 
     const ctx = gsap.context(() => {
-      // Header entrance
+      // Header entrance with bi-directional scroll
       gsap.fromTo(
         container.querySelectorAll('.methodology-header-anim'),
-        { opacity: 0, y: 24 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
@@ -76,8 +75,8 @@ export const MethodologyShowcase: React.FC = () => {
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: container,
-            start: 'top 80%',
-            once: true,
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -102,7 +101,7 @@ export const MethodologyShowcase: React.FC = () => {
             How We Work &middot; Delivery Methodology
           </div>
           <h2 className="methodology-header-anim font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#020626] tracking-tight leading-tight">
-            Accountable delivery from <TextShimmer>diagnosis to go-live</TextShimmer>.
+            Accountable delivery from <span className="text-[#D22931]">diagnosis to go-live</span>.
           </h2>
           <p className="methodology-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
             Our senior partners stay on the work. We combine strategic decision-making with hands-on systems engineering, ensuring zero handoff loss throughout the engagement lifecycle.

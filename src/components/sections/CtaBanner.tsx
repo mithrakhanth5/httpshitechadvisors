@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { MagneticButton } from '../ui/MagneticButton';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { CardSpotlight } from '../ui/CardSpotlight';
@@ -20,15 +19,17 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         banner.querySelector('.cta-inner'),
-        { opacity: 0, y: 35 },
+        { opacity: 0, y: 40, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
+          scale: 1,
           duration: 0.9,
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: banner,
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -40,6 +41,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
   return (
     <section
       ref={bannerRef}
+      id="cta"
       className="relative py-24 sm:py-32 bg-white overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
@@ -48,7 +50,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
           borderColor="rgba(250, 195, 68, 0.4)"
           className="cta-inner relative rounded-3xl bg-gradient-to-br from-[#020626] via-[#040C38] to-[#020626] text-white p-10 sm:p-16 lg:p-20 overflow-hidden shadow-2xl border border-white/10 text-center flex flex-col items-center"
         >
-          {/* Magic UI Border Beam */}
+          {/* Border Beam */}
           <BorderBeam size={280} duration={14} colorFrom="#D22931" colorTo="#FAC344" />
 
           {/* Cyber Grid Background */}
@@ -85,12 +87,16 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
               <ArrowRight className="w-4 h-4" />
             </MagneticButton>
 
-            <Link
-              to="/solutions"
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-sm font-semibold text-white/90 hover:text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all duration-300 hover:scale-105"
+            <a
+              href="#solutions"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="inline-flex items-center gap-2 px-7 py-4 rounded-xl text-sm font-semibold text-white/90 hover:text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all duration-300 hover:scale-105 cursor-pointer"
             >
               <span>Explore All Solutions</span>
-            </Link>
+            </a>
           </div>
         </CardSpotlight>
       </div>

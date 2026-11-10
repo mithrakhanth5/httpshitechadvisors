@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2 } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { TiltCard } from '../ui/TiltCard';
-import { TextShimmer } from '../ui/TextShimmer';
 
 interface ServicesGridProps {
   onSelectDiscipline: (key: string) => void;
@@ -70,10 +69,10 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      // Header entrance
+      // Header entrance with bi-directional scroll
       gsap.fromTo(
         section.querySelectorAll('.services-header-anim'),
-        { opacity: 0, y: 24 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
@@ -82,26 +81,27 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
-            start: 'top 82%',
-            once: true,
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
 
-      // Staggered card grid reveal
+      // Staggered card grid reveal with bi-directional scroll
       gsap.fromTo(
         section.querySelectorAll('.service-card-anim'),
-        { opacity: 0, y: 35 },
+        { opacity: 0, y: 40, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
+          scale: 1,
           duration: 0.85,
           stagger: 0.1,
-          ease: EDITORIAL_EASE,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: section.querySelector('.services-grid'),
-            start: 'top 82%',
-            once: true,
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -123,7 +123,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
             <span>Solution Areas</span>
           </div>
           <h2 className="services-header-anim font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            What we <TextShimmer>solve</TextShimmer>
+            What we <span className="text-[#D22931]">solve</span>
           </h2>
           <p className="services-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
             Five areas where business and technology meet. Most engagements touch more than one.
@@ -139,7 +139,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
             >
               <TiltCard
                 onClick={() => onSelectDiscipline(service.id)}
-                maxTilt={7}
+                maxTilt={6}
                 scale={1.02}
                 showBorderBeam={service.featured}
                 borderBeamDuration={10}

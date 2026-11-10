@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
 import { TiltCard } from '../ui/TiltCard';
-import { TextShimmer } from '../ui/TextShimmer';
 
 export const PropositionSection: React.FC = () => {
   const { proposition } = hitechContent;
@@ -25,23 +23,26 @@ export const PropositionSection: React.FC = () => {
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
 
       gsap.fromTo(
         section.querySelectorAll('.pillar-card'),
-        { opacity: 0, x: 30 },
+        { opacity: 0, x: 30, scale: 0.98 },
         {
           opacity: 1,
           x: 0,
+          scale: 1,
           duration: 0.85,
-          stagger: 0.15,
+          stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section.querySelector('.prop-pillars'),
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -70,19 +71,23 @@ export const PropositionSection: React.FC = () => {
               <span>The Hitech Model</span>
             </div>
             <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-              <TextShimmer>{proposition.headline}</TextShimmer>
+              {proposition.headline}
             </h2>
             <p className="text-base sm:text-lg text-[#556070] leading-relaxed">
               {proposition.body}
             </p>
             <div className="pt-2">
-              <Link
-                to="/methodology"
+              <a
+                href="#methodology"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('methodology')?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className="inline-flex items-center gap-2 font-display font-bold text-sm text-[#020626] hover:text-[#D22931] transition-colors group cursor-pointer"
               >
                 <span>See how an engagement works</span>
                 <ArrowRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </a>
             </div>
           </div>
 

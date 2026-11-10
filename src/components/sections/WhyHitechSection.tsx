@@ -3,7 +3,6 @@ import { Scale, Rocket, Award, Network } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
 import { TiltCard } from '../ui/TiltCard';
-import { TextShimmer } from '../ui/TextShimmer';
 
 export const WhyHitechSection: React.FC = () => {
   const { whyHitech } = hitechContent;
@@ -16,7 +15,7 @@ export const WhyHitechSection: React.FC = () => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         section.querySelector('.why-header'),
-        { opacity: 0, y: 25 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
@@ -24,23 +23,26 @@ export const WhyHitechSection: React.FC = () => {
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
 
       gsap.fromTo(
         section.querySelectorAll('.why-card'),
-        { opacity: 0, y: 35 },
+        { opacity: 0, y: 35, scale: 0.98 },
         {
           opacity: 1,
           y: 0,
+          scale: 1,
           duration: 0.85,
           stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section.querySelector('.why-grid'),
-            start: 'top 85%',
+            start: 'top 88%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );
@@ -68,7 +70,7 @@ export const WhyHitechSection: React.FC = () => {
             <span>Differentiation</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            <TextShimmer>{whyHitech.headline}</TextShimmer>
+            {whyHitech.headline}
           </h2>
         </div>
 
@@ -76,7 +78,7 @@ export const WhyHitechSection: React.FC = () => {
           {whyHitech.reasons.map((item, idx) => (
             <div key={item.title} className="why-card h-full">
               <TiltCard
-                maxTilt={7}
+                maxTilt={6}
                 scale={1.02}
                 showBorderBeam={idx === 1}
                 borderBeamDuration={10}

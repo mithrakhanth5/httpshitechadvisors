@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { MagneticButton } from '../ui/MagneticButton';
 import { HitechLogo } from '../ui/HitechLogo';
@@ -14,8 +14,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('Home');
   const navRef = useRef<HTMLElement | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const isHome = location.pathname === '/';
+
+  const navLinks = [
+    { label: 'Home', path: '/', sectionId: 'top' },
+    { label: 'Solutions', path: '/solutions', sectionId: 'solutions' },
+    { label: 'Role Focus', path: '/role-focus', sectionId: 'role-selector' },
+    { label: 'Capabilities', path: '/capabilities', sectionId: 'capabilities' },
+    { label: 'Methodology', path: '/methodology', sectionId: 'methodology' },
+    { label: 'Results', path: '/results', sectionId: 'results' },
+    { label: 'Industries', path: '/industries', sectionId: 'industries' },
+    { label: 'Events & Insights', path: '/events', sectionId: 'roundtable' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,10 +39,33 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
       if (totalScroll > 0) {
         setScrollProgress((window.scrollY / totalScroll) * 100);
       }
+
+      // If on Home page, dynamically determine which section is currently active
+      if (isHome) {
+        const sections = [
+          { label: 'Home', id: 'top' },
+          { label: 'Solutions', id: 'solutions' },
+          { label: 'Role Focus', id: 'role-selector' },
+          { label: 'Capabilities', id: 'capabilities' },
+          { label: 'Methodology', id: 'methodology' },
+          { label: 'Results', id: 'results' },
+          { label: 'Industries', id: 'industries' },
+          { label: 'Events & Insights', id: 'roundtable' },
+        ];
+
+        const scrollPos = window.scrollY + 200;
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const el = document.getElementById(sections[i].id);
+          if (el && el.offsetTop <= scrollPos) {
+            setActiveSection(sections[i].label);
+            break;
+          }
+        }
+      }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Initial gentle fade-in on load
     if (navRef.current) {
       gsap.fromTo(
         navRef.current,
@@ -37,18 +75,32 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
     }
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHome]);
 
-  const navLinks = [
-    { label: 'Home', path: '/' },
-    { label: 'Solutions', path: '/solutions' },
-    { label: 'Role Focus', path: '/role-focus' },
-    { label: 'Capabilities', path: '/capabilities' },
-    { label: 'Methodology', path: '/methodology' },
-    { label: 'Results', path: '/results' },
-    { label: 'Industries', path: '/industries' },
-    { label: 'Events & Insights', path: '/events' },
-  ];
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    link: { label: string; path: string; sectionId: string }
+  ) => {
+    if (isHome) {
+      e.preventDefault();
+      const el = document.getElementById(link.sectionId);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+        setActiveSection(link.label);
+      } else if (link.sectionId === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveSection('Home');
+      }
+    } else {
+      // If on dedicated page and clicking Home, go to home
+      if (link.path === '/') {
+        navigate('/');
+      } else {
+        navigate(link.path);
+      }
+    }
+  };
 
   return (
     <header
@@ -71,6 +123,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
         {/* Brand Logo Monogram */}
         <Link
           to="/"
+          onClick={(e) => {
+            if (isHome) {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setActiveSection('Home');
+            }
+          }}
           className="flex items-center gap-2.5 group text-decoration-none"
           aria-label="Hitech Advisors — Home"
         >
@@ -83,24 +142,28 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
         {/* Desktop Nav Links with Synchronized Red Locked Indicator */}
         <nav className="hidden lg:flex items-center gap-6 xl:gap-7" aria-label="Primary Navigation">
           {navLinks.map((link) => {
-            const isActive = location.pathname === link.path;
+            const isTabActive = isHome
+              ? activeSection === link.label
+              : location.pathname === link.path;
+
             return (
-              <Link
+              <a
                 key={link.label}
-                to={link.path}
-                className={`text-sm font-medium transition-colors relative py-2 px-1 ${
-                  isActive ? 'text-[#020626] font-bold' : 'text-[#3A4A5A] hover:text-[#D22931]'
+                href={isHome ? `#${link.sectionId}` : `/#${link.path}`}
+                onClick={(e) => handleNavClick(e, link)}
+                className={`text-sm font-medium transition-colors relative py-2 px-1 cursor-pointer ${
+                  isTabActive ? 'text-[#020626] font-bold' : 'text-[#3A4A5A] hover:text-[#D22931]'
                 }`}
               >
                 <span>{link.label}</span>
-                {isActive && (
+                {isTabActive && (
                   <motion.div
                     layoutId="nav-red-locked-indicator"
                     className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#D22931] rounded-full shadow-[0_2px_8px_rgba(210,41,49,0.5)]"
                     transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                   />
                 )}
-              </Link>
+              </a>
             );
           })}
         </nav>
@@ -110,7 +173,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
           <MagneticButton
             variant="primary"
             onClick={onOpenDiscuss}
-            className="text-xs font-bold uppercase tracking-wider !py-2.5 !px-5"
+            className="text-xs font-bold uppercase tracking-wider !py-2.5 !px-5 shadow-sm hover:shadow-md"
           >
             <span>Discuss a Challenge</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -132,21 +195,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
         <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-[#DCE4EC] px-6 py-6 space-y-4 shadow-xl animate-in slide-in-from-top-4 duration-300">
           <nav className="flex flex-col space-y-2">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
+              const isTabActive = isHome
+                ? activeSection === link.label
+                : location.pathname === link.path;
+
               return (
-                <Link
+                <a
                   key={link.label}
-                  to={link.path}
-                  onClick={() => setIsMobileOpen(false)}
-                  className={`text-base font-semibold transition-colors py-2 px-3 rounded-xl flex items-center justify-between ${
-                    isActive
+                  href={isHome ? `#${link.sectionId}` : `/#${link.path}`}
+                  onClick={(e) => {
+                    setIsMobileOpen(false);
+                    handleNavClick(e, link);
+                  }}
+                  className={`text-base font-semibold transition-colors py-2 px-3 rounded-xl flex items-center justify-between cursor-pointer ${
+                    isTabActive
                       ? 'bg-[#D22931]/10 text-[#D22931] border-l-4 border-[#D22931]'
                       : 'text-[#020626] hover:text-[#D22931] hover:bg-[#EBF2F7]'
                   }`}
                 >
                   <span>{link.label}</span>
-                  {isActive && <span className="w-2 h-2 rounded-full bg-[#D22931]" />}
-                </Link>
+                  {isTabActive && <span className="w-2 h-2 rounded-full bg-[#D22931]" />}
+                </a>
               );
             })}
           </nav>
