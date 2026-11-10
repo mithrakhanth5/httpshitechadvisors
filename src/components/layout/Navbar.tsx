@@ -55,8 +55,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/92 backdrop-blur-md shadow-sm border-b border-[#DCE4EC]'
-          : 'bg-white/85 backdrop-blur-sm'
+          ? 'bg-white/92 backdrop-blur-md shadow-sm border-b border-[#DCE4EC] py-3.5'
+          : 'bg-white/85 backdrop-blur-sm py-5'
       }`}
     >
       {/* Interactive Global Scroll Reading Progress Bar */}
@@ -67,27 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
         />
       </div>
 
-      {/* Top Announcement Bar per Section 8.1 (Only when event is upcoming) */}
-      {!isScrolled && (
-        <div className="w-full bg-[#020626] text-white text-xs py-2 px-6 border-b border-white/10 hidden md:flex items-center justify-between transition-all duration-300">
-          <div className="flex items-center gap-2.5 mx-auto">
-            <span className="font-semibold text-[#FAC344] uppercase tracking-wider text-[10px] bg-white/10 px-2.5 py-0.5 rounded-full">
-              Executive Event
-            </span>
-            <span className="text-white/85">
-              Executive Roundtable: Production AI &amp; Governance in the Enterprise &mdash; Seattle, WA &middot; Spring 2026.
-            </span>
-            <button
-              onClick={onOpenDiscuss}
-              className="text-[#FAC344] hover:text-white font-semibold underline underline-offset-2 ml-1 cursor-pointer transition-colors"
-            >
-              Request an invitation &rarr;
-            </button>
-          </div>
-        </div>
-      )}
-
-      <div className="w-full px-6 sm:px-10 lg:px-12 flex items-center justify-between py-3.5">
+      <div className="w-full px-6 sm:px-10 lg:px-12 flex items-center justify-between">
         {/* Brand Logo Monogram */}
         <Link
           to="/"
