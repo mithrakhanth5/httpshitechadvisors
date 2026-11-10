@@ -17,7 +17,7 @@ export const NextPageBanner: React.FC<NextPageBannerProps> = ({
   description,
 }) => {
   return (
-    <div className="py-16 bg-[#EBF2F7] border-t border-[#DCE4EC]">
+    <div className="py-10 sm:py-12 bg-[#EBF2F7] border-t border-[#DCE4EC]">
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         <Link to={nextPath} className="group block">
           <TiltCard
@@ -27,7 +27,7 @@ export const NextPageBanner: React.FC<NextPageBannerProps> = ({
             borderBeamDuration={10}
             spotlightColor="rgba(210, 41, 49, 0.08)"
             borderColor="rgba(210, 41, 49, 0.45)"
-            className="p-8 sm:p-12 rounded-3xl bg-white border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-sm hover:shadow-2xl transition-all duration-300 relative overflow-hidden"
+            className="p-6 sm:p-8 rounded-3xl bg-white border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-sm hover:shadow-2xl transition-all duration-300 relative overflow-hidden"
           >
             {/* Ambient red highlight glow on hover */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-[#D22931]/8 to-transparent rounded-full blur-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

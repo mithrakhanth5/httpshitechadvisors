@@ -135,11 +135,11 @@ export const TestimonialsSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="results"
-      className="relative py-24 sm:py-32 bg-white overflow-hidden"
+      className="relative py-14 sm:py-18 bg-white overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="cases-header max-w-3xl mb-16">
+        <div className="cases-header max-w-3xl mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
             <span>Client Impact</span>
           </div>

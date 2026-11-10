@@ -21,7 +21,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
   ctaText = 'Discuss a Challenge',
 }) => {
   return (
-    <section className="relative pt-36 pb-16 sm:pb-20 bg-white border-b border-[#DCE4EC] overflow-hidden">
+    <section className="relative pt-32 pb-12 sm:pb-14 bg-white border-b border-[#DCE4EC] overflow-hidden">
       {/* Subtle Static Cyber Grid Background Overlay */}
       <div className="absolute inset-0 bg-cyber-grid opacity-35 pointer-events-none" />
 

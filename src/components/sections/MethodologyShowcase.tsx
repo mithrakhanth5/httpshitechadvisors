@@ -91,7 +91,7 @@ export const MethodologyShowcase: React.FC = () => {
     <section
       ref={containerRef}
       id="methodology"
-      className="py-28 bg-[#EBF2F7] border-t border-[#DCE4EC] relative overflow-hidden"
+      className="py-14 sm:py-18 bg-[#EBF2F7] border-t border-[#DCE4EC] relative overflow-hidden"
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Header */}

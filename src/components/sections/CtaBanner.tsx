@@ -43,13 +43,13 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
     <section
       ref={bannerRef}
       id="cta"
-      className="relative py-24 sm:py-32 bg-white overflow-hidden"
+      className="relative py-14 sm:py-18 bg-white overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         <CardSpotlight
           spotlightColor="rgba(210, 41, 49, 0.15)"
           borderColor="rgba(250, 195, 68, 0.4)"
-          className="cta-inner relative rounded-3xl bg-gradient-to-br from-[#020626] via-[#040C38] to-[#020626] text-white p-10 sm:p-16 lg:p-20 overflow-hidden shadow-2xl border border-white/10 text-center flex flex-col items-center"
+          className="cta-inner relative rounded-3xl bg-gradient-to-br from-[#020626] via-[#040C38] to-[#020626] text-white p-8 sm:p-12 lg:p-16 overflow-hidden shadow-2xl border border-white/10 text-center flex flex-col items-center"
         >
           {/* Border Beam */}
           <BorderBeam size={280} duration={14} colorFrom="#D22931" colorTo="#FAC344" />

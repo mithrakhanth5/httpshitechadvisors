@@ -62,7 +62,7 @@ export const PropositionSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="proposition"
-      className="relative py-24 sm:py-32 bg-white overflow-hidden"
+      className="relative py-14 sm:py-18 bg-white overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">

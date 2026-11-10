@@ -60,11 +60,11 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
     <section
       ref={sectionRef}
       id="roundtable"
-      className="relative py-24 sm:py-32 bg-[#EBF2F7] border-t border-[#DCE4EC] overflow-hidden"
+      className="relative py-14 sm:py-18 bg-[#EBF2F7] border-t border-[#DCE4EC] overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="roundtable-header max-w-3xl mb-16">
+        <div className="roundtable-header max-w-3xl mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
             <span>Executive Community &middot; Since **FIRST EVENT YEAR**</span>
           </div>

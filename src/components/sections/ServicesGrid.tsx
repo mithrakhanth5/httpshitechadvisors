@@ -114,11 +114,11 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
     <section
       ref={sectionRef}
       id="solutions"
-      className="py-28 bg-white relative overflow-hidden"
+      className="py-14 sm:py-18 bg-white relative overflow-hidden"
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
+        <div className="max-w-3xl mb-10 sm:mb-12">
           <div className="services-header-anim inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
             <span>Solution Areas</span>
           </div>

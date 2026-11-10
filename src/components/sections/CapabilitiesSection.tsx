@@ -66,10 +66,10 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
     <section
       ref={sectionRef}
       id="capabilities"
-      className="relative py-24 sm:py-32 bg-white border-t border-[#DCE4EC] overflow-hidden"
+      className="relative py-14 sm:py-18 bg-white border-t border-[#DCE4EC] overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
-        <div className="cap-header max-w-3xl mb-16">
+        <div className="cap-header max-w-3xl mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
             <span>Delivery Engine</span>
           </div>

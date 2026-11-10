@@ -64,10 +64,10 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
     <section
       ref={sectionRef}
       id="role-selector"
-      className="relative py-24 sm:py-32 bg-[#EBF2F7] border-t border-[#DCE4EC] overflow-hidden"
+      className="relative py-14 sm:py-18 bg-[#EBF2F7] border-t border-[#DCE4EC] overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
-        <div className="role-header max-w-3xl mb-16">
+        <div className="role-header max-w-3xl mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
             <span>Executive Routing</span>
           </div>
