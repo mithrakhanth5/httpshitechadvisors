@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, UserCheck, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, UserCheck, Sparkles } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { CardSpotlight } from '../ui/CardSpotlight';
 import { hitechContent } from '../../data/hitechContent';
 
 interface RoleSelectorSectionProps {
@@ -80,44 +81,64 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
             return (
               <div
                 key={item.role}
-                onClick={() => setActiveRoleIndex(index)}
-                className={`role-card card-hover-feelgood p-7 rounded-2xl text-left transition-all duration-300 border border-[#DCE4EC] hover:border-[#D22931] cursor-pointer flex flex-col justify-between bg-white ${
-                  isSelected ? 'shadow-md' : 'shadow-2xs'
-                }`}
+                className="role-card h-full"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#556070]">
-                      Role
-                    </span>
-                    <UserCheck className="w-4 h-4 text-[#020626] group-hover:text-[#D22931] transition-colors" />
+                <CardSpotlight
+                  onClick={() => setActiveRoleIndex(index)}
+                  spotlightColor={isSelected ? "rgba(210, 41, 49, 0.12)" : "rgba(2, 6, 38, 0.05)"}
+                  borderColor={isSelected ? "rgba(210, 41, 49, 0.6)" : "rgba(210, 41, 49, 0.3)"}
+                  className={`p-7 rounded-2xl text-left transition-all duration-300 border cursor-pointer flex flex-col justify-between bg-white h-full ${
+                    isSelected
+                      ? 'border-[#D22931] shadow-lg ring-2 ring-[#D22931]/15 -translate-y-1'
+                      : 'border-[#DCE4EC] hover:border-[#D22931]/50 shadow-2xs hover:shadow-md hover:-translate-y-0.5'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
+                        isSelected ? 'bg-[#D22931]/10 text-[#D22931]' : 'bg-[#EBF2F7] text-[#556070]'
+                      }`}>
+                        {isSelected ? 'Active Selection' : 'Executive Role'}
+                      </span>
+                      <UserCheck className={`w-4 h-4 transition-colors ${
+                        isSelected ? 'text-[#D22931]' : 'text-[#020626]'
+                      }`} />
+                    </div>
+                    <h3 className={`font-display font-bold text-xl mb-2 leading-snug transition-colors ${
+                      isSelected ? 'text-[#D22931]' : 'text-[#020626]'
+                    }`}>
+                      {item.role}
+                    </h3>
+                    <p className="text-sm text-[#556070] leading-relaxed">
+                      {item.focus}
+                    </p>
                   </div>
-                  <h3 className="font-display font-bold text-xl text-[#020626] mb-2 leading-snug group-hover:text-[#D22931] transition-colors">
-                    {item.role}
-                  </h3>
-                  <p className="text-sm text-[#556070] leading-relaxed">
-                    {item.focus}
-                  </p>
-                </div>
 
-                <div className="mt-6 pt-4 border-t border-[#DCE4EC] flex items-center justify-between text-xs">
-                  <span className="font-medium text-[#556070]">
-                    Links to <strong className="text-[#020626]">{item.linksTo}</strong>
-                  </span>
-                  <span className="font-bold text-[#020626] group-hover:text-[#D22931] transition-colors">
-                    {isSelected ? 'Active Focus' : 'Select →'}
-                  </span>
-                </div>
+                  <div className="mt-6 pt-4 border-t border-[#DCE4EC] flex items-center justify-between text-xs">
+                    <span className="font-medium text-[#556070]">
+                      Links to <strong className="text-[#020626]">{item.linksTo}</strong>
+                    </span>
+                    <span className={`font-bold transition-all flex items-center gap-1 ${
+                      isSelected ? 'text-[#D22931]' : 'text-[#020626] group-hover:text-[#D22931]'
+                    }`}>
+                      {isSelected ? 'Focused ✓' : 'Select →'}
+                    </span>
+                  </div>
+                </CardSpotlight>
               </div>
             );
           })}
         </div>
 
-        {/* Selected Role Action Banner */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-[#020626] text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-8 shadow-xl border border-white/10">
-          <div className="space-y-2 max-w-2xl">
+        {/* Selected Role Action Banner with Reactive Motion Glow */}
+        <div className="relative p-8 sm:p-10 rounded-3xl bg-[#020626] text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-8 shadow-2xl border border-white/10 overflow-hidden">
+          {/* Subtle Cyber Grid */}
+          <div className="absolute inset-0 bg-cyber-grid-dark opacity-20 pointer-events-none" />
+          <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-[#D22931]/20 blur-[80px] pointer-events-none" />
+
+          <div className="relative z-10 space-y-2 max-w-2xl">
             <div className="text-xs font-bold text-[#FAC344] uppercase tracking-widest flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#FAC344]" />
+              <Sparkles className="w-4 h-4 text-[#FAC344]" />
               <span>Priority Focus for {activeRole.role}</span>
             </div>
             <h4 className="font-display font-bold text-2xl text-white">
@@ -130,7 +151,7 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
 
           <button
             onClick={() => onSelectRole(activeRole.helpArea)}
-            className="w-full sm:w-auto px-7 py-4 rounded-xl bg-[#D22931] hover:bg-[#b52027] text-white font-display font-bold text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer"
+            className="relative z-10 w-full sm:w-auto px-7 py-4 rounded-xl bg-[#D22931] hover:bg-[#b52027] text-white font-display font-bold text-sm tracking-wide transition-all shadow-md hover:shadow-xl flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer hover:scale-105 active:scale-95 duration-200"
           >
             <span>Discuss This Focus Area</span>
             <ArrowRight className="w-4 h-4" />

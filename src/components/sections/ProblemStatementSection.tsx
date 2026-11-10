@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { FileSpreadsheet, Bot, ShieldAlert } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
+import { CardSpotlight } from '../ui/CardSpotlight';
 
 export const ProblemStatementSection: React.FC = () => {
   const { problemStatement } = hitechContent;
@@ -71,9 +72,11 @@ export const ProblemStatementSection: React.FC = () => {
 
         <div className="problem-cards-grid grid grid-cols-1 md:grid-cols-3 gap-8">
           {problemStatement.cards.map((card, index) => (
-            <div
+            <CardSpotlight
               key={card.id}
-              className="problem-card card-hover-feelgood p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931] shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
+              spotlightColor="rgba(210, 41, 49, 0.08)"
+              borderColor="rgba(210, 41, 49, 0.45)"
+              className="problem-card p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931] shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#EBF2F7] transition-all duration-300">
@@ -86,7 +89,7 @@ export const ProblemStatementSection: React.FC = () => {
               <p className="text-sm text-[#556070] leading-relaxed pt-5 border-t border-[#DCE4EC]">
                 {card.body}
               </p>
-            </div>
+            </CardSpotlight>
           ))}
         </div>
       </div>

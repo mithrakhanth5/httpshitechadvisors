@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Compass, Code2, TrendingUp, Users2, ArrowRight } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { CardSpotlight } from '../ui/CardSpotlight';
 import { hitechContent } from '../../data/hitechContent';
 
 interface CapabilitiesSectionProps {
@@ -82,29 +83,35 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
           {capabilities.cards.map((cap, idx) => (
             <div
               key={cap.title}
-              className="cap-card card-hover-feelgood p-8 rounded-2xl border border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931] hover:bg-white shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
+              className="cap-card h-full"
             >
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#EBF2F7] transition-all duration-300 shadow-2xs">
-                  {capIcons[idx]}
+              <CardSpotlight
+                spotlightColor="rgba(210, 41, 49, 0.08)"
+                borderColor="rgba(210, 41, 49, 0.45)"
+                className="p-8 rounded-2xl border border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931]/60 hover:bg-white shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group h-full hover:-translate-y-1"
+              >
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#EBF2F7] transition-all duration-300 shadow-2xs">
+                    {capIcons[idx]}
+                  </div>
+                  <h3 className="font-display font-bold text-xl text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
+                    {cap.title}
+                  </h3>
+                  <p className="text-sm text-[#556070] leading-relaxed">
+                    {cap.line}
+                  </p>
                 </div>
-                <h3 className="font-display font-bold text-xl text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
-                  {cap.title}
-                </h3>
-                <p className="text-sm text-[#556070] leading-relaxed">
-                  {cap.line}
-                </p>
-              </div>
 
-              <div className="pt-6 mt-6 border-t border-[#DCE4EC]">
-                <button
-                  onClick={() => onSelectCapability(cap.helpArea)}
-                  className="inline-flex items-center justify-between w-full font-display font-bold text-xs uppercase tracking-wider text-[#020626] group-hover:text-[#D22931] transition-colors cursor-pointer"
-                >
-                  <span>Explore capability</span>
-                  <ArrowRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-1 transition-transform" />
-                </button>
-              </div>
+                <div className="pt-6 mt-6 border-t border-[#DCE4EC]">
+                  <button
+                    onClick={() => onSelectCapability(cap.helpArea)}
+                    className="inline-flex items-center justify-between w-full font-display font-bold text-xs uppercase tracking-wider text-[#020626] group-hover:text-[#D22931] transition-colors cursor-pointer"
+                  >
+                    <span>Explore capability</span>
+                    <ArrowRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              </CardSpotlight>
             </div>
           ))}
         </div>

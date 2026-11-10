@@ -1,10 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { gsap, EDITORIAL_EASE, animateCounterRoll } from '../../lib/gsap';
 import { ArrowUpRight, Quote, ShieldCheck, ShoppingCart, Server, CheckCircle2 } from 'lucide-react';
+import { CardSpotlight } from '../ui/CardSpotlight';
 
 interface CaseStory {
   id: string;
   stat: string;
+  rawNum: number;
+  decimals: number;
+  suffix: string;
   metric: string;
   title: string;
   industry: string;
@@ -18,6 +22,9 @@ const CASE_STORIES: CaseStory[] = [
   {
     id: 'retail',
     stat: '99.99%',
+    rawNum: 99.99,
+    decimals: 2,
+    suffix: '%',
     metric: 'Uptime at Peak',
     title: 'Keeping a high-volume retailer online through flash-sale traffic',
     industry: 'Retail & E-commerce',
@@ -29,6 +36,9 @@ const CASE_STORIES: CaseStory[] = [
   {
     id: 'divestiture',
     stat: '5,000+',
+    rawNum: 5000,
+    decimals: 0,
+    suffix: '+',
     metric: 'Users Migrated',
     title: 'Separating 5,000+ users from a parent company without disruption',
     industry: 'IT Operations & Cloud',
@@ -40,6 +50,9 @@ const CASE_STORIES: CaseStory[] = [
   {
     id: 'security',
     stat: '60%',
+    rawNum: 60,
+    decimals: 0,
+    suffix: '%',
     metric: 'Remediation Reduction',
     title: 'Cutting time to remediation across a global security estate',
     industry: 'Cybersecurity & Risk',
@@ -91,6 +104,21 @@ export const TestimonialsSection: React.FC = () => {
         }
       );
 
+      // Numeric counter odometer animations
+      const counters = section.querySelectorAll<HTMLElement>('.metric-counter');
+      counters.forEach((el) => {
+        const targetVal = parseFloat(el.getAttribute('data-target') || '0');
+        const decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+        const suffix = el.getAttribute('data-suffix') || '';
+
+        animateCounterRoll(el, targetVal, {
+          duration: 2.0,
+          decimals,
+          suffix,
+          trigger: el,
+        });
+      });
+
       // Quote card reveal
       gsap.fromTo(
         section.querySelector('.testimonial-quote-box'),
@@ -137,55 +165,72 @@ export const TestimonialsSection: React.FC = () => {
           {CASE_STORIES.map((item, index) => (
             <div
               key={item.id}
-              className="case-card card-hover-feelgood p-8 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931] bg-white shadow-2xs hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col justify-between"
+              className="case-card h-full"
             >
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold text-[#020626]">
-                    {item.icon}
-                    <span>{item.industry}</span>
-                  </div>
-                  <span className="text-xs font-bold text-[#D22931] uppercase tracking-wider">
-                    Case 0{index + 1}
-                  </span>
-                </div>
-
-                <div className="font-display font-extrabold text-4xl sm:text-5xl text-[#020626] tracking-tight mb-1">
-                  {item.stat}
-                </div>
-                <div className="text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
-                  {item.metric}
-                </div>
-
-                <h3 className="font-display font-bold text-lg text-[#020626] leading-snug tracking-tight mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-[#556070] leading-relaxed mb-6">
-                  {item.detail}
-                </p>
-              </div>
-
-              <div>
-                <div className="space-y-2 border-t border-[#DCE4EC] pt-4 mb-6">
-                  {item.outcomes.map((outcome) => (
-                    <div key={outcome} className="flex items-center gap-2 text-xs font-medium text-[#020626]">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] flex-shrink-0" />
-                      <span>{outcome}</span>
+              <CardSpotlight
+                spotlightColor="rgba(210, 41, 49, 0.08)"
+                borderColor="rgba(210, 41, 49, 0.45)"
+                className="p-8 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 bg-white shadow-2xs hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full hover:-translate-y-1"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold text-[#020626]">
+                      {item.icon}
+                      <span>{item.industry}</span>
                     </div>
-                  ))}
+                    <span className="text-xs font-bold text-[#D22931] uppercase tracking-wider font-mono">
+                      Case 0{index + 1}
+                    </span>
+                  </div>
+
+                  <div className="font-display font-extrabold text-4xl sm:text-5xl text-[#020626] tracking-tight mb-1">
+                    <span
+                      className="metric-counter inline-block tabular-nums"
+                      data-target={item.rawNum}
+                      data-decimals={item.decimals}
+                      data-suffix={item.suffix}
+                    >
+                      {item.stat}
+                    </span>
+                  </div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
+                    {item.metric}
+                  </div>
+
+                  <h3 className="font-display font-bold text-lg text-[#020626] leading-snug tracking-tight mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-[#556070] leading-relaxed mb-6">
+                    {item.detail}
+                  </p>
                 </div>
 
-                <div className="flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
-                  <span>Read the story &rarr;</span>
-                  <ArrowUpRight className="w-4 h-4 text-[#D22931]" />
+                <div>
+                  <div className="space-y-2 border-t border-[#DCE4EC] pt-4 mb-6">
+                    {item.outcomes.map((outcome) => (
+                      <div key={outcome} className="flex items-center gap-2 text-xs font-medium text-[#020626]">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] flex-shrink-0" />
+                        <span>{outcome}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
+                    <span>Read the story &rarr;</span>
+                    <ArrowUpRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
                 </div>
-              </div>
+              </CardSpotlight>
             </div>
           ))}
         </div>
 
         {/* Executive Testimonial Quote Card per Section 8.1 / Section 12 Specification */}
-        <div className="testimonial-quote-box relative rounded-3xl bg-[#020626] text-white p-8 sm:p-12 overflow-hidden shadow-xl border border-white/10">
+        <div className="testimonial-quote-box relative rounded-3xl bg-[#020626] text-white p-8 sm:p-12 overflow-hidden shadow-2xl border border-white/10 group">
+          {/* Ambient Gold Glow & Dark Grid */}
+          <div className="absolute inset-0 bg-cyber-grid-dark opacity-20 pointer-events-none" />
+          <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-[#FAC344]/15 blur-[90px] pointer-events-none animate-ambient-blob-1" />
+
           <div className="relative z-10 max-w-3xl">
             <div className="flex items-center gap-2 text-[#FAC344] mb-4">
               <Quote className="w-8 h-8 opacity-75" />

@@ -171,7 +171,10 @@ export const MethodologyShowcase: React.FC = () => {
             {/* Soft Ambient Blob Inside Showcase */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-[#D22931]/8 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-            <div className="relative z-10 space-y-6 flex flex-col justify-between h-full">
+            <div
+              key={activeStep}
+              className="relative z-10 space-y-6 flex flex-col justify-between h-full animate-smooth-fade-in"
+            >
               <div className="flex items-center justify-between">
                 <div className="p-3.5 rounded-2xl bg-[#D22931]/10 text-[#D22931]">
                   {current.icon}

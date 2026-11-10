@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Scale, Rocket, Award, Network } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
+import { CardSpotlight } from '../ui/CardSpotlight';
 
 export const WhyHitechSection: React.FC = () => {
   const { whyHitech } = hitechContent;
@@ -72,9 +73,11 @@ export const WhyHitechSection: React.FC = () => {
 
         <div className="why-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {whyHitech.reasons.map((item, idx) => (
-            <div
+            <CardSpotlight
               key={item.title}
-              className="why-card card-hover-feelgood p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931] shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
+              spotlightColor="rgba(210, 41, 49, 0.08)"
+              borderColor="rgba(210, 41, 49, 0.45)"
+              className="why-card p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931] shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
             >
               <div>
                 <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#EBF2F7] transition-all duration-300">
@@ -87,7 +90,7 @@ export const WhyHitechSection: React.FC = () => {
                   {item.body}
                 </p>
               </div>
-            </div>
+            </CardSpotlight>
           ))}
         </div>
       </div>

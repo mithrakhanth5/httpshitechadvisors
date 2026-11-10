@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2 } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { CardSpotlight } from '../ui/CardSpotlight';
 
 interface ServicesGridProps {
   onSelectDiscipline: (key: string) => void;
@@ -126,20 +127,22 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
           </p>
         </div>
 
-        {/* 6-Card Services Bento Grid with subtle hover interactions */}
+        {/* 6-Card Services Bento Grid with interactive mouse-tracking spotlight */}
         <div className="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SERVICES.map((service) => (
             <div
               key={service.id}
               className="service-card-anim rounded-2xl h-full"
             >
-              <div
+              <CardSpotlight
                 onClick={() => onSelectDiscipline(service.id)}
-                className="relative h-full p-8 rounded-2xl bg-[#EBF2F7] border border-[#DCE4EC] hover:border-[#D22931] flex flex-col justify-between group cursor-pointer overflow-hidden transition-all duration-300 shadow-2xs hover:shadow-xl"
+                spotlightColor="rgba(210, 41, 49, 0.08)"
+                borderColor="rgba(210, 41, 49, 0.45)"
+                className="relative h-full p-8 rounded-2xl bg-[#EBF2F7] border border-[#DCE4EC] hover:border-[#D22931]/50 flex flex-col justify-between group cursor-pointer transition-all duration-300 shadow-2xs hover:shadow-xl hover:-translate-y-1"
               >
                 <div>
                   <div className="mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs flex items-center justify-center group-hover:scale-110 group-hover:border-gray-300 transition-all duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs flex items-center justify-center group-hover:scale-110 group-hover:-translate-y-1 group-hover:shadow-md transition-all duration-300">
                       {service.icon}
                     </div>
                   </div>
@@ -156,7 +159,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                   <div className="mt-5 space-y-2 border-t border-[#DCE4EC] pt-4">
                     {service.deliverables.map((del) => (
                       <div key={del} className="flex items-start gap-2 text-xs text-[#020626] font-medium">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] mt-0.5 flex-shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
                         <span>{del}</span>
                       </div>
                     ))}
@@ -169,11 +172,11 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                     <span className="font-semibold text-[#020626]">Platforms: </span>
                     <span>{service.tools.join(', ')}</span>
                   </div>
-                  <span className="text-xs font-bold text-[#D22931] flex items-center gap-1 group-hover:translate-x-1 transition-transform flex-shrink-0">
+                  <span className="text-xs font-bold text-[#D22931] flex items-center gap-1 group-hover:translate-x-1.5 transition-transform flex-shrink-0">
                     Discuss &rarr;
                   </span>
                 </div>
-              </div>
+              </CardSpotlight>
             </div>
           ))}
         </div>

@@ -10,6 +10,48 @@ if (typeof window !== 'undefined') {
  * Editorial ease per Section 6: Subtle and purposeful (fade-and-rise on scroll)
  */
 export const EDITORIAL_EASE = 'power3.out';
+export const SMOOTH_SPRING_EASE = 'expo.out';
+
+/**
+ * High-end 3D kinetic text reveal: words rotate and rise with power4 deceleration
+ */
+export function animate3DTextReveal(
+  targets: gsap.DOMTarget,
+  options: {
+    delay?: number;
+    duration?: number;
+    stagger?: number;
+    trigger?: gsap.DOMTarget;
+  } = {}
+) {
+  const { delay = 0, duration = 1.05, stagger = 0.07, trigger } = options;
+
+  return gsap.fromTo(
+    targets,
+    {
+      yPercent: 120,
+      rotateX: 25,
+      opacity: 0,
+      transformOrigin: 'bottom center',
+    },
+    {
+      yPercent: 0,
+      rotateX: 0,
+      opacity: 1,
+      duration,
+      delay,
+      stagger,
+      ease: 'power4.out',
+      scrollTrigger: trigger
+        ? {
+            trigger,
+            start: 'top 85%',
+            once: true,
+          }
+        : undefined,
+    }
+  );
+}
 
 /**
  * Creates a masked text reveal animation on an element when scrolled into view
@@ -85,6 +127,40 @@ export function animateFadeUp(
         : undefined,
     }
   );
+}
+
+/**
+ * Rolling odometer counter animation for metrics
+ */
+export function animateCounterRoll(
+  target: HTMLElement,
+  targetValue: number,
+  options: {
+    duration?: number;
+    decimals?: number;
+    prefix?: string;
+    suffix?: string;
+    trigger?: gsap.DOMTarget;
+  } = {}
+) {
+  const { duration = 1.8, decimals = 0, prefix = '', suffix = '', trigger } = options;
+  const obj = { val: 0 };
+
+  return gsap.to(obj, {
+    val: targetValue,
+    duration,
+    ease: 'power3.out',
+    scrollTrigger: trigger
+      ? {
+          trigger,
+          start: 'top 85%',
+          once: true,
+        }
+      : undefined,
+    onUpdate: () => {
+      target.textContent = `${prefix}${obj.val.toFixed(decimals)}${suffix}`;
+    },
+  });
 }
 
 export { gsap, ScrollTrigger };
