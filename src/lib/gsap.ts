@@ -29,19 +29,19 @@ export function animate3DTextReveal(
   return gsap.fromTo(
     targets,
     {
-      yPercent: 120,
-      rotateX: 25,
+      y: 35,
+      rotateX: 18,
       opacity: 0,
       transformOrigin: 'bottom center',
     },
     {
-      yPercent: 0,
+      y: 0,
       rotateX: 0,
       opacity: 1,
       duration,
       delay,
       stagger,
-      ease: 'power4.out',
+      ease: 'power3.out',
       scrollTrigger: trigger
         ? {
             trigger,
