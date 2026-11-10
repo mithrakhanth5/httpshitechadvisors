@@ -20,7 +20,7 @@ const STEPS: Step[] = [
     step: '01',
     name: 'Strategic Diagnosis',
     subtitle: 'Cut through vendor noise to find the root constraint.',
-    description: 'We interview stakeholders, audit architecture debt, evaluate cloud unit economics, and benchmark security exposure. No 80-page generic decks — just the 3 decisions that actually move the business.',
+    description: 'We interview stakeholders, audit architecture debt, evaluate cloud unit economics, and benchmark security exposure. No 80-page generic decks: just the 3 decisions that actually move the business.',
     icon: <Compass className="w-6 h-6 text-[#D22931]" />,
     deliverables: ['Executive Constraint Map', 'Architecture Debt Audit', 'Payback & ROI Horizon'],
     takeaway: 'Clarity on what to build, what to kill, and where to invest.',

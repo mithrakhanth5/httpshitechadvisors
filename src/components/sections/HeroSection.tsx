@@ -97,7 +97,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
         {/* Subtext Fade-Up Container */}
         <div ref={subtextRef} className="mt-8 max-w-3xl">
           <p className="text-base sm:text-lg lg:text-xl text-[#556070] leading-relaxed">
-            Hitech Advisors helps companies make the right technology decisions and turn them into working results &mdash; across business applications, data, cybersecurity, IT operations, AI and engineering. One accountable team, from the first conversation to measurable outcomes.
+            Hitech Advisors helps companies make the right technology decisions and turn them into working results across business applications, data, cybersecurity, IT operations, AI and engineering. One accountable team, from the first conversation to measurable outcomes.
           </p>
         </div>
 

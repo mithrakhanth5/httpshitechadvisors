@@ -60,7 +60,7 @@ export const hitechContent = {
     eyebrow: "Business & Technology Solutions",
     h1: "Strategy That Connects to Execution.",
     supporting:
-      "Hitech Advisors helps companies make the right technology decisions and turn them into working results — across business applications, data, cybersecurity, IT operations, AI and engineering. One accountable team, from the first conversation to measurable outcomes.",
+      "Hitech Advisors helps companies make the right technology decisions and turn them into working results across business applications, data, cybersecurity, IT operations, AI and engineering. One accountable team, from the first conversation to measurable outcomes.",
     primaryCta: "Discuss a Challenge",
     secondaryCta: "Explore Our Solutions",
   },
@@ -81,14 +81,14 @@ export const hitechContent = {
       {
         id: "risk",
         title: "The risk keeps growing faster than the fixes.",
-        body: "Security findings, IT backlogs and data you can't fully trust — with too few hands to close them.",
+        body: "Security findings, IT backlogs and data you can't fully trust, with too few hands to close them.",
       },
     ],
   },
 
   proposition: {
     headline: "One partner from the decision to the delivery.",
-    body: "Most firms either advise or implement. We do both, and we stay accountable for both. We start with your business problem, recommend the right combination of strategy, systems, data, security, engineering and AI, and then deliver it — with the right Hitech team for the work.",
+    body: "Most firms either advise or implement. We do both, and we stay accountable for both. We start with your business problem, recommend the right combination of strategy, systems, data, security, engineering and AI, and then deliver it with the right Hitech team for the work.",
     pillars: [
       {
         title: "The right answer, not the default one.",
@@ -100,7 +100,7 @@ export const hitechContent = {
       },
       {
         title: "Senior expertise, flexibly engaged.",
-        body: "Experienced consultants and specialists — as advisors, embedded experts or complete delivery teams.",
+        body: "Experienced consultants and specialists as advisors, embedded experts, or complete delivery teams.",
       },
     ],
   },
@@ -109,7 +109,7 @@ export const hitechContent = {
     {
       id: "crm-erp",
       title: "CRM, ERP & Business Applications",
-      line: "Choose, implement and connect the systems that run your business — and make sure people use them.",
+      line: "Choose, implement and connect the systems that run your business, and make sure people use them.",
       link: "#solutions",
       helpArea: "crm-erp",
       platforms: "Salesforce, HubSpot, Microsoft Dynamics, NetSuite, SAP, Zoho, Freshworks",
@@ -133,7 +133,7 @@ export const hitechContent = {
     {
       id: "it-operations",
       title: "IT Operations & Cloud",
-      line: "Run IT that's reliable, efficient and ready to scale — from the service desk to the cloud.",
+      line: "Run IT that's reliable, efficient and ready to scale, from the service desk to the cloud.",
       link: "#solutions",
       helpArea: "it-operations",
       platforms: "ServiceNow, Jira Service Management, Freshservice, AWS, Azure, Google Cloud",
@@ -141,7 +141,7 @@ export const hitechContent = {
     {
       id: "ai",
       title: "AI Adoption & Agents",
-      line: "Move AI from pilots to production — agents and automation that do real work, safely.",
+      line: "Move AI from pilots to production with agents and automation that do real work, safely.",
       link: "#solutions",
       helpArea: "ai",
       platforms: "OpenAI, Anthropic Claude, Google Gemini, Azure AI, LangChain, open-source models",
@@ -253,7 +253,7 @@ export const hitechContent = {
       {
         step: "02",
         name: "Frame",
-        line: "We define the outcome and lay out the options — technology, approach, team, cost and risk — and recommend one.",
+        line: "We define the outcome, lay out the options across technology, approach, team, cost, and risk, and recommend one.",
         takeaway: "A clear recommendation and a plan you can approve.",
       },
       {
@@ -265,7 +265,7 @@ export const hitechContent = {
       {
         step: "04",
         name: "Optimize",
-        line: "We drive adoption, measure the result against the goal and keep improving — for as long as you need us.",
+        line: "We drive adoption, measure the result against the goal and keep improving for as long as you need us.",
         takeaway: "An outcome that lasts.",
       },
     ],
@@ -355,7 +355,7 @@ export const hitechContent = {
       {
         category: "AI & Automation",
         readTime: "6 min read",
-        title: "What is an AI agent — and what should it do in your business?",
+        title: "What is an AI agent, and what should it do in your business?",
         excerpt:
           "How leadership teams separate AI agent hype from durable workflow automation that actually reaches production and stays governed.",
       },
@@ -371,7 +371,7 @@ export const hitechContent = {
 
   finalCta: {
     headline: "What are you trying to solve?",
-    line: "Share the challenge. A senior consultant will come back to you within **RESPONSE TIME** — with questions worth answering, not a sales pitch.",
+    line: "Share the challenge. A senior consultant will come back to you within **RESPONSE TIME**, with questions worth answering, not a sales pitch.",
     button: "Discuss a Challenge",
   },
 

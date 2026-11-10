@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
         <Link
           to="/"
           className="flex items-center gap-2.5 group text-decoration-none"
-          aria-label="Hitech Advisors — Home"
+          aria-label="Hitech Advisors Home"
         >
           <HitechLogo className="w-9 h-9 group-hover:scale-105 transition-transform duration-300" />
           <span className="font-display font-extrabold text-lg leading-none tracking-tight text-[#020626] group-hover:text-[#D22931] transition-colors">

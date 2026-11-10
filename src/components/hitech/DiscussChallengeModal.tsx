@@ -135,7 +135,7 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
             </div>
             <div className="space-y-2">
               <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#0B1F33]">
-                Thanks — we&rsquo;ve got it.
+                Thank you, we&rsquo;ve got it.
               </h3>
               <p className="text-body max-w-lg mx-auto">
                 A senior consultant will review your note and reply within <strong>{contactInfo.responseTime}</strong>.
@@ -171,7 +171,7 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                   Tell us what you&rsquo;re trying to solve
                 </h2>
                 <p className="text-xs sm:text-sm text-[#3A4A5A]">
-                  Share a few details and a senior consultant will reply within {contactInfo.responseTime}. No sales sequence — just a real conversation about your problem.
+                  Share a few details and a senior consultant will reply within {contactInfo.responseTime}. No sales sequence, just a real conversation about your problem.
                 </p>
               </div>
 
@@ -315,10 +315,10 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                       className="w-full px-3 py-2 rounded-md border border-[#D9E0E6] focus:border-[#D22931] focus:ring-1 focus:ring-[#D22931] focus:outline-none bg-white text-[#020626]"
                     >
                       <option value="">Select size...</option>
-                      <option value="1-50">1–50</option>
-                      <option value="51-200">51–200</option>
-                      <option value="201-1000">201–1,000</option>
-                      <option value="1001-5000">1,001–5,000</option>
+                      <option value="1-50">1-50</option>
+                      <option value="51-200">51-200</option>
+                      <option value="201-1000">201-1,000</option>
+                      <option value="1001-5000">1,001-5,000</option>
                       <option value="5000+">5,000+</option>
                     </select>
                   </div>

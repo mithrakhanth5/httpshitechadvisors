@@ -147,7 +147,7 @@ export const TestimonialsSection: React.FC = () => {
             Results our clients can <span className="text-[#D22931]">measure</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
-            Real enterprise transformations delivered by senior practitioners — no theoretical frameworks, just operational proof.
+            Real enterprise transformations delivered by senior practitioners: no theoretical frameworks, just operational proof.
           </p>
         </div>
 

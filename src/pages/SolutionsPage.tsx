@@ -15,7 +15,7 @@ export const SolutionsPage: React.FC<SolutionsPageProps> = ({ onOpenDiscuss }) =
         badge="Enterprise Solutions &middot; 5 Canonical Practices"
         title="Targeted Solutions Built on the"
         highlightTitle="Merits."
-        description="We recommend the technology that fits your scale, operating model, and budget — not the single vendor we're tied to. Five connected solution practices to modernize your enterprise."
+        description="We recommend the technology that fits your scale, operating model, and budget, not a single vendor we're tied to. Five connected solution practices to modernize your enterprise."
         onOpenDiscuss={() => onOpenDiscuss('solutions')}
         ctaText="Discuss Solutions"
       />

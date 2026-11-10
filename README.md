@@ -1,4 +1,4 @@
-# Hitech Advisors — Corporate Website
+# Hitech Advisors | Corporate Website
 
 Enterprise systems, AI engineering, data intelligence, cybersecurity, and technology advisory. One accountable team from the first strategic decision to measurable production delivery.
 

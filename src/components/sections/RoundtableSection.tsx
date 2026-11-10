@@ -170,7 +170,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                     </span>
                   </div>
                   <h4 className="font-display font-bold text-lg text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug">
-                    What is an AI agent — and what should it do in your business?
+                    What is an AI agent, and what should it do in your business?
                   </h4>
                   <p className="mt-2.5 text-xs sm:text-sm text-[#556070] leading-relaxed">
                     How enterprise leadership teams separate generative AI marketing hype from durable, governed workflow automation that actually delivers ROI.

@@ -15,7 +15,7 @@ export const RoleFocusPage: React.FC<RoleFocusPageProps> = ({ onOpenDiscuss }) =
         badge="Executive Focus &middot; 6 Leadership Mandates"
         title="Technology Decisions Framed Around Your"
         highlightTitle="Mandate."
-        description="Whether you are a Founder managing capital efficiency, a CTO untangling legacy systems, or a CISO balancing exposure against speed — Hitech speaks your language."
+        description="Whether you are a Founder managing capital efficiency, a CTO untangling legacy systems, or a CISO balancing exposure against speed, Hitech speaks your language."
         onOpenDiscuss={() => onOpenDiscuss('role-focus')}
         ctaText="Discuss Your Mandate"
       />
