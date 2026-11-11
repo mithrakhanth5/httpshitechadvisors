@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MagneticButton } from '../ui/MagneticButton';
-import { StoryAnimation } from '../ui/StoryAnimation';
 import { gsap, animate3DTextReveal } from '../../lib/gsap';
 
 interface HeroSectionProps {
@@ -122,11 +121,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
           >
             <span>Explore Our Solutions</span>
           </Link>
-        </div>
-
-        {/* Flagship Enterprise AI & Architecture Storytelling Simulator */}
-        <div className="w-full mt-6">
-          <StoryAnimation type="home" />
         </div>
       </div>
     </section>
