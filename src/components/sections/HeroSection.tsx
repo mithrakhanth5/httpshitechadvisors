@@ -59,13 +59,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
     <section
       ref={heroRef}
       id="top"
-      className="relative pt-32 pb-12 sm:pb-14 flex flex-col justify-center items-center text-center overflow-hidden bg-white"
+      className="relative pt-32 pb-12 sm:pb-14 flex flex-col justify-center items-center text-center overflow-hidden bg-white min-h-[90vh]"
     >
-      {/* Soft Static Ambient Gradient Highlights (No moving background animation) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute -top-[20%] left-[15%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#D22931]/6 to-[#FAC344]/6 blur-[120px]" />
+      {/* Background Animated Collaboration Video (Plays continuously in a loop like a GIF) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="./images/hero-video-poster.jpg"
+          className="w-full h-full object-cover object-center opacity-35 sm:opacity-40 mix-blend-multiply scale-105"
+        >
+          <source src="./videos/hero-background.mp4" type="video/mp4" />
+        </video>
+        {/* Soft Radial & Linear Scrims: Guarantees 100% text contrast and readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/70 to-white/95" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0.45)_55%,rgba(255,255,255,0.95)_100%)]" />
+        {/* Soft Brand Highlights */}
+        <div className="absolute -top-[20%] left-[15%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#D22931]/8 to-[#FAC344]/8 blur-[120px]" />
         <div className="absolute top-[25%] -right-[10%] w-[550px] h-[550px] rounded-full bg-gradient-to-bl from-[#020626]/5 to-[#D22931]/5 blur-[130px]" />
-        <div className="absolute -bottom-[20%] left-[30%] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-[#FAC344]/5 to-[#020626]/3 blur-[110px]" />
       </div>
 
       <div className="relative z-10 max-w-[1240px] mx-auto px-6 sm:px-10 flex flex-col items-center">
