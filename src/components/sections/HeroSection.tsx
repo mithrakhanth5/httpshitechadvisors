@@ -62,20 +62,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
       className="relative pt-32 pb-12 sm:pb-14 flex flex-col justify-center items-center text-center overflow-hidden bg-white min-h-[90vh]"
     >
       {/* Background Animated Collaboration Video (Plays continuously in a loop like a GIF) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center" aria-hidden="true">
         <video
           autoPlay
           loop
           muted
           playsInline
           poster="./images/hero-video-poster.jpg"
-          className="w-full h-full object-cover object-center opacity-60 sm:opacity-65 scale-100"
+          className="w-full h-full object-cover object-center opacity-45 sm:opacity-50 scale-115 sm:scale-120 origin-center transition-all duration-700"
         >
           <source src="./videos/hero-background.mp4" type="video/mp4" />
         </video>
-        {/* Minimal edge blend: Leaves video 100% visible while smoothly transitioning top and bottom */}
-        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/80 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/50 to-transparent" />
+        {/* Smooth edge blend: Seamlessly integrates into top navbar and bottom proof points */}
+        <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-white to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-white via-white/40 to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-[1240px] mx-auto px-6 sm:px-10 flex flex-col items-center">
