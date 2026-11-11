@@ -123,6 +123,7 @@ export const MethodologyShowcase: React.FC = () => {
                 <button
                   key={step.step}
                   onClick={() => setActiveStep(idx)}
+                  onMouseEnter={() => setActiveStep(idx)}
                   className={`w-full flex-1 p-5 rounded-2xl text-left transition-all duration-300 flex items-center gap-4 cursor-pointer border ${
                     isSelected
                       ? 'bg-white border-[#D22931] shadow-lg ring-2 ring-[#D22931]/15 -translate-y-0.5'

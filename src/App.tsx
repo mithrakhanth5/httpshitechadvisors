@@ -6,6 +6,7 @@ import 'lenis/dist/lenis.css';
 import { gsap, ScrollTrigger } from './lib/gsap';
 import { CursorFollower } from './components/ui/CursorFollower';
 import { ScrollToTop } from './components/ui/ScrollToTop';
+import { PageTransitionOverlay } from './components/ui/PageTransitionOverlay';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { DiscussChallengeModal } from './components/hitech/DiscussChallengeModal';
@@ -93,6 +94,7 @@ export function App() {
     >
       <HashRouter>
         <ScrollToTop />
+        <PageTransitionOverlay />
         <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
           {/* Feel-Good Custom Cursor Follower */}
           <CursorFollower />

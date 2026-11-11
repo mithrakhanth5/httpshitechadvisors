@@ -84,7 +84,11 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
           {roleSelector.roles.map((item, index) => {
             const isSelected = activeRoleIndex === index;
             return (
-              <div key={item.role} className="role-card h-full">
+              <div
+                key={item.role}
+                className="role-card h-full"
+                onMouseEnter={() => setActiveRoleIndex(index)}
+              >
                 <TiltCard
                   onClick={() => setActiveRoleIndex(index)}
                   maxTilt={6}
