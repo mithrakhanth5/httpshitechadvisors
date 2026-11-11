@@ -62,7 +62,7 @@ export const LaserCircuit: React.FC<LaserCircuitProps> = ({
               >
                 <div
                   className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    isActive ? 'bg-[#FAC344] animate-ping' : isPassed ? 'bg-white' : 'bg-transparent'
+                    isActive ? 'bg-[#FAC344]' : isPassed ? 'bg-white' : 'bg-transparent'
                   }`}
                 />
               </motion.div>

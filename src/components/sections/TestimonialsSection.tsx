@@ -181,8 +181,8 @@ export const TestimonialsSection: React.FC = () => {
                       {item.icon}
                       <span>{item.industry}</span>
                     </div>
-                    <span className="text-xs font-bold text-[#D22931] uppercase tracking-wider font-mono">
-                      Case 0{index + 1}
+                    <span className="text-xs font-semibold text-[#D22931] uppercase tracking-wider">
+                      Verified Impact
                     </span>
                   </div>
 
@@ -230,7 +230,6 @@ export const TestimonialsSection: React.FC = () => {
         {/* Executive Testimonial Quote Card with Border Beam & Ambient Motion */}
         <div className="testimonial-quote-box relative rounded-3xl bg-[#020626] text-white p-8 sm:p-12 overflow-hidden shadow-2xl border border-white/10 group">
           <BorderBeam size={260} duration={14} colorFrom="#FAC344" colorTo="#D22931" />
-          <div className="absolute inset-0 bg-cyber-grid-dark opacity-20 pointer-events-none" />
           <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-[#FAC344]/15 blur-[90px] pointer-events-none animate-ambient-blob-1" />
 
           <div className="relative z-10 max-w-3xl">

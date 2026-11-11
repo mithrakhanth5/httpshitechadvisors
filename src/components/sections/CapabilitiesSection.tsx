@@ -176,12 +176,12 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div className="max-w-3xl">
-            <div className="cap-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-mono font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D22931] animate-ping" />
+            <div className="cap-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
               <span>Delivery Engine &middot; Four Connected Capabilities</span>
             </div>
             <h2 className="cap-header-anim font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
-              How we <span className="text-[#D22931]">deliver</span>.
+              How we <span className="text-[#D22931]">deliver.</span>
             </h2>
             <p className="cap-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
               Our solution areas define what we solve. Our capabilities define how we deliver with senior pods, platform-neutral architecture, and zero handoff loss.
@@ -190,8 +190,8 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
 
           {/* Quick Counter Badge */}
           <div className="cap-header-anim flex items-center gap-2 self-start md:self-end px-4 py-2 rounded-2xl bg-[#020626] text-white border border-white/10 shadow-md">
-            <span className="w-2 h-2 rounded-full bg-[#D22931] animate-pulse" />
-            <span className="font-mono text-xs font-bold">4 Production Capabilities</span>
+            <span className="w-2 h-2 rounded-full bg-[#D22931]" />
+            <span className="text-xs font-semibold">4 Production Capabilities</span>
           </div>
         </div>
 
@@ -224,13 +224,13 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
                       <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shadow-2xs group-hover:scale-110 group-hover:bg-white/15 transition-all duration-300">
                         {cap.icon}
                       </div>
-                      <span className="font-mono text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-[#FAC344] border border-white/15">
-                        Capability {cap.number}
+                      <span className="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-[#FAC344] border border-white/15">
+                        Pillar {cap.number}
                       </span>
                     </div>
 
                     {/* Tag Eyebrow */}
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D22931]/20 text-[#FAC344] text-[11px] font-mono font-bold uppercase tracking-wider border border-[#D22931]/30 mb-3">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D22931]/20 text-[#FAC344] text-[11px] font-semibold uppercase tracking-wider border border-[#D22931]/30 mb-3">
                       <Sparkles className="w-3 h-3 text-[#FAC344]" />
                       <span>{cap.tag}</span>
                     </div>
@@ -245,9 +245,9 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
                       {cap.description}
                     </p>
 
-                    {/* Nested Frosted Deliverables Panel from Screenshot */}
+                    {/* Nested Frosted Deliverables Panel */}
                     <div className="rounded-2xl p-5 sm:p-6 bg-[#050b1f]/90 border border-white/10 shadow-lg mb-6 space-y-3 backdrop-blur-md">
-                      <div className="font-mono text-xs font-bold uppercase tracking-wider text-[#FAC344] border-b border-white/10 pb-2">
+                      <div className="text-xs font-semibold uppercase tracking-wider text-[#FAC344] border-b border-white/10 pb-2">
                         {cap.deliverablesHeader}
                       </div>
                       <ul className="space-y-2.5">
@@ -262,11 +262,11 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
 
                     {/* Ecosystem Chips */}
                     <div className="pt-1 flex flex-wrap items-center gap-1.5">
-                      <span className="text-xs font-mono text-white/50 mr-1">Ecosystem:</span>
+                      <span className="text-xs text-white/50 mr-1">Ecosystem:</span>
                       {cap.tools.map((tool) => (
                         <span
                           key={tool}
-                          className="px-2.5 py-1 rounded-lg bg-white/10 text-white/90 text-xs font-mono border border-white/10"
+                          className="px-2.5 py-1 rounded-lg bg-white/10 text-white/90 text-xs font-medium border border-white/10"
                         >
                           {tool}
                         </span>
@@ -276,12 +276,12 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
 
                   {/* Footer Row: Delivery Model & Direct CTA */}
                   <div className="relative z-10 pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-                    <span className="font-mono text-xs text-[#FAC344] font-medium">
+                    <span className="text-xs text-[#FAC344] font-medium">
                       {cap.deliveryModel}
                     </span>
                     <button
                       onClick={() => onSelectCapability(cap.helpArea)}
-                      className="group/btn inline-flex items-center gap-2 font-mono text-xs font-bold text-white hover:text-[#FAC344] transition-colors cursor-pointer"
+                      className="group/btn inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white hover:text-[#FAC344] transition-colors cursor-pointer"
                     >
                       <span>{cap.ctaText}</span>
                       <ArrowRight className="w-3.5 h-3.5 text-[#D22931] group-hover/btn:translate-x-1.5 transition-transform" />

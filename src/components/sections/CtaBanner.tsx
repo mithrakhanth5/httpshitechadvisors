@@ -54,16 +54,13 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
           {/* Border Beam */}
           <BorderBeam size={280} duration={14} colorFrom="#D22931" colorTo="#FAC344" />
 
-          {/* Cyber Grid Background */}
-          <div className="absolute inset-0 bg-cyber-grid-dark opacity-35 pointer-events-none" />
-
           {/* Ambient Blob Gradients */}
           <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#D22931]/25 blur-[120px] pointer-events-none animate-ambient-blob-1" />
           <div className="absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-[#FAC344]/20 blur-[120px] pointer-events-none animate-ambient-blob-2" />
 
           {/* Eyebrow */}
-          <div className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-xs font-bold uppercase tracking-wider text-[#FAC344] border border-white/15 mb-6 backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#D22931] animate-pulse" />
+          <div className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-xs font-semibold uppercase tracking-wider text-[#FAC344] border border-white/15 mb-6 backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
             <span>Start the Conversation</span>
           </div>
 

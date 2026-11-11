@@ -1,53 +1,48 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Activity, Server, ShieldCheck, Sparkles, TrendingUp, CheckCircle2 } from 'lucide-react';
-import { BorderBeam } from '../ui/BorderBeam';
+import { ShoppingCart, Server, ShieldCheck, CheckCircle2, ArrowRight } from 'lucide-react';
 
 interface MetricCase {
   id: string;
-  badge: string;
+  category: string;
   stat: string;
-  label: string;
+  statLabel: string;
   client: string;
   icon: React.ReactNode;
-  detail: string;
-  telemetryText: string;
-  benchmark: string;
+  narrative: string;
+  outcomes: string[];
 }
 
 const CASES: MetricCase[] = [
   {
-    id: 'uptime',
-    badge: 'Retail Flash Traffic',
+    id: 'retail',
+    category: 'Retail & E-Commerce',
     stat: '99.99%',
-    label: 'Uptime at Peak',
-    client: 'High-Volume E-Commerce',
-    icon: <Activity className="w-5 h-5 text-[#FAC344]" />,
-    detail: 'Zero downtime through surge events. 50% faster page loads and 40% revenue boost.',
-    telemetryText: 'SLA: 99.99% · 0 Critical Incidents',
-    benchmark: '+40% Revenue Lift',
+    statLabel: 'Peak Availability',
+    client: 'High-Volume Online Retailer',
+    icon: <ShoppingCart className="w-5 h-5 text-[#FAC344]" />,
+    narrative: 'Maintained 99.99% uptime through flash-sale traffic surges with 50% faster page loads and a 40% revenue increase.',
+    outcomes: ['99.99% uptime at peak volume', '50% faster page load times', '40% verified revenue growth'],
   },
   {
     id: 'divestiture',
-    badge: 'Enterprise Separation',
+    category: 'Cloud & Infrastructure',
     stat: '5,000+',
-    label: 'Users Migrated',
-    client: 'Global SaaS Divestiture',
+    statLabel: 'Users Migrated',
+    client: 'Global SaaS Enterprise Divestiture',
     icon: <Server className="w-5 h-5 text-[#FAC344]" />,
-    detail: 'Full carve-out from parent infrastructure with zero downtime and 30% higher asset efficiency.',
-    telemetryText: 'Cutover Time: On-Schedule · 0 Downtime',
-    benchmark: '25% Higher Satisfaction',
+    narrative: 'Carved out global workforce infrastructure from parent company with zero critical downtime and 30% higher asset efficiency.',
+    outcomes: ['5,000+ users migrated safely', 'Zero business-critical downtime', '25% higher user satisfaction'],
   },
   {
-    id: 'remediation',
-    badge: 'Threat Surface',
+    id: 'security',
+    category: 'Cybersecurity & Risk',
     stat: '60%',
-    label: 'Faster Remediation',
-    client: 'Global Enterprise to SaaS',
+    statLabel: 'Faster Remediation',
+    client: 'Global Enterprise Moving to SaaS',
     icon: <ShieldCheck className="w-5 h-5 text-[#FAC344]" />,
-    detail: 'Vulnerability backlog cleared across global endpoints with automated 3-year security roadmap.',
-    telemetryText: 'Audit Status: SOC 2 & HIPAA Ready',
-    benchmark: 'Zero Exploited CVEs',
+    narrative: 'Streamlined vulnerability backlogs across international endpoints and established an active 3-year board-approved security roadmap.',
+    outcomes: ['60% cut in time to remediation', 'SOC 2 Type II readiness achieved', 'Continuous exposure defense'],
   },
 ];
 
@@ -65,7 +60,7 @@ export const ResultsHeroAnim: React.FC = () => {
     if (isHovered) return;
 
     const intervalMs = 50;
-    const durationMs = 4000; // 4s per case
+    const durationMs = 4500;
     const increment = (intervalMs / durationMs) * 100;
 
     const timer = setInterval(() => {
@@ -85,33 +80,31 @@ export const ResultsHeroAnim: React.FC = () => {
 
   return (
     <div
-      className="relative w-full max-w-[560px] rounded-3xl bg-gradient-to-br from-[#020626] via-[#050c33] to-[#0a1548] text-white p-6 sm:p-7 border border-white/15 shadow-2xl overflow-hidden select-none"
+      className="relative w-full max-w-[560px] rounded-3xl bg-gradient-to-br from-[#020626] to-[#0a1133] text-white p-6 sm:p-8 border border-white/15 shadow-2xl overflow-hidden select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Specular Beam & Amber/Red Glow */}
-      <BorderBeam size={270} duration={11} colorFrom="#FAC344" colorTo="#D22931" />
-      <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-72 h-72 bg-[#D22931]/15 blur-[90px] rounded-full pointer-events-none" />
+      {/* Soft Ambient Glow */}
+      <div className="absolute -top-24 right-0 w-72 h-72 bg-[#D22931]/15 blur-[90px] rounded-full pointer-events-none" />
+      <div className="absolute -bottom-24 left-0 w-72 h-72 bg-[#FAC344]/10 blur-[90px] rounded-full pointer-events-none" />
 
-      {/* Cyber Grid Texture */}
-      <div className="absolute inset-0 bg-cyber-grid-dark opacity-20 pointer-events-none" />
-
-      {/* Top Live Telemetry Header */}
-      <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/10 mb-5 text-xs font-mono">
+      {/* Top Header */}
+      <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/10 mb-6">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-          <span className="font-bold tracking-wider text-white/90 uppercase">Live Verification Telemetry</span>
+          <span className="w-2 h-2 rounded-full bg-[#D22931]" />
+          <span className="text-xs font-semibold uppercase tracking-wider text-white/90">
+            Verified Production Track Record
+          </span>
         </div>
-        <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 text-[#FAC344] text-[11px] font-semibold">
-          <Sparkles className="w-3 h-3 text-[#FAC344]" />
-          <span>Audited in Production</span>
+        <div className="px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[#FAC344] text-xs font-medium">
+          Audited Client Results
         </div>
       </div>
 
-      {/* 3 Interactive Metric Selector Cards */}
-      <div className="relative z-10 grid grid-cols-3 gap-2.5 mb-5">
+      {/* 3 Metric Selector Cards */}
+      <div className="relative z-10 grid grid-cols-3 gap-2.5 mb-6">
         {CASES.map((c, idx) => {
-          const isActive = idx === activeIdx;
+          const isSelected = idx === activeIdx;
 
           return (
             <button
@@ -121,148 +114,83 @@ export const ResultsHeroAnim: React.FC = () => {
                 setProgress(0);
               }}
               className={`relative rounded-xl p-3 text-left transition-all duration-300 cursor-pointer overflow-hidden border ${
-                isActive
+                isSelected
                   ? 'bg-white/15 border-[#D22931] shadow-lg -translate-y-0.5'
-                  : 'bg-white/[0.04] border-white/10 hover:border-white/20 hover:bg-white/[0.08]'
+                  : 'bg-white/[0.04] border-white/10 hover:border-white/25 hover:bg-white/[0.08]'
               }`}
             >
-              {isActive && !isHovered && (
+              {isSelected && !isHovered && (
                 <motion.div
                   style={{ width: `${progress}%` }}
-                  className="absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-[#FAC344] to-[#D22931]"
+                  className="absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-[#D22931] to-[#FAC344]"
                 />
               )}
 
-              <div className="text-[10px] font-mono text-white/50 truncate mb-1">
-                {c.badge}
-              </div>
-              <div className="font-display font-extrabold text-lg sm:text-xl text-white tracking-tight">
+              <div className="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight">
                 {c.stat}
               </div>
-              <div className="text-[10px] font-mono font-medium text-[#FAC344] truncate mt-0.5">
-                {c.label}
+              <div className="text-[11px] font-semibold text-[#FAC344] truncate mt-0.5">
+                {c.statLabel}
               </div>
             </button>
           );
         })}
       </div>
 
-      {/* Dynamic Animated Waveform / Signal Display */}
-      <div className="relative z-10 bg-white/[0.04] rounded-2xl p-4 border border-white/10 mb-5 overflow-hidden">
-        <div className="flex items-center justify-between text-[11px] font-mono text-white/60 mb-2">
-          <span className="flex items-center gap-1.5">
-            <TrendingUp className="w-3.5 h-3.5 text-[#FAC344]" />
-            <span>Signal Waveform · {current.client}</span>
-          </span>
-          <span className="text-[#FAC344] font-bold">{current.benchmark}</span>
-        </div>
-
-        {/* Live SVG Waveform Canvas */}
-        <div className="w-full h-14 relative flex items-center justify-center">
-          <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 300 50">
-            <defs>
-              <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#D22931" stopOpacity="0.4" />
-                <stop offset="50%" stopColor="#FAC344" stopOpacity="0.9" />
-                <stop offset="100%" stopColor="#D22931" stopOpacity="0.4" />
-              </linearGradient>
-            </defs>
-
-            {/* Subtle background grid lines */}
-            <line x1="0" y1="25" x2="300" y2="25" stroke="rgba(255,255,255,0.1)" strokeDasharray="3 3" />
-            <line x1="0" y1="12" x2="300" y2="12" stroke="rgba(255,255,255,0.05)" />
-            <line x1="0" y1="38" x2="300" y2="38" stroke="rgba(255,255,255,0.05)" />
-
-            {/* Animated primary wave */}
-            <motion.path
-              d={
-                activeIdx === 0
-                  ? "M 0 25 Q 35 5, 75 25 T 150 25 T 225 25 T 300 25"
-                  : activeIdx === 1
-                  ? "M 0 25 Q 50 40, 100 25 T 200 25 T 300 25"
-                  : "M 0 35 Q 40 10, 80 30 T 160 15 T 240 30 T 300 20"
-              }
-              fill="none"
-              stroke="url(#waveGradient)"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              initial={false}
-              animate={{
-                d:
-                  activeIdx === 0
-                    ? [
-                        "M 0 25 Q 35 5, 75 25 T 150 25 T 225 25 T 300 25",
-                        "M 0 25 Q 35 45, 75 25 T 150 25 T 225 25 T 300 25",
-                        "M 0 25 Q 35 5, 75 25 T 150 25 T 225 25 T 300 25",
-                      ]
-                    : activeIdx === 1
-                    ? [
-                        "M 0 25 Q 50 40, 100 25 T 200 25 T 300 25",
-                        "M 0 25 Q 50 10, 100 25 T 200 25 T 300 25",
-                        "M 0 25 Q 50 40, 100 25 T 200 25 T 300 25",
-                      ]
-                    : [
-                        "M 0 35 Q 40 10, 80 30 T 160 15 T 240 30 T 300 20",
-                        "M 0 20 Q 40 35, 80 15 T 160 30 T 240 15 T 300 25",
-                        "M 0 35 Q 40 10, 80 30 T 160 15 T 240 30 T 300 20",
-                      ],
-              }}
-              transition={{ repeat: Infinity, duration: 2.8, ease: 'easeInOut' }}
-            />
-
-            {/* Glowing signal node */}
-            <motion.circle
-              r="4"
-              fill="#FAC344"
-              className="drop-shadow-[0_0_8px_#FAC344]"
-              animate={{
-                cx: [20, 150, 280, 150, 20],
-                cy: [25, 20, 25, 30, 25],
-              }}
-              transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
-            />
-          </svg>
-        </div>
-      </div>
-
-      {/* Active Case Narrative */}
-      <div className="relative z-10 bg-white/[0.06] rounded-2xl p-5 border border-white/15 backdrop-blur-md min-h-[140px] flex flex-col justify-between">
+      {/* Detailed Case Study Card */}
+      <div className="relative z-10 bg-white/[0.06] rounded-2xl p-6 border border-white/15 backdrop-blur-md min-h-[220px] flex flex-col justify-between">
         <AnimatePresence mode="wait">
           <motion.div
             key={current.id}
-            initial={{ opacity: 0, y: 10, filter: 'blur(3px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -10, filter: 'blur(3px)' }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-2.5"
+            className="space-y-4"
           >
+            {/* Header */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
                   {current.icon}
                 </div>
-                <div className="font-display font-bold text-sm text-white">{current.client}</div>
+                <div>
+                  <h3 className="font-display font-bold text-base text-white">
+                    {current.client}
+                  </h3>
+                  <div className="text-xs text-[#FAC344] font-medium">{current.category}</div>
+                </div>
               </div>
-              <span className="text-[10px] font-mono text-[#FAC344]">{current.telemetryText}</span>
+              <span className="text-base font-display font-bold text-white bg-white/10 px-3 py-1 rounded-xl">
+                {current.stat}
+              </span>
             </div>
 
-            <p className="text-xs text-white/80 leading-relaxed">{current.detail}</p>
+            {/* Narrative */}
+            <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+              {current.narrative}
+            </p>
 
-            <div className="pt-2 border-t border-white/10 flex items-center gap-2 text-[11px] text-white/90">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] flex-shrink-0" />
-              <span className="font-medium">Strictly audited against production telemetry benchmarks</span>
+            {/* Outcomes Checklist */}
+            <div className="pt-3 border-t border-white/10 space-y-2">
+              {current.outcomes.map((item) => (
+                <div key={item} className="flex items-center gap-2 text-xs text-white/90">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] flex-shrink-0" />
+                  <span className="font-medium">{item}</span>
+                </div>
+              ))}
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Footer Status */}
-      <div className="relative z-10 mt-4 flex items-center justify-between text-[11px] font-mono text-white/50">
-        <span className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          <span>{isHovered ? 'Paused on inspection' : 'Continuous production audit'}</span>
-        </span>
-        <span className="text-white/40">Case 0{activeIdx + 1} / 03</span>
+      {/* Bottom Guarantee */}
+      <div className="relative z-10 mt-5 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-white/60">
+        <span>Verified outcomes delivered in live client production</span>
+        <div className="flex items-center gap-1 text-[#FAC344] font-semibold">
+          <span>Read Cases</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </div>
       </div>
     </div>
   );

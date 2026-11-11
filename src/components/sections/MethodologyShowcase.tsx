@@ -143,12 +143,12 @@ export const MethodologyShowcase: React.FC = () => {
         {/* Header with Slide Control Toggles */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
           <div className="max-w-3xl">
-            <div className="methodology-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D22931]/10 text-[#D22931] text-xs font-bold uppercase tracking-wider mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D22931] animate-ping" />
+            <div className="methodology-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D22931]/10 text-[#D22931] text-xs font-semibold uppercase tracking-wider mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
               How We Work &middot; Delivery Methodology
             </div>
             <h2 className="methodology-header-anim font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#020626] tracking-tight leading-tight">
-              Accountable delivery from <span className="text-[#D22931]">diagnosis to go-live</span>.
+              Accountable delivery from <span className="text-[#D22931]">diagnosis to go-live.</span>
             </h2>
             <p className="methodology-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
               Our senior partners stay on the work. We combine strategic decision-making with hands-on systems engineering, ensuring zero handoff loss throughout the engagement lifecycle.

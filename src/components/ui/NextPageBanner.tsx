@@ -34,7 +34,7 @@ export const NextPageBanner: React.FC<NextPageBannerProps> = ({
 
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div>
-                <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#D22931] mb-2">
+                <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-2">
                   <Compass className="w-4 h-4 animate-spin-slow" />
                   <span>Next Section &middot; {currentStage}</span>
                 </div>

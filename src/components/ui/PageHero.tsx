@@ -24,9 +24,6 @@ export const PageHero: React.FC<PageHeroProps> = ({
 }) => {
   return (
     <section className="relative pt-32 pb-14 sm:pb-18 bg-white border-b border-[#DCE4EC] overflow-hidden">
-      {/* Subtle Static Cyber Grid Background Overlay */}
-      <div className="absolute inset-0 bg-cyber-grid opacity-35 pointer-events-none" />
-
       {/* Floating Ambient Light Accents */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute -top-[25%] left-[20%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#D22931]/8 to-[#FAC344]/8 blur-[120px] animate-ambient-blob-1" />
@@ -43,9 +40,9 @@ export const PageHero: React.FC<PageHeroProps> = ({
                 initial={{ opacity: 0, y: -16, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-2xs text-xs font-mono font-bold uppercase tracking-wider text-[#D22931] mb-6 backdrop-blur-md"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-2xs text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-6 backdrop-blur-md"
               >
-                <Sparkles className="w-3.5 h-3.5 animate-pulse text-[#D22931]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#D22931]" />
                 <span dangerouslySetInnerHTML={{ __html: badge }} />
               </motion.div>
 
@@ -111,9 +108,9 @@ export const PageHero: React.FC<PageHeroProps> = ({
               initial={{ opacity: 0, y: -16, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-2xs text-xs font-mono font-bold uppercase tracking-wider text-[#D22931] mb-6 backdrop-blur-md"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-2xs text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-6 backdrop-blur-md"
             >
-              <Sparkles className="w-3.5 h-3.5 animate-pulse text-[#D22931]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#D22931]" />
               <span dangerouslySetInnerHTML={{ __html: badge }} />
             </motion.div>
 

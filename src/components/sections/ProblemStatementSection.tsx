@@ -64,6 +64,8 @@ export const ProblemStatementSection: React.FC = () => {
     './images/problem-vendor-lockin.jpg',
   ];
 
+  const problemTags = ['Fragmented Data', 'Isolated AI Pilots', 'Vendor Lock-In'];
+
   return (
     <section
       ref={sectionRef}
@@ -115,8 +117,8 @@ export const ProblemStatementSection: React.FC = () => {
                       <div className="absolute top-3 left-3 w-9 h-9 rounded-lg bg-[#020626]/80 backdrop-blur-md border border-white/15 flex items-center justify-center shadow-xs">
                         {cardIcons[index]}
                       </div>
-                      <div className="absolute bottom-2.5 right-3 px-2 py-0.5 rounded-full bg-[#020626]/80 backdrop-blur-md border border-white/10 text-[10px] font-mono text-[#FAC344] font-bold">
-                        Problem 0{index + 1}
+                      <div className="absolute bottom-2.5 right-3 px-2.5 py-0.5 rounded-full bg-[#020626]/80 backdrop-blur-md border border-white/10 text-[10px] font-sans font-semibold text-[#FAC344] uppercase tracking-wider">
+                        {problemTags[index]}
                       </div>
                     </div>
 

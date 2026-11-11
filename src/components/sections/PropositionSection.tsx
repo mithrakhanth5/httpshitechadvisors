@@ -99,8 +99,8 @@ export const PropositionSection: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-[#020626]/80 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-white/90 px-3 py-1.5 rounded-lg bg-[#020626]/80 backdrop-blur-md border border-white/10">
                 <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D22931] animate-ping" />
-                  <span>Strategy to Code Pipeline</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
+                  <span className="font-sans font-medium">Strategy to Code Pipeline</span>
                 </span>
                 <span className="text-[#FAC344] font-bold">Zero Handoff Loss</span>
               </div>

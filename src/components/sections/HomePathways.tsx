@@ -8,7 +8,7 @@ export const HomePathways: React.FC = () => {
   const pathways = [
     {
       title: 'Enterprise Solutions',
-      tag: '01. Solutions',
+      tag: 'Practice Areas',
       icon: <Layers className="w-5 h-5 text-[#D22931]" />,
       desc: 'CRM & ERP, Data Foundations, Cybersecurity, Cloud Infrastructure, and Governed AI Systems.',
       path: '/solutions',
@@ -17,7 +17,7 @@ export const HomePathways: React.FC = () => {
     },
     {
       title: 'Executive Role Focus',
-      tag: '02. Role Focus',
+      tag: 'Leadership Mandates',
       icon: <Users className="w-5 h-5 text-[#D22931]" />,
       desc: 'Technology decisions framed around specific mandates for Founders, COOs, CTOs, and CISOs.',
       path: '/role-focus',
@@ -25,7 +25,7 @@ export const HomePathways: React.FC = () => {
     },
     {
       title: 'Delivery Capabilities',
-      tag: '03. Capabilities',
+      tag: 'Advisory & Build',
       icon: <Zap className="w-5 h-5 text-[#D22931]" />,
       desc: 'Strategy & Advisory, Product & Engineering, Growth Operations, and Embedded Specialist Talent.',
       path: '/capabilities',
@@ -33,7 +33,7 @@ export const HomePathways: React.FC = () => {
     },
     {
       title: 'How We Work',
-      tag: '04. Methodology',
+      tag: 'Delivery Framework',
       icon: <Compass className="w-5 h-5 text-[#D22931]" />,
       desc: 'A structured 4-phase delivery framework where senior practitioners stay on the work to go-live.',
       path: '/methodology',
@@ -41,7 +41,7 @@ export const HomePathways: React.FC = () => {
     },
     {
       title: 'Verified Results',
-      tag: '05. Results',
+      tag: 'Client Outcomes',
       icon: <CheckCircle2 className="w-5 h-5 text-[#D22931]" />,
       desc: '99.99% peak availability, 5,000+ safe migrations, and 60% faster security remediation.',
       path: '/results',
@@ -49,7 +49,7 @@ export const HomePathways: React.FC = () => {
     },
     {
       title: 'Sector Experience',
-      tag: '06. Industries',
+      tag: 'Industry Depth',
       icon: <Building2 className="w-5 h-5 text-[#D22931]" />,
       desc: 'Specialized architectures across SaaS, Retail, Financial Services, Healthcare, and Manufacturing.',
       path: '/industries',
@@ -57,7 +57,7 @@ export const HomePathways: React.FC = () => {
     },
     {
       title: 'Executive Roundtable',
-      tag: '07. Community',
+      tag: 'Executive Forum',
       icon: <Calendar className="w-5 h-5 text-[#D22931]" />,
       desc: 'Convening senior tech leaders and founders across the Seattle ecosystem on AI and emerging systems.',
       path: '/events',
@@ -111,7 +111,7 @@ export const HomePathways: React.FC = () => {
                     <div className="w-11 h-11 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
                       {item.icon}
                     </div>
-                    <span className="font-mono text-xs font-bold text-[#556070] bg-[#EBF2F7] px-2.5 py-1 rounded-lg">
+                    <span className="text-[11px] font-semibold text-[#020626] bg-[#EBF2F7] border border-[#DCE4EC] px-3 py-1 rounded-full group-hover:border-[#D22931]/30 transition-colors">
                       {item.tag}
                     </span>
                   </div>

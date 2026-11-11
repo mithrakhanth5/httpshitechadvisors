@@ -18,7 +18,6 @@ export const PageTransitionOverlay: React.FC = () => {
   const location = useLocation();
   const lenis = useLenis();
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [counter, setCounter] = useState(0);
   const isFirstRender = useRef(true);
 
   const routeInfo = ROUTE_LABELS[location.pathname] || {
@@ -35,17 +34,6 @@ export const PageTransitionOverlay: React.FC = () => {
     }
 
     setIsTransitioning(true);
-    setCounter(0);
-
-    // Fast digital counter simulation (0 -> 100%)
-    const start = Date.now();
-    const duration = 280;
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - start;
-      const progress = Math.min(100, Math.floor((elapsed / duration) * 100));
-      setCounter(progress);
-      if (progress >= 100) clearInterval(interval);
-    }, 18);
 
     // Instant Lenis scroll reset at transition midpoint
     const scrollTimer = setTimeout(() => {
@@ -62,7 +50,6 @@ export const PageTransitionOverlay: React.FC = () => {
     }, 720);
 
     return () => {
-      clearInterval(interval);
       clearTimeout(scrollTimer);
       clearTimeout(endTimer);
     };
@@ -91,33 +78,22 @@ export const PageTransitionOverlay: React.FC = () => {
                 className="relative h-full w-full bg-[#020626] border-r border-white/5 overflow-hidden"
               >
                 {/* Leading Crimson Razor Edge */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D22931] via-[#FAC344] to-[#D22931] shadow-[0_0_15px_#D22931]" />
-                
-                {/* Subtle cyber background line inside shutter column */}
-                <div className="absolute inset-0 bg-cyber-grid-dark opacity-20 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D22931] via-[#FAC344] to-[#D22931]" />
               </motion.div>
             ))}
           </div>
 
-          {/* Center Stage Cinematic HUD Display */}
+          {/* Center Stage Brand Transition Display */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: [0, 1, 1, 0], scale: [0.92, 1, 1, 0.97] }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: [0, 1, 1, 0], scale: [0.95, 1, 1, 0.98] }}
             transition={{
-              duration: 0.6,
+              duration: 0.55,
               times: [0, 0.35, 0.65, 1],
               ease: [0.16, 1, 0.3, 1],
             }}
             className="relative z-10 m-auto flex flex-col items-center justify-center text-center p-6 sm:p-10 max-w-xl"
           >
-            {/* Top Status Bar */}
-            <div className="flex items-center gap-3 text-xs font-mono font-bold tracking-widest text-[#FAC344] uppercase mb-4 px-3.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-[#D22931] animate-ping" />
-              <span>{routeInfo.code}</span>
-              <span className="text-white/40">&middot;</span>
-              <span className="font-mono text-white/90">{counter}% LOADED</span>
-            </div>
-
             {/* Destination Headline */}
             <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-white tracking-tight leading-tight">
               {routeInfo.title}

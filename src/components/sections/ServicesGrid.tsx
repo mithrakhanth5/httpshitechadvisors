@@ -219,12 +219,12 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-10 sm:mb-12">
-          <div className="services-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-mono font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D22931] animate-ping" />
+          <div className="services-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
             <span>Targeted Solution Areas &middot; 5 Canonical Practices</span>
           </div>
           <h2 className="services-header-anim font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
-            What we <span className="text-[#D22931]">solve</span>.
+            What we <span className="text-[#D22931]">solve.</span>
           </h2>
           <p className="services-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
             Explore our five connected solution practices. Hover over the showcase to hold on any solution, or let it slide sequentially through each practice.
@@ -243,7 +243,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                   goToSlide(idx);
                   setIsHovered(true);
                 }}
-                className={`relative px-4 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-2 overflow-hidden ${
+                className={`relative px-4 py-2.5 rounded-2xl text-xs font-sans font-semibold transition-all cursor-pointer flex items-center gap-2 overflow-hidden ${
                   isSelected
                     ? 'bg-[#020626] text-white shadow-lg border border-white/20 -translate-y-0.5'
                     : 'bg-white hover:bg-[#F8FAFC] text-[#556070] border border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs'
@@ -262,7 +262,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                     isSelected ? 'bg-[#D22931] shadow-[0_0_8px_#D22931]' : 'bg-[#DCE4EC]'
                   }`}
                 />
-                <span>0{idx + 1}. {s.title.split('&')[0].trim()}</span>
+                <span>{s.title.split('&')[0].trim()}</span>
               </button>
             );
           })}
@@ -295,11 +295,11 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                 <div className="lg:col-span-7 space-y-6">
                   {/* Badges */}
                   <div className="flex flex-wrap items-center gap-3">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D22931]/20 text-[#FAC344] text-xs font-mono font-bold uppercase tracking-wider border border-[#D22931]/30">
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D22931]/20 text-[#FAC344] text-xs font-semibold uppercase tracking-wider border border-[#D22931]/30">
                       <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
                       {currentService.tag}
                     </span>
-                    <span className="text-xs font-mono text-white/50">{currentService.badge}</span>
+                    <span className="text-xs text-white/60">{currentService.badge}</span>
                   </div>
 
                   {/* Title */}
@@ -314,11 +314,11 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
 
                   {/* Ecosystem Row */}
                   <div className="pt-2 flex flex-wrap items-center gap-2">
-                    <span className="text-xs font-mono text-white/50 mr-2">Ecosystem:</span>
+                    <span className="text-xs text-white/50 mr-2">Ecosystem:</span>
                     {currentService.tools.map((tool) => (
                       <span
                         key={tool}
-                        className="px-3 py-1 rounded-lg bg-white/10 text-white text-xs font-mono font-medium border border-white/10"
+                        className="px-3 py-1 rounded-lg bg-white/10 text-white text-xs font-medium border border-white/10"
                       >
                         {tool}
                       </span>
@@ -326,9 +326,9 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                   </div>
                 </div>
 
-                {/* Right Column: Exact Nested Frosted Card from Screenshot */}
+                {/* Right Column: Nested Frosted Card */}
                 <div className="lg:col-span-5 bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 space-y-6 shadow-inner backdrop-blur-sm">
-                  <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#FAC344]">
+                  <div className="text-xs font-semibold uppercase tracking-wider text-[#FAC344]">
                     {currentService.deliverablesHeader}
                   </div>
 
@@ -344,7 +344,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
 
                   {/* Bottom Action Footer */}
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                    <span className="font-mono font-semibold text-[#FAC344]">
+                    <span className="font-semibold text-[#FAC344]">
                       {currentService.leftFooter}
                     </span>
                     <button

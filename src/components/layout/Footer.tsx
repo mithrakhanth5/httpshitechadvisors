@@ -122,22 +122,22 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
                 <Link to="/methodology" className="hover:text-white transition-colors">
-                  01. Strategic Diagnosis
+                  Strategic Diagnosis
                 </Link>
               </li>
               <li>
                 <Link to="/methodology" className="hover:text-white transition-colors">
-                  02. Target Architecture
+                  Target Architecture
                 </Link>
               </li>
               <li>
                 <Link to="/methodology" className="hover:text-white transition-colors">
-                  03. Hands-On Delivery
+                  Hands-On Delivery
                 </Link>
               </li>
               <li>
                 <Link to="/methodology" className="hover:text-white transition-colors">
-                  04. Operational Handover
+                  Operational Handover
                 </Link>
               </li>
               <li>

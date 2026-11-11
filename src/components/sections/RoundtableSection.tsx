@@ -69,7 +69,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
             <span>Executive Community &middot; Since 2018</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Where technology leaders <span className="text-[#D22931]">compare notes</span>.
+            Where technology leaders <span className="text-[#D22931]">compare notes.</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             Since 2018, our closed-door executive roundtables have brought Pacific Northwest CIOs, CTOs, and CISOs together to discuss real enterprise outcomes under Chatham House Rules.
@@ -89,16 +89,13 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
               borderColor="rgba(250, 195, 68, 0.5)"
               className="bg-[#020626] text-white rounded-3xl p-8 sm:p-12 relative overflow-hidden flex flex-col justify-between shadow-2xl border border-white/10 group h-full"
             >
-              {/* Cyber Grid Background */}
-              <div className="absolute inset-0 bg-cyber-grid-dark opacity-35 pointer-events-none" />
-
               {/* Ambient Red Glow */}
-              <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#D22931]/20 blur-[100px] pointer-events-none animate-ambient-blob-1" />
+              <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#D22931]/15 blur-[100px] pointer-events-none animate-ambient-blob-1" />
 
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
-                  <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#FAC344] text-xs font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md">
-                    <span className="w-2 h-2 rounded-full bg-[#D22931] animate-ping" />
+                  <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#FAC344] text-xs font-semibold uppercase tracking-wider border border-white/15 backdrop-blur-md">
+                    <span className="w-2 h-2 rounded-full bg-[#D22931]" />
                     Next Executive Roundtable
                   </span>
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/60">

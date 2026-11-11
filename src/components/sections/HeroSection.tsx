@@ -60,9 +60,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
       id="top"
       className="relative pt-32 pb-12 sm:pb-14 flex flex-col justify-center items-center text-center overflow-hidden bg-white"
     >
-      {/* Subtle Static Cyber Grid Background Overlay */}
-      <div className="absolute inset-0 bg-cyber-grid opacity-40 pointer-events-none" />
-
       {/* Soft Static Ambient Gradient Highlights (No moving background animation) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute -top-[20%] left-[15%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#D22931]/6 to-[#FAC344]/6 blur-[120px]" />
@@ -71,10 +68,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
       </div>
 
       <div className="relative z-10 max-w-[1240px] mx-auto px-6 sm:px-10 flex flex-col items-center">
-        {/* Eyebrow Pill - Sleek High-Tech Badge per Section 8.1 */}
+        {/* Eyebrow Pill */}
         <div className="hero-eyebrow inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-xs mb-8 backdrop-blur-md">
           <Zap className="w-3.5 h-3.5 text-[#D22931]" />
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#020626]">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#020626]">
             Business &amp; Technology Solutions
           </span>
         </div>

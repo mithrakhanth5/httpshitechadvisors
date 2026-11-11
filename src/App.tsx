@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'motion/react';
 import { ReactLenis, type LenisRef } from 'lenis/react';
 import 'lenis/dist/lenis.css';
 import { gsap, ScrollTrigger } from './lib/gsap';
-import { CursorFollower } from './components/ui/CursorFollower';
 import { ScrollToTop } from './components/ui/ScrollToTop';
 import { PageTransitionOverlay } from './components/ui/PageTransitionOverlay';
 import { Navbar } from './components/layout/Navbar';
@@ -96,9 +95,6 @@ export function App() {
         <ScrollToTop />
         <PageTransitionOverlay />
         <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
-          {/* Feel-Good Custom Cursor Follower */}
-          <CursorFollower />
-
           {/* 1. Header & Navigation (Blurs on scroll with Sticky Announcement & Red Locked Indicator) */}
           <Navbar onOpenDiscuss={() => handleOpenDiscuss('not-sure')} />
 

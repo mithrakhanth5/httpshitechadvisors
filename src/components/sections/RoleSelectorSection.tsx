@@ -50,12 +50,12 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <div className="role-header max-w-3xl mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#DCE4EC] text-xs font-mono font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D22931] animate-ping" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#DCE4EC] text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
             <span>Executive Routing &middot; 6 Leadership Mandates</span>
           </div>
           <h2 className="font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
-            Solutions framed by <span className="text-[#D22931]">mandate</span>.
+            Solutions framed by <span className="text-[#D22931]">mandate.</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             {roleSelector.subhead}
