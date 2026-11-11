@@ -113,6 +113,23 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                   An intimate, closed-door dinner for 16 technology executives navigating the leap from experimental GenAI proofs-of-concept into high-throughput production with strict enterprise safety guardrails. Co-sponsored with J.P. Morgan Private Bank.
                 </p>
 
+                {/* 2D Vector Editorial Artwork on Amber Field */}
+                <div className="relative rounded-2xl overflow-hidden border border-white/15 shadow-xl my-6 bg-[#FAC344] group">
+                  <img
+                    src="./images/hitech-vector-ai-advisory.jpg"
+                    alt="Senior Technologist and Autonomous AI Agent Collaboration"
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-[#020626] font-semibold px-3 py-1.5 rounded-lg bg-white/95 backdrop-blur-md border border-black/10">
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-[#D22931]" />
+                      <span>Executive AI Forum &middot; Chatham House Rule</span>
+                    </span>
+                    <span className="text-[#D22931] font-bold">Seattle, WA</span>
+                  </div>
+                </div>
+
                 {/* Event Metadata */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/10">
                   <div className="flex items-center gap-2.5 text-xs text-white/80">

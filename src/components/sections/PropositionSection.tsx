@@ -88,16 +88,16 @@ export const PropositionSection: React.FC = () => {
               </Link>
             </div>
 
-            {/* Google-Style 3D Isometric Conceptual Architecture Pipeline */}
-            <div className="relative rounded-2xl overflow-hidden border border-[#DCE4EC] shadow-xl group mt-6 bg-[#020626]">
+            {/* Hand-Drawn Editorial 2D Vector Illustration: Strategy to Execution */}
+            <div className="relative rounded-2xl overflow-hidden border border-[#DCE4EC] shadow-xl group mt-6 bg-[#EBF2F7]">
               <img
-                src="./images/hitech-model-pipeline.jpg"
-                alt="Hitech Connected Model Architecture Pipeline"
+                src="./images/hitech-vector-strategy-collab.jpg"
+                alt="Hitech Advisors Strategy to Code Collaboration Pipeline"
                 className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020626]/80 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-white/90 px-3 py-1.5 rounded-lg bg-[#020626]/80 backdrop-blur-md border border-white/10">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020626]/70 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-white/95 px-3 py-1.5 rounded-lg bg-[#020626]/85 backdrop-blur-md border border-white/10">
                 <span className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
                   <span className="font-sans font-medium">Strategy to Code Pipeline</span>
