@@ -58,6 +58,7 @@ export const MethodologyShowcase: React.FC = () => {
   const [[activeStep, direction], setPage] = useState<[number, number]>([0, 0]);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const containerRef = useRef<HTMLElement | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
   const goToStep = useCallback((newStep: number) => {
     setPage(([curr]) => [newStep, newStep > curr ? 1 : -1]);
@@ -70,6 +71,21 @@ export const MethodologyShowcase: React.FC = () => {
   const prevStep = useCallback(() => {
     setPage(([curr]) => [(curr - 1 + STEPS.length) % STEPS.length, -1]);
   }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) nextStep();
+      else prevStep();
+    }
+    touchStartX.current = null;
+  };
 
   // Auto-advance presentation timer
   useEffect(() => {
@@ -195,10 +211,62 @@ export const MethodologyShowcase: React.FC = () => {
           />
         </div>
 
+        {/* Mobile Compact 4-Phase Horizontal Pill Tabs (< lg) */}
+        <div className="lg:hidden mb-5">
+          <div className="flex items-center justify-between mb-2.5">
+            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#556070]">
+              Phase 0{activeStep + 1} of 04
+            </span>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={prevStep}
+                className="p-1.5 rounded-lg bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 text-[#020626] transition-colors"
+                aria-label="Previous Phase"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={nextStep}
+                className="p-1.5 rounded-lg bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 text-[#020626] transition-colors"
+                aria-label="Next Phase"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory -mx-6 px-6 sm:-mx-10 sm:px-10">
+            {STEPS.map((step, idx) => {
+              const isSelected = idx === activeStep;
+              return (
+                <button
+                  key={step.step}
+                  onClick={() => goToStep(idx)}
+                  className={`snap-start flex-shrink-0 px-3.5 py-2 rounded-xl text-xs font-sans font-semibold transition-all duration-300 flex items-center gap-2 border cursor-pointer ${
+                    isSelected
+                      ? 'bg-[#020626] text-white border-white/20 shadow-md ring-2 ring-[#D22931]/30 scale-[1.02]'
+                      : 'bg-white text-[#556070] border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs'
+                  }`}
+                >
+                  <span
+                    className={`w-5 h-5 rounded-md font-mono text-[10px] font-bold flex items-center justify-center transition-colors ${
+                      isSelected ? 'bg-[#D22931] text-white' : 'bg-[#EBF2F7] text-[#556070]'
+                    }`}
+                  >
+                    {step.step}
+                  </span>
+                  <span className="whitespace-nowrap">{step.name}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* 4-Phase Interactive Tabs & Showcase Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Step Selector List (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col justify-between gap-3.5 h-full">
+          {/* Step Selector List (Hidden on mobile, 5 cols on desktop) */}
+          <div className="hidden lg:flex lg:col-span-5 flex-col justify-between gap-3.5 h-full">
             {STEPS.map((step, idx) => {
               const isSelected = idx === activeStep;
               return (
@@ -245,8 +313,12 @@ export const MethodologyShowcase: React.FC = () => {
             })}
           </div>
 
-          {/* Deep-Dive Showcase Card with Dynamic Border Beam (7 cols) */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-[#DCE4EC] shadow-2xl relative overflow-hidden flex flex-col justify-between h-full min-h-[460px]">
+          {/* Deep-Dive Showcase Card with Dynamic Border Beam (7 cols on desktop, full width on mobile) */}
+          <div
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-10 border border-[#DCE4EC] shadow-2xl relative overflow-hidden flex flex-col justify-between h-full min-h-0 sm:min-h-[440px] lg:min-h-[460px]"
+          >
             <BorderBeam size={260} duration={8} colorFrom="#D22931" colorTo="#FAC344" />
 
             {/* Soft Ambient Glow Inside Showcase */}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
+import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { BorderBeam } from '../ui/BorderBeam';
@@ -126,10 +126,32 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
     setProgress(0);
   }, []);
 
+  const prevSlide = useCallback(() => {
+    setSlide(([curr]) => [(curr - 1 + SERVICES.length) % SERVICES.length, -1]);
+    setProgress(0);
+  }, []);
+
   const goToSlide = useCallback((targetIdx: number) => {
     setSlide(([curr]) => [targetIdx, targetIdx > curr ? 1 : -1]);
     setProgress(0);
   }, []);
+
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
+    }
+    touchStartX.current = null;
+  };
 
   // Medium-speed auto-sliding loop with instant hover-to-hold
   useEffect(() => {
@@ -231,8 +253,33 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
           </p>
         </div>
 
+        {/* Mobile Indicator + Prev/Next Controls (< sm) */}
+        <div className="sm:hidden flex items-center justify-between mb-3">
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#556070]">
+            Practice 0{currentIdx + 1} of 05
+          </span>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={prevSlide}
+              className="p-1.5 rounded-lg bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 text-[#020626] transition-colors"
+              aria-label="Previous Practice"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={nextSlide}
+              className="p-1.5 rounded-lg bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 text-[#020626] transition-colors"
+              aria-label="Next Practice"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
         {/* 5-Practice Interactive Selector Tabs */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-8">
+        <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory -mx-6 px-6 sm:-mx-0 sm:px-0 sm:flex-wrap">
           {SERVICES.map((s, idx) => {
             const isSelected = idx === currentIdx;
             return (
@@ -243,7 +290,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                   goToSlide(idx);
                   setIsHovered(true);
                 }}
-                className={`relative px-4 py-2.5 rounded-2xl text-xs font-sans font-semibold transition-all cursor-pointer flex items-center gap-2 overflow-hidden ${
+                className={`snap-start flex-shrink-0 whitespace-nowrap relative px-4 py-2.5 rounded-2xl text-xs font-sans font-semibold transition-all cursor-pointer flex items-center gap-2 overflow-hidden ${
                   isSelected
                     ? 'bg-[#020626] text-white shadow-lg border border-white/20 -translate-y-0.5'
                     : 'bg-white hover:bg-[#F8FAFC] text-[#556070] border border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs'
@@ -273,8 +320,10 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
           className="relative w-full"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
-          <div className="relative rounded-[32px] p-8 sm:p-12 bg-gradient-to-br from-[#020626] to-[#0a1133] text-white border border-white/15 shadow-2xl overflow-hidden min-h-[480px] flex flex-col justify-between">
+          <div className="relative rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 lg:p-12 bg-gradient-to-br from-[#020626] to-[#0a1133] text-white border border-white/15 shadow-2xl overflow-hidden min-h-0 sm:min-h-[440px] lg:min-h-[480px] flex flex-col justify-between">
             {/* Subtle Red Specular Glare in Top Center as in screenshot */}
             <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-48 bg-[#D22931]/20 blur-[90px] rounded-full pointer-events-none" />
 
@@ -289,21 +338,21 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center h-full my-auto"
+                className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center h-full my-auto"
               >
                 {/* Left Column: Practice Identity, Title, Description, Ecosystem */}
-                <div className="lg:col-span-7 space-y-6">
+                <div className="lg:col-span-7 space-y-5 sm:space-y-6">
                   {/* Badges */}
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D22931]/20 text-[#FAC344] text-xs font-semibold uppercase tracking-wider border border-[#D22931]/30">
+                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#D22931]/20 text-[#FAC344] text-[11px] sm:text-xs font-semibold uppercase tracking-wider border border-[#D22931]/30">
                       <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
                       {currentService.tag}
                     </span>
-                    <span className="text-xs text-white/60">{currentService.badge}</span>
+                    <span className="text-[11px] sm:text-xs text-white/60">{currentService.badge}</span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-snug">
+                  <h3 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-5xl text-white tracking-tight leading-snug">
                     {currentService.title}
                   </h3>
 
@@ -327,7 +376,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                 </div>
 
                 {/* Right Column: Nested Frosted Card */}
-                <div className="lg:col-span-5 bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 space-y-6 shadow-inner backdrop-blur-sm">
+                <div className="lg:col-span-5 bg-white/5 p-5 sm:p-8 rounded-2xl border border-white/10 space-y-4 sm:space-y-6 shadow-inner backdrop-blur-sm">
                   <div className="text-xs font-semibold uppercase tracking-wider text-[#FAC344]">
                     {currentService.deliverablesHeader}
                   </div>
