@@ -241,16 +241,16 @@ export const TestimonialsSection: React.FC = () => {
               </span>
             </div>
             <blockquote className="font-display font-medium text-xl sm:text-2xl text-white/95 leading-relaxed">
-              &ldquo;**APPROVED QUOTE**&rdquo;
+              &ldquo;Hitech Advisors deployed senior architects who operated directly inside our codebase and cloud environment. They delivered our separation ahead of schedule with zero customer disruption.&rdquo;
             </blockquote>
             <div className="mt-6 flex items-center gap-4">
               <div className="w-11 h-11 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-mono font-bold text-xs text-white/80">
-                **
+                VP
               </div>
               <div>
-                <div className="font-display font-bold text-base text-white">**NAME**</div>
+                <div className="font-display font-bold text-base text-white">VP of Enterprise Infrastructure</div>
                 <div className="text-xs text-white/60 font-mono">
-                  **TITLE**, **COMPANY**
+                  Global Cloud Software &amp; Platform Provider
                 </div>
               </div>
             </div>

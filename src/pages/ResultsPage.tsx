@@ -3,6 +3,7 @@ import { PageHero } from '../components/ui/PageHero';
 import { TestimonialsSection } from '../components/sections/TestimonialsSection';
 import { NextPageBanner } from '../components/ui/NextPageBanner';
 import { CtaBanner } from '../components/sections/CtaBanner';
+import { ResultsHeroAnim } from '../components/animations/ResultsHeroAnim';
 
 interface ResultsPageProps {
   onOpenDiscuss: (area?: string) => void;
@@ -18,6 +19,7 @@ export const ResultsPage: React.FC<ResultsPageProps> = ({ onOpenDiscuss }) => {
         description="Authentic case study metrics and executive references from complex enterprise modernization engagements across North America."
         onOpenDiscuss={() => onOpenDiscuss('results')}
         ctaText="Discuss Your Results"
+        visual={<ResultsHeroAnim />}
       />
 
       <TestimonialsSection />
