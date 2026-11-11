@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { Calendar, MapPin, Lock, ArrowRight, BookOpen, Clock } from 'lucide-react';
+import { Calendar, MapPin, Lock, ArrowRight, BookOpen, Clock, Building } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { MagneticButton } from '../ui/MagneticButton';
 import { TiltCard } from '../ui/TiltCard';
+import { hitechContent } from '../../data/hitechContent';
 
 interface RoundtableSectionProps {
   onOpenDiscuss: (area?: string) => void;
@@ -105,11 +106,11 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                 </div>
 
                 <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight leading-snug">
-                  Production AI &amp; Governance in the Enterprise
+                  Governed AI Agents &amp; Multi-Step Production Workflows
                 </h3>
 
                 <p className="mt-4 text-sm sm:text-base text-white/75 leading-relaxed">
-                  An intimate, peer-to-peer dinner for 16 technology executives navigating the leap from experimental GenAI proofs-of-concept to governed, high-ROI enterprise production workloads.
+                  An intimate, closed-door dinner for 16 technology executives navigating the leap from experimental GenAI proofs-of-concept into high-throughput production with strict enterprise safety guardrails. Co-sponsored with J.P. Morgan Private Bank.
                 </p>
 
                 {/* Event Metadata */}
@@ -123,8 +124,8 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                     <span>Seattle, WA &middot; In-Person</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-white/80">
-                    <Lock className="w-4 h-4 text-[#FAC344]" />
-                    <span>Invitation Only</span>
+                    <Building className="w-4 h-4 text-[#FAC344]" />
+                    <span>Co-Host: J.P. Morgan Private Bank</span>
                   </div>
                 </div>
               </div>
@@ -147,77 +148,42 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
 
           {/* Perspective Articles Column */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-6">
-            {/* Article 1 */}
-            <div className="roundtable-card h-full">
-              <TiltCard
-                maxTilt={5}
-                scale={1.02}
-                spotlightColor="rgba(210, 41, 49, 0.08)"
-                borderColor="rgba(210, 41, 49, 0.4)"
-                className="bg-white p-7 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer"
-              >
-                <div>
-                  <div className="flex items-center justify-between text-xs text-[#556070] mb-3">
-                    <span className="font-bold uppercase tracking-wider text-[#D22931]">
-                      AI &amp; Automation
-                    </span>
-                    <span className="flex items-center gap-1 font-medium">
-                      <Clock className="w-3.5 h-3.5" />
-                      6 min read
-                    </span>
+            {hitechContent.eventsAndInsights.articles.slice(0, 2).map((art) => (
+              <div key={art.title} className="roundtable-card h-full">
+                <TiltCard
+                  maxTilt={5}
+                  scale={1.02}
+                  spotlightColor="rgba(210, 41, 49, 0.08)"
+                  borderColor="rgba(210, 41, 49, 0.4)"
+                  className="bg-white p-7 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer"
+                >
+                  <div>
+                    <div className="flex items-center justify-between text-xs text-[#556070] mb-3">
+                      <span className="font-semibold uppercase tracking-wider text-[#D22931]">
+                        {art.category}
+                      </span>
+                      <span className="flex items-center gap-1 font-medium">
+                        <Clock className="w-3.5 h-3.5" />
+                        {art.readTime}
+                      </span>
+                    </div>
+                    <h4 className="font-display font-bold text-lg text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug">
+                      {art.title}
+                    </h4>
+                    <p className="mt-2.5 text-xs sm:text-sm text-[#556070] leading-relaxed">
+                      {art.excerpt}
+                    </p>
                   </div>
-                  <h4 className="font-display font-bold text-lg text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug">
-                    What is an AI agent, and what should it do in your business?
-                  </h4>
-                  <p className="mt-2.5 text-xs sm:text-sm text-[#556070] leading-relaxed">
-                    How enterprise leadership teams separate generative AI marketing hype from durable, governed workflow automation that actually delivers ROI.
-                  </p>
-                </div>
-                <div className="mt-5 pt-4 border-t border-[#DCE4EC] flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
-                  <span className="flex items-center gap-1.5">
-                    <BookOpen className="w-3.5 h-3.5 text-[#D22931]" />
-                    Read Executive Perspective
-                  </span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
-                </div>
-              </TiltCard>
-            </div>
-
-            {/* Article 2 */}
-            <div className="roundtable-card h-full">
-              <TiltCard
-                maxTilt={5}
-                scale={1.02}
-                spotlightColor="rgba(210, 41, 49, 0.08)"
-                borderColor="rgba(210, 41, 49, 0.4)"
-                className="bg-white p-7 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer"
-              >
-                <div>
-                  <div className="flex items-center justify-between text-xs text-[#556070] mb-3">
-                    <span className="font-bold uppercase tracking-wider text-[#D22931]">
-                      Data &amp; Intelligence
+                  <div className="mt-5 pt-4 border-t border-[#DCE4EC] flex items-center justify-between text-xs font-semibold text-[#020626] group-hover:text-[#D22931]">
+                    <span className="flex items-center gap-1.5">
+                      <BookOpen className="w-3.5 h-3.5 text-[#D22931]" />
+                      <span>Read Executive Insight</span>
                     </span>
-                    <span className="flex items-center gap-1 font-medium">
-                      <Clock className="w-3.5 h-3.5" />
-                      7 min read
-                    </span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
                   </div>
-                  <h4 className="font-display font-bold text-lg text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug">
-                    Customer data platform or data warehouse? How to decide
-                  </h4>
-                  <p className="mt-2.5 text-xs sm:text-sm text-[#556070] leading-relaxed">
-                    Why CDPs and lakehouses solve distinct operational jobs, and how to architect the simplest data foundation that doesn&rsquo;t blow out your cloud budget.
-                  </p>
-                </div>
-                <div className="mt-5 pt-4 border-t border-[#DCE4EC] flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
-                  <span className="flex items-center gap-1.5">
-                    <BookOpen className="w-3.5 h-3.5 text-[#D22931]" />
-                    Read Executive Perspective
-                  </span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
-                </div>
-              </TiltCard>
-            </div>
+                </TiltCard>
+              </div>
+            ))}
           </div>
         </div>
       </div>

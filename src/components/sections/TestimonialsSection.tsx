@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { ArrowUpRight, Quote, ShieldCheck, ShoppingCart, Server, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { TiltCard } from '../ui/TiltCard';
 import { BorderBeam } from '../ui/BorderBeam';
 import { AnimatedCounter } from '../ui/AnimatedCounter';
+import { hitechContent } from '../../data/hitechContent';
 
 interface CaseStory {
   id: string;
@@ -68,6 +70,22 @@ const CASE_STORIES: CaseStory[] = [
 export const TestimonialsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [activeStoryIndex, setActiveStoryIndex] = useState<number>(0);
+  const [quoteIdx, setQuoteIdx] = useState<number>(0);
+  const [isQuoteHovered, setIsQuoteHovered] = useState<boolean>(false);
+
+  const testimonials = hitechContent.verifiedTestimonials || [];
+
+  const nextQuote = useCallback(() => {
+    if (testimonials.length > 0) {
+      setQuoteIdx((prev) => (prev + 1) % testimonials.length);
+    }
+  }, [testimonials.length]);
+
+  useEffect(() => {
+    if (isQuoteHovered || testimonials.length <= 1) return;
+    const timer = setInterval(nextQuote, 6000);
+    return () => clearInterval(timer);
+  }, [isQuoteHovered, nextQuote, testimonials.length]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -227,32 +245,75 @@ export const TestimonialsSection: React.FC = () => {
         })}
         </div>
 
-        {/* Executive Testimonial Quote Card with Border Beam & Ambient Motion */}
-        <div className="testimonial-quote-box relative rounded-3xl bg-[#020626] text-white p-8 sm:p-12 overflow-hidden shadow-2xl border border-white/10 group">
+        {/* Executive Testimonial Quote Suite with Border Beam & Verified References */}
+        <div
+          className="testimonial-quote-box relative rounded-3xl bg-[#020626] text-white p-8 sm:p-12 overflow-hidden shadow-2xl border border-white/10 group"
+          onMouseEnter={() => setIsQuoteHovered(true)}
+          onMouseLeave={() => setIsQuoteHovered(false)}
+        >
           <BorderBeam size={260} duration={14} colorFrom="#FAC344" colorTo="#D22931" />
           <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-[#FAC344]/15 blur-[90px] pointer-events-none animate-ambient-blob-1" />
 
-          <div className="relative z-10 max-w-3xl">
-            <div className="flex items-center gap-2 text-[#FAC344] mb-4">
-              <Quote className="w-8 h-8 opacity-75" />
-              <span className="text-xs font-bold uppercase tracking-widest text-white/70">
-                Client Perspective &middot; Testimonial
+          {/* Top Row: Category + Verified Client Selector Tabs */}
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <div className="flex items-center gap-2 text-[#FAC344]">
+              <Quote className="w-7 h-7 opacity-75" />
+              <span className="text-xs font-semibold uppercase tracking-widest text-white/70">
+                Verified Executive References &middot; Client Perspectives
               </span>
             </div>
-            <blockquote className="font-display font-medium text-xl sm:text-2xl text-white/95 leading-relaxed">
-              &ldquo;Hitech Advisors deployed senior architects who operated directly inside our codebase and cloud environment. They delivered our separation ahead of schedule with zero customer disruption.&rdquo;
-            </blockquote>
-            <div className="mt-6 flex items-center gap-4">
-              <div className="w-11 h-11 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-mono font-bold text-xs text-white/80">
-                VP
-              </div>
-              <div>
-                <div className="font-display font-bold text-base text-white">VP of Enterprise Infrastructure</div>
-                <div className="text-xs text-white/60 font-mono">
-                  Global Cloud Software &amp; Platform Provider
-                </div>
-              </div>
+
+            {/* 4 Client Selector Pills */}
+            <div className="flex flex-wrap items-center gap-2">
+              {testimonials.map((item, idx) => {
+                const isSelected = idx === quoteIdx;
+                return (
+                  <button
+                    key={item.company}
+                    onClick={() => setQuoteIdx(idx)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-[#D22931] text-white shadow-md'
+                        : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
+                    }`}
+                  >
+                    <span>{item.company}</span>
+                  </button>
+                );
+              })}
             </div>
+          </div>
+
+          {/* Active Testimonial Content with Smooth Fade Transition */}
+          <div className="relative z-10 max-w-3xl min-h-[160px] flex flex-col justify-between">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={testimonials[quoteIdx]?.company || 'quote'}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-6"
+              >
+                <blockquote className="font-display font-medium text-xl sm:text-2xl text-white/95 leading-relaxed">
+                  &ldquo;{testimonials[quoteIdx]?.quote}&rdquo;
+                </blockquote>
+
+                <div className="flex items-center gap-4 pt-2">
+                  <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center font-bold text-sm text-[#FAC344]">
+                    {testimonials[quoteIdx]?.initials}
+                  </div>
+                  <div>
+                    <div className="font-display font-bold text-base text-white">
+                      {testimonials[quoteIdx]?.author}
+                    </div>
+                    <div className="text-xs text-white/70">
+                      {testimonials[quoteIdx]?.title}, <span className="text-[#FAC344] font-medium">{testimonials[quoteIdx]?.company}</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

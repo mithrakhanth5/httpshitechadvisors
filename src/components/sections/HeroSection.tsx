@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MagneticButton } from '../ui/MagneticButton';
+import { AnimatedCounter } from '../ui/AnimatedCounter';
 import { gsap, animate3DTextReveal } from '../../lib/gsap';
 
 interface HeroSectionProps {
@@ -118,6 +119,42 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
           >
             <span>Explore Our Solutions</span>
           </Link>
+        </div>
+
+        {/* Verified Enterprise Proof Points Strip */}
+        <div className="mt-14 pt-8 border-t border-[#DCE4EC]/70 w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div>
+            <div className="font-display font-extrabold text-3xl sm:text-4xl text-[#020626] tracking-tight">
+              <AnimatedCounter value={10} suffix="+" duration={1.8} />
+            </div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-[#D22931] mt-1">
+              Years in Industry
+            </div>
+          </div>
+          <div>
+            <div className="font-display font-extrabold text-3xl sm:text-4xl text-[#020626] tracking-tight">
+              <AnimatedCounter value={100} suffix="+" duration={2.0} />
+            </div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-[#D22931] mt-1">
+              Completed Projects
+            </div>
+          </div>
+          <div>
+            <div className="font-display font-extrabold text-3xl sm:text-4xl text-[#020626] tracking-tight">
+              <AnimatedCounter value={95} suffix="%" duration={2.0} />
+            </div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-[#D22931] mt-1">
+              Client &amp; Talent Retention
+            </div>
+          </div>
+          <div>
+            <div className="font-display font-extrabold text-3xl sm:text-4xl text-[#020626] tracking-tight">
+              <AnimatedCounter value={3} suffix="x" duration={1.6} />
+            </div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-[#D22931] mt-1">
+              Faster Delivery Velocity
+            </div>
+          </div>
         </div>
       </div>
     </section>

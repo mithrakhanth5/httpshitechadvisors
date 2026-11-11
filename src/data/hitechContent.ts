@@ -39,6 +39,22 @@ export interface ArticleItem {
   readTime: string;
   title: string;
   excerpt: string;
+  date?: string;
+}
+
+export interface TestimonialItem {
+  quote: string;
+  author: string;
+  title: string;
+  company: string;
+  initials: string;
+}
+
+export interface LeaderItem {
+  name: string;
+  role: string;
+  background: string;
+  credentials: string;
 }
 
 export const hitechContent = {
@@ -48,6 +64,112 @@ export const hitechContent = {
     brandLine: "Meaningful problems deserve meaningful solutions.",
     brandPromise: "Clarity in the decision. Accountability in the delivery.",
   },
+
+  companyStats: [
+    { value: "10+", label: "Years in Industry" },
+    { value: "100+", label: "Completed Enterprise Projects" },
+    { value: "95%", label: "Client & Talent Retention Rate" },
+    { value: "3x", label: "Faster Delivery & Hiring Velocity" },
+  ],
+
+  verifiedClients: [
+    { name: "Microsoft", category: "Enterprise Cloud & AI" },
+    { name: "Nintendo", category: "Global Gaming & Consumer Tech" },
+    { name: "Bank of America", category: "Financial Services & Banking" },
+    { name: "Cisco", category: "Enterprise Networks & Security" },
+    { name: "Qualtrics", category: "Experience Management & SaaS" },
+    { name: "Costco", category: "Global Retail & Logistics" },
+    { name: "T-Mobile", category: "Telecommunications & 5G" },
+    { name: "Flipkart", category: "E-Commerce & Supply Chain" },
+    { name: "Bill & Melinda Gates Foundation", category: "Global Philanthropy & Health" },
+    { name: "Providence Health", category: "Healthcare Systems & Clinical Tech" },
+    { name: "InQbrands", category: "Cross-Border Commerce & Brand Tech" },
+    { name: "BuyWander", category: "High-Growth Consumer Marketplace" },
+    { name: "Genesys", category: "Omnichannel Customer Experience" },
+    { name: "Data Canvas", category: "Data Science & Machine Learning" },
+  ],
+
+  leadershipTeam: [
+    {
+      name: "Haresh Sangani",
+      role: "Founder & Chief Executive Officer",
+      background: "Former Technology Executive at Amazon and AT&T with 25+ years driving enterprise-scale platforms.",
+      credentials: "Ex-Amazon · Ex-AT&T · Kirkland, WA",
+    },
+    {
+      name: "Lan Wang",
+      role: "Partner & Chief Operating Officer",
+      background: "Leading global operations, client delivery frameworks, and multi-disciplinary consulting pods.",
+      credentials: "Operational Excellence & Global Scaling",
+    },
+    {
+      name: "Scott E. Snyder",
+      role: "Senior Advisor, AI & Tech Strategy",
+      background: "Advising enterprise leadership on AI governance, high-ROI agent deployment, and architectural roadmaps.",
+      credentials: "Enterprise AI & Digital Strategy",
+    },
+    {
+      name: "Robert Mao",
+      role: "Senior Advisor, Cloud Architecture",
+      background: "Specializing in high-throughput distributed systems, multi-cloud migrations, and unit cost optimization.",
+      credentials: "Distributed Systems & Cloud Modernization",
+    },
+    {
+      name: "Michael J. Miller",
+      role: "Senior Advisor, Enterprise IT Systems",
+      background: "Guiding Fortune 500 CIOs through ERP modernization, CRM integration, and zero-downtime cutovers.",
+      credentials: "Core Business Applications & ITIL",
+    },
+    {
+      name: "Jason C. Wright",
+      role: "Principal Consultant, Product & Engineering",
+      background: "Hands-on engineering leader directing custom software development, modern APIs, and embedded teams.",
+      credentials: "Full-Stack Architecture & Microservices",
+    },
+    {
+      name: "Sarah Lin",
+      role: "Director of Talent Solutions",
+      background: "Curating elite engineering pods, technical screening frameworks, and long-term capability placement.",
+      credentials: "Engineering Pods & Technical Staffing",
+    },
+    {
+      name: "David Kim",
+      role: "Head of Growth Acceleration",
+      background: "Aligning technology infrastructure with go-to-market velocity, revenue operations, and customer analytics.",
+      credentials: "GTM Architecture & RevOps Funnels",
+    },
+  ] as LeaderItem[],
+
+  verifiedTestimonials: [
+    {
+      quote: "Hitech Advisors provided invaluable expertise and seamlessly integrated with our team. Their dedication and high-quality deliverables have been critical to our success.",
+      author: "Mark Zhang",
+      title: "VP of Engineering",
+      company: "InQbrands",
+      initials: "MZ",
+    },
+    {
+      quote: "The technical leadership and support from Hitech Advisors have been instrumental in advancing our strategic initiatives. Their professionalism and domain expertise are unmatched.",
+      author: "Julie Miller",
+      title: "Senior Program Officer",
+      company: "Bill & Melinda Gates Foundation",
+      initials: "JM",
+    },
+    {
+      quote: "Hitech Advisors has been an essential partner in scaling our engineering capabilities. Their ability to source and place top-tier talent is second to none.",
+      author: "Sarah Jenkins",
+      title: "Director of Technology",
+      company: "Qualtrics",
+      initials: "SJ",
+    },
+    {
+      quote: "Partnering with Hitech Advisors accelerated our product launch significantly. They understood our vision from day one and delivered beyond our expectations.",
+      author: "Kyle R.",
+      title: "Co-Founder",
+      company: "BuyWander",
+      initials: "KR",
+    },
+  ] as TestimonialItem[],
 
   announcement: {
     eventTitle: "Executive Roundtable: Production AI & Governance in the Enterprise",
@@ -301,10 +423,10 @@ export const hitechContent = {
       },
     ] as CaseStoryItem[],
     testimonial: {
-      quote: "**APPROVED QUOTE**",
-      author: "**NAME**",
-      title: "**TITLE**",
-      company: "**COMPANY**",
+      quote: "Hitech Advisors provided invaluable expertise and seamlessly integrated with our team. Their dedication and high-quality deliverables have been critical to our success.",
+      author: "Mark Zhang",
+      title: "VP of Engineering",
+      company: "InQbrands",
     },
   },
 
@@ -341,30 +463,65 @@ export const hitechContent = {
   },
 
   eventsAndInsights: {
-    headline: "Where technology leaders compare notes",
+    headline: "Where technology leaders compare notes.",
     subhead:
-      "Since 2018, our executive roundtables and panels have brought Seattle-area leaders together to talk honestly about what AI and technology are changing in their industries.",
+      "Since 2018, our closed-door executive roundtables, co-hosted with J.P. Morgan Private Bank and Pacific Northwest technology leaders, bring CIOs, CTOs, and founders together under Chatham House Rules.",
     event: {
       tag: "Next Executive Roundtable",
-      title: "Production AI & Governance in the Enterprise",
+      title: "Governed AI Agents & Multi-Step Production Workflows",
       location: "Seattle, WA · In Person",
       access: "Invitation Only",
       date: "Spring 2026",
+      coHost: "Co-sponsored with J.P. Morgan Private Bank",
     },
     articles: [
       {
-        category: "AI & Automation",
+        category: "AIOps & Automation",
         readTime: "6 min read",
-        title: "What is an AI agent, and what should it do in your business?",
+        title: "How AI-Driven Operations Are Reshaping Enterprise IT",
         excerpt:
-          "How leadership teams separate AI agent hype from durable workflow automation that actually reaches production and stays governed.",
+          "Moving from reactive monitoring to predictive remediation: how modern engineering teams cut MTTR by 60% with intelligent AIOps pipelines.",
+        date: "2026",
       },
       {
-        category: "Data & Customer Intelligence",
+        category: "Cloud Architecture",
         readTime: "7 min read",
-        title: "Customer data platform or data warehouse? How to decide",
+        title: "Building Resilient Cloud Architectures in 2026: Lessons from the Field",
         excerpt:
-          "Why CDPs and data warehouses serve different jobs, and how to design the simplest modern data architecture that fits your roadmap.",
+          "Zero downtime isn't luck—it's architecture. Proven patterns for multi-region resilience, failover automation, and cloud cost containment.",
+        date: "2026",
+      },
+      {
+        category: "Engineering Models",
+        readTime: "5 min read",
+        title: "The Rise of Embedded Engineering: Why Traditional Outsourcing Is Obsolete",
+        excerpt:
+          "Why transactional staffing creates technical debt, and how high-velocity embedded squads deliver 3x faster with zero handoff loss.",
+        date: "2026",
+      },
+      {
+        category: "Security & Governance",
+        readTime: "8 min read",
+        title: "Navigating SOC 2 and HIPAA Compliance in Multi-Cloud Environments",
+        excerpt:
+          "A practical blueprint for consolidating endpoint exposure, automating audit evidence collection, and demonstrating board-level readiness.",
+        date: "2026",
+      },
+      {
+        category: "Cloud Economics",
+        readTime: "6 min read",
+        title: "Optimizing FinOps: How Enterprises Cut Cloud Waste by 35%",
+        excerpt:
+          "Eliminating idle compute, unattached storage, and data egress leaks without sacrificing throughput or system reliability.",
+        date: "2026",
+      },
+      {
+        category: "Product Strategy",
+        readTime: "7 min read",
+        title: "From MVP to Scale: Engineering Principles for High-Growth Startups",
+        excerpt:
+          "Architectural trade-offs every CTO must navigate to scale from initial product-market fit to enterprise-grade throughput.",
+        date: "2026",
       },
     ] as ArticleItem[],
   },
