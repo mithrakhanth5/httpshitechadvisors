@@ -69,13 +69,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
           muted
           playsInline
           poster="./images/hero-video-poster.jpg"
-          className="w-full h-full object-cover object-center opacity-70 sm:opacity-80 scale-100"
+          className="w-full h-full object-cover object-center opacity-95 sm:opacity-100 scale-100"
         >
           <source src="./videos/hero-background.mp4" type="video/mp4" />
         </video>
-        {/* Soft Radial Center Scrim: Keeps the video vibrant and clearly visible while ensuring text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.35)_45%,transparent_75%)]" />
+        {/* Minimal edge blend: Leaves video 100% visible while smoothly transitioning top and bottom */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/80 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/50 to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-[1240px] mx-auto px-6 sm:px-10 flex flex-col items-center">
@@ -90,7 +90,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
         {/* Staggered 3D Text Reveal Headline with Full Descender Clearance for "Strategy" (g & y) */}
         <h1
           ref={headlineRef}
-          className="font-display font-extrabold text-[clamp(2.75rem,6.5vw,5.5rem)] text-[#020626] leading-[1.14] tracking-tight max-w-5xl [perspective:1000px] pb-3"
+          className="font-display font-extrabold text-[clamp(2.75rem,6.5vw,5.5rem)] text-[#020626] leading-[1.14] tracking-tight max-w-5xl [perspective:1000px] pb-3 drop-shadow-[0_2px_14px_rgba(255,255,255,0.95)]"
         >
           <span className="hero-word inline-block mr-3 sm:mr-4 will-change-transform">Strategy</span>
           <span className="hero-word inline-block mr-3 sm:mr-4 will-change-transform">That</span>
@@ -103,8 +103,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
         </h1>
 
         {/* Subtext Fade-Up Container */}
-        <div ref={subtextRef} className="mt-8 max-w-3xl">
-          <p className="text-base sm:text-lg lg:text-xl text-[#556070] leading-relaxed">
+        <div ref={subtextRef} className="mt-8 max-w-3xl drop-shadow-[0_1px_10px_rgba(255,255,255,0.95)]">
+          <p className="text-base sm:text-lg lg:text-xl text-[#020626] font-medium leading-relaxed">
             Hitech Advisors helps companies make the right technology decisions and turn them into working results across business applications, data, cybersecurity, IT operations, AI and engineering. One accountable team, from the first conversation to measurable outcomes.
           </p>
         </div>
