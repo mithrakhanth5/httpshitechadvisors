@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import Lenis from 'lenis';
+import { ReactLenis, type LenisRef } from 'lenis/react';
+import 'lenis/dist/lenis.css';
 import { gsap, ScrollTrigger } from './lib/gsap';
 import { CursorFollower } from './components/ui/CursorFollower';
 import { ScrollToTop } from './components/ui/ScrollToTop';
@@ -52,28 +53,24 @@ function AnimatedAppRoutes({ onOpenDiscuss }: { onOpenDiscuss: (area?: string) =
 export function App() {
   const [isDiscussOpen, setIsDiscussOpen] = useState(false);
   const [selectedHelpArea, setSelectedHelpArea] = useState<string>('not-sure');
+  const lenisRef = useRef<LenisRef>(null);
 
-  // Initialize Lenis Smooth Inertia Scrolling & sync with GSAP ScrollTrigger
+  // Initialize Darkroom Engineering Lenis & synchronize with GSAP ScrollTrigger
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      smoothWheel: true,
-    });
-
-    lenis.on('scroll', ScrollTrigger.update);
-
-    const tickerCallback = (time: number) => {
-      lenis.raf(time * 1000);
+    const update = (time: number) => {
+      lenisRef.current?.lenis?.raf(time * 1000);
     };
 
-    gsap.ticker.add(tickerCallback);
+    gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
+    const lenisInstance = lenisRef.current?.lenis;
+    if (lenisInstance) {
+      lenisInstance.on('scroll', ScrollTrigger.update);
+    }
+
     return () => {
-      gsap.ticker.remove(tickerCallback);
-      lenis.destroy();
+      gsap.ticker.remove(update);
     };
   }, []);
 
@@ -83,29 +80,41 @@ export function App() {
   };
 
   return (
-    <HashRouter>
-      <ScrollToTop />
-      <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
-        {/* Feel-Good Custom Cursor Follower */}
-        <CursorFollower />
+    <ReactLenis
+      root
+      ref={lenisRef}
+      autoRaf={false}
+      options={{
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        smoothWheel: true,
+      }}
+    >
+      <HashRouter>
+        <ScrollToTop />
+        <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
+          {/* Feel-Good Custom Cursor Follower */}
+          <CursorFollower />
 
-        {/* 1. Header & Navigation (Blurs on scroll with Sticky Announcement & Red Locked Indicator) */}
-        <Navbar onOpenDiscuss={() => handleOpenDiscuss('not-sure')} />
+          {/* 1. Header & Navigation (Blurs on scroll with Sticky Announcement & Red Locked Indicator) */}
+          <Navbar onOpenDiscuss={() => handleOpenDiscuss('not-sure')} />
 
-        {/* Animated Routed Pages */}
-        <AnimatedAppRoutes onOpenDiscuss={handleOpenDiscuss} />
+          {/* Animated Routed Pages */}
+          <AnimatedAppRoutes onOpenDiscuss={handleOpenDiscuss} />
 
-        {/* Minimal Footer */}
-        <Footer onOpenDiscuss={() => handleOpenDiscuss('not-sure')} />
+          {/* Minimal Footer */}
+          <Footer onOpenDiscuss={() => handleOpenDiscuss('not-sure')} />
 
-        {/* Interactive Modals */}
-        <DiscussChallengeModal
-          isOpen={isDiscussOpen}
-          onClose={() => setIsDiscussOpen(false)}
-          presetHelpArea={selectedHelpArea}
-        />
-      </div>
-    </HashRouter>
+          {/* Interactive Modals */}
+          <DiscussChallengeModal
+            isOpen={isDiscussOpen}
+            onClose={() => setIsDiscussOpen(false)}
+            presetHelpArea={selectedHelpArea}
+          />
+        </div>
+      </HashRouter>
+    </ReactLenis>
   );
 }
 

@@ -162,7 +162,7 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
           /* Standard Modal Grid */
           <div className="grid grid-cols-1 lg:grid-cols-12">
             {/* Form Column (7 cols) */}
-            <div className="lg:col-span-7 p-6 sm:p-8 md:p-10 border-b lg:border-b-0 lg:border-r border-[#D9E0E6] max-h-[85vh] overflow-y-auto">
+            <div data-lenis-prevent className="lg:col-span-7 p-6 sm:p-8 md:p-10 border-b lg:border-b-0 lg:border-r border-[#D9E0E6] max-h-[85vh] overflow-y-auto">
               <div className="mb-6 space-y-2">
                 <div className="text-eyebrow">
                   Direct Inquiries
