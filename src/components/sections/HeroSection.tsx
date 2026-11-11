@@ -94,7 +94,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
         >
           <span className="hero-word inline-block mr-3 sm:mr-4 will-change-transform">Strategy</span>
           <span className="hero-word inline-block mr-3 sm:mr-4 will-change-transform">That</span>
-          <span className="hero-word inline-block will-change-transform">Connects</span>
+          <span className="hero-word inline-block mr-3 sm:mr-0 will-change-transform">Connects</span>
           <br className="hidden sm:inline" />
           <span className="hero-word inline-block mr-3 sm:mr-4 will-change-transform">to</span>
           <span className="hero-word inline-block text-[#D22931] will-change-transform">
