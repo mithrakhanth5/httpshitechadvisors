@@ -3,6 +3,7 @@ import { FileSpreadsheet, Bot, ShieldAlert } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
 import { TiltCard } from '../ui/TiltCard';
+import { SymmetryIntegrationMesh } from '../ui/SymmetryIntegrationMesh';
 
 export const ProblemStatementSection: React.FC = () => {
   const { problemStatement } = hitechContent;
@@ -111,6 +112,11 @@ export const ProblemStatementSection: React.FC = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* Symmetry-Inspired Connected Platform Integration Mesh */}
+        <div className="mt-12 sm:mt-16">
+          <SymmetryIntegrationMesh />
         </div>
       </div>
     </section>

@@ -3,6 +3,7 @@ import { ArrowRight, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MagneticButton } from '../ui/MagneticButton';
 import { gsap, animate3DTextReveal } from '../../lib/gsap';
+import { SymmetryInteractiveDeck } from '../ui/SymmetryInteractiveDeck';
 
 interface HeroSectionProps {
   onOpenDiscuss: () => void;
@@ -121,6 +122,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
           >
             <span>Explore Our Solutions</span>
           </Link>
+        </div>
+
+        {/* Symmetry-Inspired Live Interactive Execution Deck */}
+        <div className="w-full mt-10">
+          <SymmetryInteractiveDeck />
         </div>
       </div>
     </section>
