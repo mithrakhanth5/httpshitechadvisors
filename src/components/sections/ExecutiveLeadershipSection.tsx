@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Award, Briefcase, ChevronRight, UserCheck } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
-import { TiltCard } from '../ui/TiltCard';
 import { hitechContent, type LeaderItem } from '../../data/hitechContent';
 
 interface ExecutiveLeadershipSectionProps {
@@ -10,7 +9,6 @@ interface ExecutiveLeadershipSectionProps {
 
 export const ExecutiveLeadershipSection: React.FC<ExecutiveLeadershipSectionProps> = ({ onOpenDiscuss }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [activeLeaderIdx, setActiveLeaderIdx] = useState<number>(0);
   const leaders: LeaderItem[] = hitechContent.leadershipTeam || [];
 
   useEffect(() => {
@@ -20,34 +18,33 @@ export const ExecutiveLeadershipSection: React.FC<ExecutiveLeadershipSectionProp
     const ctx = gsap.context(() => {
       gsap.fromTo(
         section.querySelector('.lead-header'),
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: 0.7,
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
             start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
+            toggleActions: 'play none none none',
           },
         }
       );
 
       gsap.fromTo(
         section.querySelectorAll('.lead-card'),
-        { opacity: 0, y: 35, scale: 0.98 },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.85,
+          duration: 0.65,
           stagger: 0.08,
-          ease: 'power3.out',
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: section.querySelector('.lead-grid'),
             start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
+            toggleActions: 'play none none none',
           },
         }
       );
@@ -77,34 +74,16 @@ export const ExecutiveLeadershipSection: React.FC<ExecutiveLeadershipSectionProp
           </p>
         </div>
 
-        {/* 8 Executive Leadership Cards Grid */}
+        {/* 8 Executive Leadership Cards Grid (Simple Fade-and-Rise Cards) */}
         <div className="lead-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {leaders.map((leader, idx) => {
-            const isSelected = activeLeaderIdx === idx;
-
             return (
-              <div
-                key={leader.name}
-                className="lead-card h-full"
-                onMouseEnter={() => setActiveLeaderIdx(idx)}
-              >
-                <TiltCard
-                  maxTilt={5}
-                  scale={1.015}
-                  showBorderBeam={isSelected}
-                  borderBeamDuration={10}
-                  spotlightColor="rgba(210, 41, 49, 0.12)"
-                  borderColor="rgba(210, 41, 49, 0.45)"
-                  className={`p-6 sm:p-7 rounded-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer ${
-                    isSelected
-                      ? 'bg-white border-[#D22931] shadow-xl ring-2 ring-[#D22931]/15 -translate-y-1'
-                      : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-md'
-                  }`}
-                >
+              <div key={leader.name} className="lead-card h-full">
+                <div className="p-6 sm:p-7 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-md transition-colors duration-300 flex flex-col justify-between h-full">
                   <div>
                     {/* Top Initials / Role Badge */}
                     <div className="flex items-center justify-between mb-5">
-                      <div className="w-12 h-12 rounded-xl bg-[#020626] text-white flex items-center justify-center font-display font-bold text-base shadow-sm group-hover:bg-[#D22931] transition-colors duration-300">
+                      <div className="w-12 h-12 rounded-xl bg-[#020626] text-white flex items-center justify-center font-display font-bold text-base shadow-sm">
                         {leader.name
                           .split(' ')
                           .map((n) => n[0])
@@ -117,7 +96,7 @@ export const ExecutiveLeadershipSection: React.FC<ExecutiveLeadershipSectionProp
                     </div>
 
                     {/* Name & Title */}
-                    <h3 className="font-display font-bold text-lg text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-1">
+                    <h3 className="font-display font-bold text-lg text-[#020626] leading-snug mb-1">
                       {leader.name}
                     </h3>
                     <div className="text-xs font-medium text-[#D22931] mb-3">
@@ -137,7 +116,7 @@ export const ExecutiveLeadershipSection: React.FC<ExecutiveLeadershipSectionProp
                       <span className="truncate">{leader.credentials}</span>
                     </span>
                   </div>
-                </TiltCard>
+                </div>
               </div>
             );
           })}

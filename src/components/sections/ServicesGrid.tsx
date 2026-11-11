@@ -241,15 +241,11 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <div className="max-w-3xl mb-10 sm:mb-12">
-          <div className="services-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
-            <span>Targeted Solution Areas &middot; 5 Canonical Practices</span>
-          </div>
           <h2 className="services-header-anim font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
-            What we <span className="text-[#D22931]">solve.</span>
+            Core Solution <span className="text-[#D22931]">Practices.</span>
           </h2>
-          <p className="services-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
-            Explore our five connected solution practices. Hover over the showcase to hold on any solution, or let it slide sequentially through each practice.
+          <p className="services-header-anim text-base sm:text-lg text-[#556070] mt-3 leading-relaxed">
+            Select a practice below to inspect deliverables and supported platforms.
           </p>
         </div>
 

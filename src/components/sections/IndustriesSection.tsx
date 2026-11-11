@@ -83,14 +83,11 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenCont
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         <div className="ind-header max-w-3xl mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
-            <span>Sector Relevance</span>
-          </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Built for your <span className="text-[#D22931]">industry reality</span>
+            Six Core <span className="text-[#D22931]">Verticals.</span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
-            Technology problems look similar on paper and very different in practice. We bring cross-industry experience and people who know your sector's systems, regulations and customers.
+          <p className="mt-3 text-base sm:text-lg text-[#556070] leading-relaxed">
+            Representative operating challenges and domain contexts across the industries we serve.
           </p>
         </div>
 

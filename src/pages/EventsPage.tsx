@@ -3,7 +3,6 @@ import { PageHero } from '../components/ui/PageHero';
 import { RoundtableSection } from '../components/sections/RoundtableSection';
 import { NextPageBanner } from '../components/ui/NextPageBanner';
 import { CtaBanner } from '../components/sections/CtaBanner';
-import { EventsHeroAnim } from '../components/animations/EventsHeroAnim';
 
 interface EventsPageProps {
   onOpenDiscuss: (area?: string) => void;
@@ -19,7 +18,6 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onOpenDiscuss }) => {
         description="Hitech convenes technology executives, founders, and engineering leaders across the Seattle ecosystem on how AI and emerging technologies reshape industries."
         onOpenDiscuss={() => onOpenDiscuss('roundtable')}
         ctaText="Request Roundtable Invitation"
-        visual={<EventsHeroAnim />}
       />
 
       <RoundtableSection onOpenDiscuss={() => onOpenDiscuss('roundtable')} />

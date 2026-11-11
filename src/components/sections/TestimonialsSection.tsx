@@ -159,14 +159,11 @@ export const TestimonialsSection: React.FC = () => {
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
         <div className="cases-header max-w-3xl mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4">
-            <span>Client Impact</span>
-          </div>
           <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Results our clients can <span className="text-[#D22931]">measure</span>
+            Client impact by the <span className="text-[#D22931]">numbers.</span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
-            Real enterprise transformations delivered by senior practitioners: no theoretical frameworks, just operational proof.
+          <p className="mt-3 text-base sm:text-lg text-[#556070] leading-relaxed">
+            Highlighted production case studies and verified references from our client leadership partners.
           </p>
         </div>
 

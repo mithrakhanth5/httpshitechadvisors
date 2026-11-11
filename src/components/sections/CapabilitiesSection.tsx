@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Compass,
   Code2,
@@ -9,7 +9,6 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
-import { TiltCard } from '../ui/TiltCard';
 
 interface CapabilitiesSectionProps {
   onSelectCapability: (helpArea: string) => void;
@@ -120,7 +119,6 @@ const CAPABILITIES: CapabilityCard[] = [
 
 export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSelectCapability }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -129,35 +127,34 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
     const ctx = gsap.context(() => {
       gsap.fromTo(
         section.querySelectorAll('.cap-header-anim'),
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.1,
+          duration: 0.7,
+          stagger: 0.08,
           ease: EDITORIAL_EASE,
           scrollTrigger: {
             trigger: section,
             start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
+            toggleActions: 'play none none none',
           },
         }
       );
 
       gsap.fromTo(
         section.querySelectorAll('.cap-card-anim'),
-        { opacity: 0, y: 40, scale: 0.98 },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.85,
-          stagger: 0.12,
-          ease: 'power3.out',
+          duration: 0.65,
+          stagger: 0.1,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: section.querySelector('.cap-grid'),
             start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
+            toggleActions: 'play none none none',
           },
         }
       );
@@ -174,54 +171,32 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
-          <div className="max-w-3xl">
-            <div className="cap-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
-              <span>Delivery Engine &middot; Four Connected Capabilities</span>
-            </div>
-            <h2 className="cap-header-anim font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
-              How we <span className="text-[#D22931]">deliver.</span>
-            </h2>
-            <p className="cap-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
-              Our solution areas define what we solve. Our capabilities define how we deliver with senior pods, platform-neutral architecture, and zero handoff loss.
-            </p>
+        <div className="max-w-3xl mb-12 sm:mb-16">
+          <div className="cap-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
+            <span>Delivery Engine &middot; Four Connected Capabilities</span>
           </div>
-
-          {/* Quick Counter Badge */}
-          <div className="cap-header-anim flex items-center gap-2 self-start md:self-end px-4 py-2 rounded-2xl bg-[#020626] text-white border border-white/10 shadow-md">
-            <span className="w-2 h-2 rounded-full bg-[#D22931]" />
-            <span className="text-xs font-semibold">4 Production Capabilities</span>
-          </div>
+          <h2 className="cap-header-anim font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
+            How we <span className="text-[#D22931]">deliver.</span>
+          </h2>
+          <p className="cap-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
+            Our solution areas define what we solve. Our capabilities define how we deliver with senior pods, platform-neutral architecture, and zero handoff loss.
+          </p>
         </div>
 
-        {/* The 4 Capabilities Bento Grid in Dark Blue Screenshot Theme */}
+        {/* The 4 Capabilities Bento Grid (Simple Fade-and-Rise Cards, Zero Tilt/Hover Distortion) */}
         <div className="cap-grid grid grid-cols-1 md:grid-cols-2 gap-8">
-          {CAPABILITIES.map((cap, idx) => {
-            const isHovered = hoveredIdx === idx;
+          {CAPABILITIES.map((cap) => {
             return (
-              <div
-                key={cap.id}
-                className="cap-card-anim h-full"
-                onMouseEnter={() => setHoveredIdx(idx)}
-                onMouseLeave={() => setHoveredIdx(null)}
-              >
-                <TiltCard
-                  maxTilt={4}
-                  scale={1.012}
-                  showBorderBeam={isHovered}
-                  borderBeamDuration={8}
-                  spotlightColor="rgba(210, 41, 49, 0.18)"
-                  borderColor="rgba(210, 41, 49, 0.45)"
-                  className="p-8 sm:p-10 rounded-[30px] bg-gradient-to-br from-[#020626] to-[#0a1133] text-white border border-white/15 shadow-2xl flex flex-col justify-between group h-full cursor-pointer relative overflow-hidden transition-all duration-300"
-                >
-                  {/* Subtle Red Specular Glare matching reference screenshot */}
+              <div key={cap.id} className="cap-card-anim h-full">
+                <div className="p-8 sm:p-10 rounded-[30px] bg-gradient-to-br from-[#020626] to-[#0a1133] text-white border border-white/15 hover:border-[#D22931]/40 shadow-2xl flex flex-col justify-between h-full relative overflow-hidden transition-colors duration-300">
+                  {/* Subtle Red Specular Glare */}
                   <div className="absolute -top-16 -right-16 w-56 h-56 bg-[#D22931]/15 blur-[70px] rounded-full pointer-events-none" />
 
                   <div className="relative z-10">
                     {/* Top Meta Bar */}
                     <div className="flex items-center justify-between mb-6">
-                      <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shadow-2xs group-hover:scale-110 group-hover:bg-white/15 transition-all duration-300">
+                      <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shadow-2xs">
                         {cap.icon}
                       </div>
                       <span className="text-xs font-semibold px-3 py-1 rounded-full bg-white/10 text-[#FAC344] border border-white/15">
@@ -236,7 +211,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-white group-hover:text-[#FAC344] transition-colors leading-snug mb-3">
+                    <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-white leading-snug mb-3">
                       {cap.title}
                     </h3>
 
@@ -284,10 +259,10 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
                       className="group/btn inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white hover:text-[#FAC344] transition-colors cursor-pointer"
                     >
                       <span>{cap.ctaText}</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#D22931] group-hover/btn:translate-x-1.5 transition-transform" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#D22931] transition-transform group-hover/btn:translate-x-1" />
                     </button>
                   </div>
-                </TiltCard>
+                </div>
               </div>
             );
           })}

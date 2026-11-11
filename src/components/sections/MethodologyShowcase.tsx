@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Compass, GitMerge, Rocket, Award, CheckCircle2, ChevronLeft, ChevronRight, Pause, Play, Sparkles } from 'lucide-react';
+import { Compass, GitMerge, Rocket, Award, CheckCircle2, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { LaserCircuit } from '../ui/LaserCircuit';
@@ -56,7 +56,6 @@ const STEPS: Step[] = [
 
 export const MethodologyShowcase: React.FC = () => {
   const [[activeStep, direction], setPage] = useState<[number, number]>([0, 0]);
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const containerRef = useRef<HTMLElement | null>(null);
   const touchStartX = useRef<number | null>(null);
 
@@ -86,15 +85,6 @@ export const MethodologyShowcase: React.FC = () => {
     }
     touchStartX.current = null;
   };
-
-  // Auto-advance presentation timer
-  useEffect(() => {
-    if (!isPlaying) return;
-    const timer = setInterval(() => {
-      nextStep();
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [isPlaying, nextStep]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -151,37 +141,22 @@ export const MethodologyShowcase: React.FC = () => {
     <section
       ref={containerRef}
       id="methodology"
-      onMouseEnter={() => setIsPlaying(false)}
-      onMouseLeave={() => setIsPlaying(true)}
       className="py-14 sm:py-18 bg-[#EBF2F7] border-t border-[#DCE4EC] relative overflow-hidden"
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
-        {/* Header with Slide Control Toggles */}
+        {/* Header with Manual Phase Step Controls (Play button removed) */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
           <div className="max-w-3xl">
-            <div className="methodology-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D22931]/10 text-[#D22931] text-xs font-semibold uppercase tracking-wider mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
-              How We Work &middot; Delivery Methodology
-            </div>
             <h2 className="methodology-header-anim font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#020626] tracking-tight leading-tight">
-              Accountable delivery from <span className="text-[#D22931]">diagnosis to go-live.</span>
+              Four Structured Engagement <span className="text-[#D22931]">Phases.</span>
             </h2>
-            <p className="methodology-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
-              Our senior partners stay on the work. We combine strategic decision-making with hands-on systems engineering, ensuring zero handoff loss throughout the engagement lifecycle.
+            <p className="methodology-header-anim text-base sm:text-lg text-[#556070] mt-3 leading-relaxed">
+              Step through each phase from diagnostic clarity and target architecture to embedded delivery and team ownership.
             </p>
           </div>
 
           {/* Interactive Slide Controls */}
-          <div className="flex items-center gap-3 self-start md:self-end flex-shrink-0 bg-white p-2 rounded-2xl border border-[#DCE4EC] shadow-2xs">
-            <button
-              onClick={() => setIsPlaying(!isPlaying)}
-              className="p-2.5 rounded-xl hover:bg-[#EBF2F7] text-[#020626] transition-colors cursor-pointer"
-              aria-label={isPlaying ? 'Pause Auto-Play' : 'Start Auto-Play'}
-              title={isPlaying ? 'Pause Auto-Slide' : 'Start Auto-Slide'}
-            >
-              {isPlaying ? <Pause className="w-4 h-4 text-[#D22931]" /> : <Play className="w-4 h-4 text-[#020626]" />}
-            </button>
-            <div className="h-4 w-[1px] bg-[#DCE4EC]" />
+          <div className="hidden lg:flex items-center gap-2 self-start md:self-end flex-shrink-0 bg-white p-2 rounded-2xl border border-[#DCE4EC] shadow-2xs">
             <button
               onClick={prevStep}
               className="p-2.5 rounded-xl hover:bg-[#EBF2F7] text-[#020626] transition-colors cursor-pointer"
@@ -280,17 +255,6 @@ export const MethodologyShowcase: React.FC = () => {
                       : 'bg-white/70 hover:bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-md'
                   }`}
                 >
-                  {/* Active Progress Bar for Auto-Slide */}
-                  {isSelected && isPlaying && (
-                    <motion.div
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 6, ease: 'linear' }}
-                      style={{ transformOrigin: 'left' }}
-                      className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#D22931] to-[#FAC344]"
-                    />
-                  )}
-
                   <span
                     className={`font-mono font-bold text-sm px-3 py-1.5 rounded-xl flex-shrink-0 transition-all ${
                       isSelected

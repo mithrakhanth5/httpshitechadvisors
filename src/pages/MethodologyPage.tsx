@@ -3,7 +3,6 @@ import { PageHero } from '../components/ui/PageHero';
 import { MethodologyShowcase } from '../components/sections/MethodologyShowcase';
 import { NextPageBanner } from '../components/ui/NextPageBanner';
 import { CtaBanner } from '../components/sections/CtaBanner';
-import { MethodologyHeroAnim } from '../components/animations/MethodologyHeroAnim';
 
 interface MethodologyPageProps {
   onOpenDiscuss: (area?: string) => void;
@@ -19,7 +18,6 @@ export const MethodologyPage: React.FC<MethodologyPageProps> = ({ onOpenDiscuss 
         description="Our senior partners stay on the work. We combine strategic decision-making with hands-on systems engineering, ensuring zero handoff loss throughout the engagement lifecycle."
         onOpenDiscuss={() => onOpenDiscuss('methodology')}
         ctaText="Discuss Methodology"
-        visual={<MethodologyHeroAnim />}
       />
 
       <MethodologyShowcase />

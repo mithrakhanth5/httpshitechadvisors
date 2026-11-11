@@ -66,7 +66,7 @@ export const PropositionSection: React.FC = () => {
       className="relative py-14 sm:py-18 bg-white overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Proposition Narrative */}
           <div className="prop-narrative lg:col-span-5 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-2 shadow-2xs">
@@ -86,24 +86,6 @@ export const PropositionSection: React.FC = () => {
                 <span>See how an engagement works</span>
                 <ArrowRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-1 transition-transform" />
               </Link>
-            </div>
-
-            {/* Hand-Drawn Editorial 2D Vector Illustration: Strategy to Execution */}
-            <div className="relative rounded-2xl overflow-hidden border border-[#DCE4EC] shadow-xl group mt-6 bg-[#EBF2F7]">
-              <img
-                src="./images/hitech-vector-strategy-collab.jpg"
-                alt="Hitech Advisors Strategy to Code Collaboration Pipeline"
-                className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020626]/70 via-transparent to-transparent pointer-events-none" />
-              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-white/95 px-3 py-1.5 rounded-lg bg-[#020626]/85 backdrop-blur-md border border-white/10">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
-                  <span className="font-sans font-medium">Strategy to Code Pipeline</span>
-                </span>
-                <span className="text-[#FAC344] font-bold">Zero Handoff Loss</span>
-              </div>
             </div>
           </div>
 

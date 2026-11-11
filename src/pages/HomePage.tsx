@@ -2,7 +2,6 @@ import React from 'react';
 import { HeroSection } from '../components/sections/HeroSection';
 import { ProblemStatementSection } from '../components/sections/ProblemStatementSection';
 import { PropositionSection } from '../components/sections/PropositionSection';
-import { WhyHitechSection } from '../components/sections/WhyHitechSection';
 import { HomePathways } from '../components/sections/HomePathways';
 import { CtaBanner } from '../components/sections/CtaBanner';
 
@@ -22,13 +21,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenDiscuss }) => {
       {/* 3. The Hitech Model: One Partner from Decision to Delivery */}
       <PropositionSection />
 
-      {/* 4. Why Hitech: Four Differentiators */}
-      <WhyHitechSection />
-
-      {/* 5. Practice Directory & Routing Pathways to Dedicated Pages */}
+      {/* 4. Practice Directory & Routing Pathways to Dedicated Pages */}
       <HomePathways />
 
-      {/* 6. Conversion CTA Band */}
+      {/* 5. Conversion CTA Band */}
       <CtaBanner onOpenDiscuss={() => onOpenDiscuss('not-sure')} />
     </div>
   );
