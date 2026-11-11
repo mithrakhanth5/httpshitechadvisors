@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, UserCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, UserCheck, Sparkles, CheckCircle2, ShieldCheck, Compass } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
-import { TiltCard } from '../ui/TiltCard';
 import { BorderBeam } from '../ui/BorderBeam';
 import { hitechContent } from '../../data/hitechContent';
 
@@ -37,24 +36,6 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
           },
         }
       );
-
-      gsap.fromTo(
-        section.querySelectorAll('.role-card'),
-        { opacity: 0, y: 35, scale: 0.98 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          stagger: 0.08,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: section.querySelector('.roles-grid'),
-            start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
-          },
-        }
-      );
     }, section);
 
     return () => ctx.revert();
@@ -63,123 +44,161 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
   return (
     <section
       ref={sectionRef}
-      id="role-selector"
-      className="relative py-14 sm:py-18 bg-[#EBF2F7] border-t border-[#DCE4EC] overflow-hidden"
+      id="role-focus"
+      className="relative py-14 sm:py-20 bg-[#EBF2F7] border-t border-[#DCE4EC] overflow-hidden"
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
-        <div className="role-header max-w-3xl mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
-            <span>Executive Routing</span>
+        {/* Section Header */}
+        <div className="role-header max-w-3xl mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#DCE4EC] text-xs font-mono font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D22931] animate-ping" />
+            <span>Executive Routing &middot; 6 Leadership Mandates</span>
           </div>
-          <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
-            Solutions framed by <span className="text-[#D22931]">mandate</span>
+          <h2 className="font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
+            Solutions framed by <span className="text-[#D22931]">mandate</span>.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             {roleSelector.subhead}
           </p>
         </div>
 
-        {/* 6 Role Cards Grid with 3D Tilt */}
-        <div className="roles-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-          {roleSelector.roles.map((item, index) => {
-            const isSelected = activeRoleIndex === index;
-            return (
-              <div
-                key={item.role}
-                className="role-card h-full"
-                onMouseEnter={() => setActiveRoleIndex(index)}
-              >
-                <TiltCard
+        {/* Symmetry-Inspired Split-Screen Persona Showcase (Replaces 3x3 square boxes) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+          {/* Left Column: Interactive Role Selector Stack (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-3 h-full">
+            {roleSelector.roles.map((item, index) => {
+              const isSelected = activeRoleIndex === index;
+              return (
+                <button
+                  key={item.role}
                   onClick={() => setActiveRoleIndex(index)}
-                  maxTilt={6}
-                  scale={1.02}
-                  showBorderBeam={isSelected}
-                  borderBeamDuration={8}
-                  spotlightColor={isSelected ? 'rgba(210, 41, 49, 0.12)' : 'rgba(2, 6, 38, 0.05)'}
-                  borderColor={isSelected ? 'rgba(210, 41, 49, 0.6)' : 'rgba(210, 41, 49, 0.3)'}
-                  className={`p-7 rounded-2xl text-left transition-all duration-300 border cursor-pointer flex flex-col justify-between bg-white h-full ${
+                  onMouseEnter={() => setActiveRoleIndex(index)}
+                  className={`w-full p-4 sm:p-5 rounded-2xl text-left transition-all duration-300 flex items-center justify-between gap-4 cursor-pointer border ${
                     isSelected
-                      ? 'border-[#D22931] shadow-xl ring-2 ring-[#D22931]/20'
-                      : 'border-[#DCE4EC] hover:border-[#D22931]/50 shadow-2xs hover:shadow-md'
+                      ? 'bg-white border-[#D22931] shadow-xl ring-2 ring-[#D22931]/15 -translate-y-0.5'
+                      : 'bg-white/70 hover:bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-md'
                   }`}
+                  aria-label={`Select ${item.role}`}
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span
-                        className={`text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full transition-colors ${
-                          isSelected ? 'bg-[#D22931]/10 text-[#D22931]' : 'bg-[#EBF2F7] text-[#556070]'
-                        }`}
-                      >
-                        {isSelected ? 'Active Mandate' : 'Executive Role'}
-                      </span>
-                      <UserCheck
-                        className={`w-4 h-4 transition-colors ${
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    {/* Tactile Keycap Badge */}
+                    <span
+                      className={`font-mono font-bold text-xs px-2.5 py-1.5 rounded-xl flex-shrink-0 transition-colors ${
+                        isSelected
+                          ? 'bg-[#D22931] text-white shadow-xs'
+                          : 'bg-[#EBF2F7] text-[#556070] border border-[#DCE4EC]'
+                      }`}
+                    >
+                      0{index + 1}
+                    </span>
+                    <div className="min-w-0">
+                      <h3
+                        className={`font-display font-bold text-base leading-tight truncate transition-colors ${
                           isSelected ? 'text-[#D22931]' : 'text-[#020626]'
                         }`}
-                      />
+                      >
+                        {item.role}
+                      </h3>
+                      <p className="text-xs text-[#556070] mt-0.5 truncate">
+                        Connects to {item.linksTo}
+                      </p>
                     </div>
-                    <h3
-                      className={`font-display font-bold text-xl mb-2 leading-snug transition-colors ${
-                        isSelected ? 'text-[#D22931]' : 'text-[#020626]'
-                      }`}
-                    >
-                      {item.role}
-                    </h3>
-                    <p className="text-sm text-[#556070] leading-relaxed">{item.focus}</p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-[#DCE4EC] flex items-center justify-between text-xs">
-                    <span className="font-medium text-[#556070]">
-                      Links to <strong className="text-[#020626]">{item.linksTo}</strong>
-                    </span>
+                  {/* Active Indicator Pip */}
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
                     <span
-                      className={`font-bold transition-all flex items-center gap-1 ${
-                        isSelected ? 'text-[#D22931]' : 'text-[#020626] group-hover:text-[#D22931]'
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        isSelected ? 'bg-[#D22931] shadow-[0_0_8px_#D22931] scale-125' : 'bg-[#DCE4EC]'
                       }`}
-                    >
-                      {isSelected ? 'Focused ✓' : 'Select →'}
+                    />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right Column: Expansive Tactile Showcase Card (7 cols) */}
+          <div className="lg:col-span-7 bg-[#020626] text-white rounded-[32px] p-8 sm:p-12 shadow-2xl border border-white/10 relative overflow-hidden flex flex-col justify-between h-full min-h-[480px]">
+            <BorderBeam size={280} duration={10} colorFrom="#D22931" colorTo="#FAC344" />
+
+            {/* Ambient Red Glow in Background */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#D22931]/20 to-transparent rounded-full blur-3xl pointer-events-none" />
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeRole.role}
+                initial={{ opacity: 0, y: 18, filter: 'blur(4px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, y: -18, filter: 'blur(4px)' }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="relative z-10 space-y-6 flex flex-col justify-between h-full"
+              >
+                <div>
+                  {/* Status Banner */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#FAC344] text-xs font-mono font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md">
+                      <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
+                      Executive Mandate 0{activeRoleIndex + 1}
+                    </span>
+                    <span className="inline-flex items-center gap-2 text-xs font-mono text-white/60">
+                      <span className="w-2 h-2 rounded-full bg-[#40aa4a] animate-pulse" />
+                      Senior Advisory Pod Ready
                     </span>
                   </div>
-                </TiltCard>
-              </div>
-            );
-          })}
-        </div>
 
-        {/* Selected Role Action Banner with Reactive Motion & Border Beam */}
-        <div className="relative p-8 sm:p-10 rounded-3xl bg-[#020626] text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-8 shadow-2xl border border-white/10 overflow-hidden">
-          <BorderBeam size={220} duration={12} colorFrom="#D22931" colorTo="#FAC344" />
-          <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-[#D22931]/20 blur-[80px] pointer-events-none" />
+                  <h3 className="font-display font-extrabold text-2xl sm:text-4xl text-white tracking-tight leading-snug">
+                    {activeRole.role}
+                  </h3>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeRole.role}
-              initial={{ opacity: 0, y: 16, filter: 'blur(3px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -16, filter: 'blur(3px)' }}
-              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 space-y-2 max-w-2xl"
-            >
-              <div className="text-xs font-bold text-[#FAC344] uppercase tracking-widest flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#FAC344] animate-pulse" />
-                <span>Priority Focus for {activeRole.role}</span>
-              </div>
-              <h4 className="font-display font-bold text-2xl text-white">
-                {activeRole.focus}
-              </h4>
-              <p className="text-sm text-white/70">
-                Connecting strategic diagnosis with measurable delivery through {activeRole.linksTo}.
-              </p>
-            </motion.div>
-          </AnimatePresence>
+                  <p className="mt-4 text-base sm:text-lg text-white/80 leading-relaxed">
+                    {activeRole.focus}
+                  </p>
+                </div>
 
-          <button
-            onClick={() => onSelectRole(activeRole.helpArea)}
-            className="relative z-10 w-full sm:w-auto px-7 py-4 rounded-xl bg-[#D22931] hover:bg-[#b52027] text-white font-display font-bold text-sm tracking-wide transition-all shadow-md hover:shadow-xl flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer hover:scale-105 active:scale-95 duration-200"
-          >
-            <span>Discuss This Focus Area</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+                {/* Hitech Engagement Framework Pillars */}
+                <div className="space-y-3 pt-6 border-t border-white/10">
+                  <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#FAC344]">
+                    How Hitech Executes for this Mandate
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
+                      <CheckCircle2 className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
+                      <span>Direct Senior Partner engagement from day one</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
+                      <ShieldCheck className="w-4 h-4 text-[#FAC344] mt-0.5 flex-shrink-0" />
+                      <span>Objective vendor-neutral technology selection</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
+                      <Compass className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
+                      <span>Production engineering with zero handoff loss</span>
+                    </div>
+                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
+                      <UserCheck className="w-4 h-4 text-[#FAC344] mt-0.5 flex-shrink-0" />
+                      <span>Knowledge transfer so internal teams own the system</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom CTA Row */}
+                <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+                  <div className="text-xs font-mono text-white/60">
+                    <span>Practice: </span>
+                    <strong className="text-white font-semibold">{activeRole.linksTo}</strong>
+                  </div>
+
+                  <button
+                    onClick={() => onSelectRole(activeRole.helpArea)}
+                    className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#D22931] hover:bg-[#b52027] text-white font-display font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-2xl cursor-pointer hover:scale-105 active:scale-95 duration-200"
+                  >
+                    <span>Discuss This Mandate</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>

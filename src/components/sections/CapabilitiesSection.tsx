@@ -82,8 +82,8 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
           </p>
         </div>
 
-        {/* 4 Capability Cards in a 4-Column Grid with 3D Tilt */}
-        <div className="cap-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Symmetry-Inspired 2x2 Bento Architecture (Replaces uniform squished boxes) */}
+        <div className="cap-grid grid grid-cols-1 md:grid-cols-2 gap-8">
           {capabilities.cards.map((cap, idx) => {
             const isSelected = activeCapIndex === idx;
             return (
@@ -93,35 +93,44 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
                 onMouseEnter={() => setActiveCapIndex(idx)}
               >
                 <TiltCard
-                  maxTilt={6}
-                  scale={1.02}
+                  maxTilt={5}
+                  scale={1.015}
                   showBorderBeam={isSelected}
                   borderBeamDuration={10}
                   spotlightColor="rgba(210, 41, 49, 0.12)"
                   borderColor="rgba(210, 41, 49, 0.5)"
-                  className={`p-8 rounded-2xl transition-all duration-300 flex flex-col justify-between group h-full ${
+                  className={`p-8 sm:p-10 rounded-[28px] transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer ${
                     isSelected
                       ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
-                      : 'border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931]/40 hover:bg-white shadow-2xs hover:shadow-lg'
+                      : 'border-[#DCE4EC] bg-[#F8FAFC] hover:border-[#D22931]/40 hover:bg-white shadow-2xs hover:shadow-lg'
                   }`}
                 >
                   <div>
-                    <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-md transition-all duration-300 shadow-2xs">
-                      {capIcons[idx]}
+                    {/* Top Meta Bar */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-12 h-12 rounded-2xl bg-white border border-[#DCE4EC] flex items-center justify-center shadow-2xs group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+                        {capIcons[idx]}
+                      </div>
+                      <span className="font-mono text-xs font-bold px-3 py-1 rounded-full bg-[#EBF2F7] text-[#556070] border border-[#DCE4EC]">
+                        Capability 0{idx + 1}
+                      </span>
                     </div>
-                    <h3 className="font-display font-bold text-xl text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
+
+                    <h3 className="font-display font-extrabold text-2xl text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
                       {cap.title}
                     </h3>
-                    <p className="text-sm text-[#556070] leading-relaxed">{cap.line}</p>
+                    <p className="text-sm sm:text-base text-[#556070] leading-relaxed">
+                      {cap.line}
+                    </p>
                   </div>
 
-                  <div className="pt-6 mt-6 border-t border-[#DCE4EC]">
+                  <div className="pt-6 mt-8 border-t border-[#DCE4EC]">
                     <button
                       onClick={() => onSelectCapability(cap.helpArea)}
                       className="inline-flex items-center justify-between w-full font-display font-bold text-xs uppercase tracking-wider text-[#020626] group-hover:text-[#D22931] transition-colors cursor-pointer"
                     >
-                      <span>Explore capability</span>
-                      <ArrowRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-1 transition-transform" />
+                      <span>Explore Delivery Capability</span>
+                      <ArrowRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-1.5 transition-transform" />
                     </button>
                   </div>
                 </TiltCard>
