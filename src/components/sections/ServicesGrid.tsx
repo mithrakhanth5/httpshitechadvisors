@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2, ArrowRight, Sparkles, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { BorderBeam } from '../ui/BorderBeam';
@@ -126,11 +126,6 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
     setProgress(0);
   }, []);
 
-  const prevSlide = useCallback(() => {
-    setSlide(([curr]) => [(curr - 1 + SERVICES.length) % SERVICES.length, -1]);
-    setProgress(0);
-  }, []);
-
   const goToSlide = useCallback((targetIdx: number) => {
     setSlide(([curr]) => [targetIdx, targetIdx > curr ? 1 : -1]);
     setProgress(0);
@@ -222,59 +217,18 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
       className="py-14 sm:py-20 bg-white relative overflow-hidden"
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
-        {/* Section Header with Slide Loop Controls */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
-          <div className="max-w-3xl">
-            <div className="services-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-mono font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D22931] animate-ping" />
-              <span>Targeted Solution Areas &middot; 5 Canonical Practices</span>
-            </div>
-            <h2 className="services-header-anim font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
-              What we <span className="text-[#D22931]">solve</span>.
-            </h2>
-            <p className="services-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
-              Explore our five connected solution practices. Hover over the showcase to hold on any solution, or let it slide sequentially through each practice.
-            </p>
+        {/* Section Header */}
+        <div className="max-w-3xl mb-10 sm:mb-12">
+          <div className="services-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-mono font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D22931] animate-ping" />
+            <span>Targeted Solution Areas &middot; 5 Canonical Practices</span>
           </div>
-
-          {/* Interactive Slide Controls & Status */}
-          <div className="flex items-center gap-3 self-start md:self-end flex-shrink-0 bg-[#EBF2F7] p-2 rounded-2xl border border-[#DCE4EC] shadow-2xs">
-            {/* Live Hover/Loop Status Badge */}
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-[#DCE4EC] text-[11px] font-mono font-bold text-[#020626]">
-              {isHovered ? (
-                <>
-                  <Pause className="w-3 h-3 text-[#D22931]" />
-                  <span>Held on Slide 0{currentIdx + 1}</span>
-                </>
-              ) : (
-                <>
-                  <Play className="w-3 h-3 text-[#40aa4a] animate-pulse" />
-                  <span>Looping Slide 0{currentIdx + 1}</span>
-                </>
-              )}
-            </div>
-
-            <div className="h-4 w-[1px] bg-[#DCE4EC]" />
-
-            {/* Arrows & Counter */}
-            <button
-              onClick={prevSlide}
-              className="p-2 rounded-xl bg-white hover:bg-[#D22931] hover:text-white text-[#020626] border border-[#DCE4EC] transition-all cursor-pointer shadow-2xs"
-              aria-label="Previous Solution Slide"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <span className="font-mono text-xs font-bold text-[#020626] px-1">
-              0{currentIdx + 1} <span className="text-[#556070]">/ 05</span>
-            </span>
-            <button
-              onClick={nextSlide}
-              className="p-2 rounded-xl bg-white hover:bg-[#D22931] hover:text-white text-[#020626] border border-[#DCE4EC] transition-all cursor-pointer shadow-2xs"
-              aria-label="Next Solution Slide"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+          <h2 className="services-header-anim font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
+            What we <span className="text-[#D22931]">solve</span>.
+          </h2>
+          <p className="services-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
+            Explore our five connected solution practices. Hover over the showcase to hold on any solution, or let it slide sequentially through each practice.
+          </p>
         </div>
 
         {/* 5-Practice Interactive Selector Tabs */}
