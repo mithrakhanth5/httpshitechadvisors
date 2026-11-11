@@ -69,7 +69,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
           muted
           playsInline
           poster="./images/hero-video-poster.jpg"
-          className="w-full h-full object-cover object-center opacity-95 sm:opacity-100 scale-100"
+          className="w-full h-full object-cover object-center opacity-60 sm:opacity-65 scale-100"
         >
           <source src="./videos/hero-background.mp4" type="video/mp4" />
         </video>
