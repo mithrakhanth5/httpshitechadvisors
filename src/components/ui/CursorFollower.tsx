@@ -91,7 +91,7 @@ export const CursorFollower: React.FC = () => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
       const isButton = target.closest('a, button, input, select, textarea, [data-interactive]');
-      const isCard = target.closest('.card-hover-feelgood, [data-spotlight], .pillar-card, .ind-card, .why-card');
+      const isCard = target.closest('.card-hover-feelgood, [data-spotlight], .pillar-card, .ind-card, .why-card, .service-card-anim, .cap-card, .case-card, .role-card, .problem-card');
 
       if (isButton) {
         gsap.to(cursor, {

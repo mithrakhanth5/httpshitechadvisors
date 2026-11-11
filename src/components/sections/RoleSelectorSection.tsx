@@ -154,10 +154,10 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
           <AnimatePresence mode="wait">
             <motion.div
               key={activeRole.role}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: 16, filter: 'blur(3px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -16, filter: 'blur(3px)' }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 space-y-2 max-w-2xl"
             >
               <div className="text-xs font-bold text-[#FAC344] uppercase tracking-widest flex items-center gap-2">

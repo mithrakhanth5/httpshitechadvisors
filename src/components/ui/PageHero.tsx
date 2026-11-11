@@ -45,9 +45,9 @@ export const PageHero: React.FC<PageHeroProps> = ({
 
         {/* Display Headline with Stagger */}
         <motion.h1
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 26, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.75, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
           className="font-display font-extrabold text-[clamp(2.5rem,5.5vw,4.5rem)] text-[#020626] leading-[1.12] tracking-tight max-w-4xl pb-3"
         >
           {title}{' '}
@@ -60,9 +60,9 @@ export const PageHero: React.FC<PageHeroProps> = ({
 
         {/* Narrative Description Fade Up */}
         <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 20, filter: 'blur(3px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.75, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
           className="mt-4 max-w-2xl text-base sm:text-lg lg:text-xl text-[#556070] leading-relaxed"
         >
           {description}
@@ -71,9 +71,9 @@ export const PageHero: React.FC<PageHeroProps> = ({
         {/* Quick Action CTA with Magnetic Spring */}
         {onOpenDiscuss && (
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 18, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.75, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
             className="mt-8 flex items-center justify-center gap-4"
           >
             <MagneticButton

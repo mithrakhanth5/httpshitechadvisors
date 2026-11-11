@@ -28,10 +28,10 @@ function AnimatedAppRoutes({ onOpenDiscuss }: { onOpenDiscuss: (area?: string) =
     <AnimatePresence mode="wait">
       <motion.main
         key={location.pathname}
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -14 }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, y: 24, scale: 0.995, filter: 'blur(3px)' }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+        exit={{ opacity: 0, y: -20, scale: 0.995, filter: 'blur(3px)' }}
+        transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
         className="relative w-full"
       >
         <Routes location={location}>
