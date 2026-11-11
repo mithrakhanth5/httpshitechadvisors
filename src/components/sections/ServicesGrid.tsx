@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2 } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { TiltCard } from '../ui/TiltCard';
@@ -63,6 +63,7 @@ const SERVICES: ServiceCard[] = [
 
 export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [activeServiceId, setActiveServiceId] = useState<string>('ai');
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -132,21 +133,28 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
 
         {/* 5-Card Services Bento Grid with 3D Tilt & Dynamic Specular Glare */}
         <div className="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {SERVICES.map((service) => (
-            <div
-              key={service.id}
-              className="service-card-anim rounded-2xl h-full"
-            >
-              <TiltCard
-                onClick={() => onSelectDiscipline(service.id)}
-                maxTilt={6}
-                scale={1.02}
-                showBorderBeam={service.featured}
-                borderBeamDuration={10}
-                spotlightColor="rgba(210, 41, 49, 0.09)"
-                borderColor="rgba(210, 41, 49, 0.45)"
-                className="relative h-full p-8 rounded-2xl bg-[#EBF2F7] border border-[#DCE4EC] hover:border-[#D22931]/60 flex flex-col justify-between group cursor-pointer transition-all duration-300 shadow-2xs hover:shadow-2xl"
+          {SERVICES.map((service) => {
+            const isSelected = activeServiceId === service.id;
+            return (
+              <div
+                key={service.id}
+                className="service-card-anim rounded-2xl h-full"
+                onMouseEnter={() => setActiveServiceId(service.id)}
               >
+                <TiltCard
+                  onClick={() => onSelectDiscipline(service.id)}
+                  maxTilt={6}
+                  scale={1.02}
+                  showBorderBeam={isSelected}
+                  borderBeamDuration={10}
+                  spotlightColor="rgba(210, 41, 49, 0.12)"
+                  borderColor="rgba(210, 41, 49, 0.55)"
+                  className={`relative h-full p-8 rounded-2xl flex flex-col justify-between group cursor-pointer transition-all duration-300 ${
+                    isSelected
+                      ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
+                      : 'bg-[#EBF2F7] border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                  }`}
+                >
                 <div>
                   <div className="mb-6 flex items-center justify-between">
                     <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs flex items-center justify-center group-hover:scale-110 group-hover:-translate-y-1 group-hover:shadow-md transition-all duration-300">
@@ -190,7 +198,8 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                 </div>
               </TiltCard>
             </div>
-          ))}
+          );
+        })}
         </div>
       </div>
     </section>

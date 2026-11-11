@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
@@ -8,6 +8,7 @@ import { TiltCard } from '../ui/TiltCard';
 export const PropositionSection: React.FC = () => {
   const { proposition } = hitechContent;
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [activePillarIndex, setActivePillarIndex] = useState<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -90,33 +91,44 @@ export const PropositionSection: React.FC = () => {
 
           {/* Right Column: Three Value Pillars with 3D Tilt */}
           <div className="prop-pillars lg:col-span-7 space-y-5">
-            {proposition.pillars.map((pillar, idx) => (
-              <div key={pillar.title} className="pillar-card">
-                <TiltCard
-                  maxTilt={5}
-                  scale={1.015}
-                  showBorderBeam={idx === 0}
-                  borderBeamDuration={10}
-                  spotlightColor="rgba(210, 41, 49, 0.08)"
-                  borderColor="rgba(210, 41, 49, 0.45)"
-                  className="p-6 sm:p-7 rounded-2xl border border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931]/60 hover:bg-white shadow-2xs hover:shadow-2xl transition-all duration-300"
+            {proposition.pillars.map((pillar, idx) => {
+              const isSelected = activePillarIndex === idx;
+              return (
+                <div
+                  key={pillar.title}
+                  className="pillar-card"
+                  onMouseEnter={() => setActivePillarIndex(idx)}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="p-2.5 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs">
-                      {pillarIcons[idx]}
+                  <TiltCard
+                    maxTilt={5}
+                    scale={1.015}
+                    showBorderBeam={isSelected}
+                    borderBeamDuration={10}
+                    spotlightColor="rgba(210, 41, 49, 0.12)"
+                    borderColor="rgba(210, 41, 49, 0.5)"
+                    className={`p-6 sm:p-7 rounded-2xl transition-all duration-300 cursor-pointer ${
+                      isSelected
+                        ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-0.5'
+                        : 'border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="p-2.5 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs">
+                        {pillarIcons[idx]}
+                      </div>
+                      <div className="space-y-1.5 flex-1">
+                        <h3 className="font-display font-bold text-lg text-[#020626]">
+                          {pillar.title}
+                        </h3>
+                        <p className="text-sm text-[#556070] leading-relaxed">
+                          {pillar.body}
+                        </p>
+                      </div>
                     </div>
-                    <div className="space-y-1.5 flex-1">
-                      <h3 className="font-display font-bold text-lg text-[#020626]">
-                        {pillar.title}
-                      </h3>
-                      <p className="text-sm text-[#556070] leading-relaxed">
-                        {pillar.body}
-                      </p>
-                    </div>
-                  </div>
-                </TiltCard>
-              </div>
-            ))}
+                  </TiltCard>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

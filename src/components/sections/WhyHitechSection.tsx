@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Scale, Rocket, Award, Network } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
@@ -7,6 +7,7 @@ import { TiltCard } from '../ui/TiltCard';
 export const WhyHitechSection: React.FC = () => {
   const { whyHitech } = hitechContent;
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [activeReasonIndex, setActiveReasonIndex] = useState<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -75,29 +76,40 @@ export const WhyHitechSection: React.FC = () => {
         </div>
 
         <div className="why-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {whyHitech.reasons.map((item, idx) => (
-            <div key={item.title} className="why-card h-full">
-              <TiltCard
-                maxTilt={6}
-                scale={1.02}
-                showBorderBeam={idx === 1}
-                borderBeamDuration={10}
-                spotlightColor="rgba(210, 41, 49, 0.08)"
-                borderColor="rgba(210, 41, 49, 0.45)"
-                className="p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full"
+          {whyHitech.reasons.map((item, idx) => {
+            const isSelected = activeReasonIndex === idx;
+            return (
+              <div
+                key={item.title}
+                className="why-card h-full"
+                onMouseEnter={() => setActiveReasonIndex(idx)}
               >
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
-                    {reasonIcons[idx]}
+                <TiltCard
+                  maxTilt={6}
+                  scale={1.02}
+                  showBorderBeam={isSelected}
+                  borderBeamDuration={10}
+                  spotlightColor="rgba(210, 41, 49, 0.12)"
+                  borderColor="rgba(210, 41, 49, 0.5)"
+                  className={`p-8 rounded-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer ${
+                    isSelected
+                      ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
+                      : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                  }`}
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+                      {reasonIcons[idx]}
+                    </div>
+                    <h3 className="font-display font-bold text-lg text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-[#556070] leading-relaxed">{item.body}</p>
                   </div>
-                  <h3 className="font-display font-bold text-lg text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-[#556070] leading-relaxed">{item.body}</p>
-                </div>
-              </TiltCard>
-            </div>
-          ))}
+                </TiltCard>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

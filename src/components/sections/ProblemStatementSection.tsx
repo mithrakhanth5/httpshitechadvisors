@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FileSpreadsheet, Bot, ShieldAlert } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
@@ -7,6 +7,7 @@ import { TiltCard } from '../ui/TiltCard';
 export const ProblemStatementSection: React.FC = () => {
   const { problemStatement } = hitechContent;
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [activeProblemIndex, setActiveProblemIndex] = useState<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -74,31 +75,42 @@ export const ProblemStatementSection: React.FC = () => {
         </div>
 
         <div className="problem-cards-grid grid grid-cols-1 md:grid-cols-3 gap-8">
-          {problemStatement.cards.map((card, index) => (
-            <div key={card.id} className="problem-card h-full">
-              <TiltCard
-                maxTilt={6}
-                scale={1.02}
-                showBorderBeam={index === 0}
-                borderBeamDuration={10}
-                spotlightColor="rgba(210, 41, 49, 0.08)"
-                borderColor="rgba(210, 41, 49, 0.45)"
-                className="p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full"
+          {problemStatement.cards.map((card, index) => {
+            const isSelected = activeProblemIndex === index;
+            return (
+              <div
+                key={card.id}
+                className="problem-card h-full"
+                onMouseEnter={() => setActiveProblemIndex(index)}
               >
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
-                    {cardIcons[index]}
+                <TiltCard
+                  maxTilt={6}
+                  scale={1.02}
+                  showBorderBeam={isSelected}
+                  borderBeamDuration={10}
+                  spotlightColor="rgba(210, 41, 49, 0.12)"
+                  borderColor="rgba(210, 41, 49, 0.5)"
+                  className={`p-8 rounded-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer ${
+                    isSelected
+                      ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
+                      : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                  }`}
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+                      {cardIcons[index]}
+                    </div>
+                    <h3 className="font-display font-bold text-xl text-[#020626] leading-snug tracking-tight mb-4 group-hover:text-[#D22931] transition-colors">
+                      {card.title}
+                    </h3>
                   </div>
-                  <h3 className="font-display font-bold text-xl text-[#020626] leading-snug tracking-tight mb-4 group-hover:text-[#D22931] transition-colors">
-                    {card.title}
-                  </h3>
-                </div>
-                <p className="text-sm text-[#556070] leading-relaxed pt-5 border-t border-[#DCE4EC]">
-                  {card.body}
-                </p>
-              </TiltCard>
-            </div>
-          ))}
+                  <p className="text-sm text-[#556070] leading-relaxed pt-5 border-t border-[#DCE4EC]">
+                    {card.body}
+                  </p>
+                </TiltCard>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

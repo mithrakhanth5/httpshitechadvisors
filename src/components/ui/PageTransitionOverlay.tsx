@@ -29,7 +29,7 @@ export const PageTransitionOverlay: React.FC = () => {
 
     const endTimer = setTimeout(() => {
       setIsTransitioning(false);
-    }, 620);
+    }, 640);
 
     return () => {
       clearTimeout(scrollTimer);
@@ -41,34 +41,32 @@ export const PageTransitionOverlay: React.FC = () => {
     <AnimatePresence mode="wait">
       {isTransitioning && (
         <div
-          className="fixed inset-0 z-50 pointer-events-none flex flex-col justify-end"
+          className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden"
           aria-hidden="true"
         >
           {/* Top Layer - Crimson Red Primary Lead (#D22931) */}
           <motion.div
-            initial={{ scaleY: 0 }}
-            animate={{ scaleY: [0, 1, 1, 0] }}
+            initial={{ y: '100%' }}
+            animate={{ y: ['100%', '0%', '0%', '-100%'] }}
             transition={{
-              duration: 0.6,
-              times: [0, 0.45, 0.55, 1],
+              duration: 0.62,
+              times: [0, 0.42, 0.58, 1],
               ease: [0.76, 0, 0.24, 1],
             }}
-            style={{ transformOrigin: 'bottom' }}
-            className="fixed inset-0 bg-[#D22931]"
+            className="fixed inset-0 bg-[#D22931] z-[9998]"
           />
 
           {/* Secondary Shutter - Deep Navy Brand Accent (#020626) */}
           <motion.div
-            initial={{ scaleY: 0 }}
-            animate={{ scaleY: [0, 1, 1, 0] }}
+            initial={{ y: '100%' }}
+            animate={{ y: ['100%', '0%', '0%', '-100%'] }}
             transition={{
-              duration: 0.6,
+              duration: 0.62,
               delay: 0.05,
-              times: [0, 0.45, 0.55, 1],
+              times: [0, 0.42, 0.58, 1],
               ease: [0.76, 0, 0.24, 1],
             }}
-            style={{ transformOrigin: 'bottom' }}
-            className="fixed inset-0 bg-[#020626] flex items-center justify-center shadow-2xl"
+            className="fixed inset-0 bg-[#020626] flex items-center justify-center shadow-2xl z-[9999]"
           >
             {/* Center Brand Monogram Flash */}
             <motion.div
@@ -77,7 +75,7 @@ export const PageTransitionOverlay: React.FC = () => {
               transition={{ duration: 0.5, times: [0, 0.35, 0.65, 1] }}
               className="flex items-center gap-3 text-white font-display font-extrabold text-2xl tracking-tight"
             >
-              <span className="w-3 h-3 rounded-full bg-[#D22931] shadow-[0_0_12px_#D22931]" />
+              <span className="w-3.5 h-3.5 rounded-full bg-[#D22931] shadow-[0_0_16px_#D22931]" />
               <span>Hitech Advisors</span>
             </motion.div>
           </motion.div>

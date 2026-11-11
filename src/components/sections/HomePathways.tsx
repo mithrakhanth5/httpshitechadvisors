@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowRight, Layers, Users, Zap, Compass, CheckCircle2, Building2, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { TiltCard } from '../ui/TiltCard';
 
 export const HomePathways: React.FC = () => {
+  const [activePathwayIndex, setActivePathwayIndex] = useState<number>(0);
   const pathways = [
     {
       title: 'Enterprise Solutions',
@@ -83,17 +84,28 @@ export const HomePathways: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {pathways.map((item) => (
-            <Link key={item.path} to={item.path} className="group block h-full">
-              <TiltCard
-                maxTilt={6}
-                scale={1.02}
-                showBorderBeam={item.featured}
-                borderBeamDuration={10}
-                spotlightColor="rgba(210, 41, 49, 0.08)"
-                borderColor="rgba(210, 41, 49, 0.45)"
-                className="h-full p-8 rounded-2xl bg-white border border-[#DCE4EC] hover:border-[#D22931]/60 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between"
+          {pathways.map((item, idx) => {
+            const isSelected = activePathwayIndex === idx;
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="group block h-full"
+                onMouseEnter={() => setActivePathwayIndex(idx)}
               >
+                <TiltCard
+                  maxTilt={6}
+                  scale={1.02}
+                  showBorderBeam={isSelected}
+                  borderBeamDuration={10}
+                  spotlightColor="rgba(210, 41, 49, 0.1)"
+                  borderColor="rgba(210, 41, 49, 0.5)"
+                  className={`h-full p-8 rounded-2xl transition-all duration-300 flex flex-col justify-between ${
+                    isSelected
+                      ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
+                      : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                  }`}
+                >
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <div className="w-11 h-11 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
@@ -116,7 +128,8 @@ export const HomePathways: React.FC = () => {
                 </div>
               </TiltCard>
             </Link>
-          ))}
+          );
+        })}
         </div>
       </div>
     </section>

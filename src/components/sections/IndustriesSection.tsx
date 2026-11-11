@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { 
   Building2, 
   ShoppingCart, 
@@ -19,6 +19,7 @@ interface IndustriesSectionProps {
 export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenContact }) => {
   const { industries } = hitechContent;
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [activeIndustryIndex, setActiveIndustryIndex] = useState<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -95,33 +96,44 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onOpenCont
 
         {/* 6 Industry Tiles Grid with 3D Tilt */}
         <div className="ind-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {industries.items.map((ind, idx) => (
-            <div key={ind.name} className="ind-card h-full">
-              <TiltCard
-                maxTilt={6}
-                scale={1.02}
-                showBorderBeam={idx === 0} // High-tech sector card gets border beam
-                borderBeamDuration={10}
-                spotlightColor="rgba(210, 41, 49, 0.08)"
-                borderColor="rgba(210, 41, 49, 0.45)"
-                className="p-8 rounded-2xl bg-[#EBF2F7] border border-[#DCE4EC] hover:border-[#D22931]/60 hover:bg-white shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group h-full"
+          {industries.items.map((ind, idx) => {
+            const isSelected = activeIndustryIndex === idx;
+            return (
+              <div
+                key={ind.name}
+                className="ind-card h-full"
+                onMouseEnter={() => setActiveIndustryIndex(idx)}
               >
-                <div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] flex items-center justify-center shadow-2xs group-hover:scale-110 group-hover:bg-[#EBF2F7] transition-all duration-300">
-                      {industryIcons[idx]}
+                <TiltCard
+                  maxTilt={6}
+                  scale={1.02}
+                  showBorderBeam={isSelected}
+                  borderBeamDuration={10}
+                  spotlightColor="rgba(210, 41, 49, 0.12)"
+                  borderColor="rgba(210, 41, 49, 0.5)"
+                  className={`p-8 rounded-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer ${
+                    isSelected
+                      ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
+                      : 'border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-white border border-[#DCE4EC] flex items-center justify-center shadow-2xs group-hover:scale-110 group-hover:bg-[#EBF2F7] transition-all duration-300">
+                        {industryIcons[idx]}
+                      </div>
+                      <h3 className="font-display font-bold text-xl text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug">
+                        {ind.name}
+                      </h3>
                     </div>
-                    <h3 className="font-display font-bold text-xl text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug">
-                      {ind.name}
-                    </h3>
+                    <p className="text-sm text-[#556070] leading-relaxed pt-4 border-t border-[#DCE4EC]">
+                      <strong className="text-[#020626] font-semibold">Typical challenges:</strong> {ind.challenges}
+                    </p>
                   </div>
-                  <p className="text-sm text-[#556070] leading-relaxed pt-4 border-t border-[#DCE4EC]">
-                    <strong className="text-[#020626] font-semibold">Typical challenges:</strong> {ind.challenges}
-                  </p>
-                </div>
-              </TiltCard>
-            </div>
-          ))}
+                </TiltCard>
+              </div>
+            );
+          })}
         </div>
 
         {/* Closing Prompt Banner */}

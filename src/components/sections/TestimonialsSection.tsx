@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Quote, ShieldCheck, ShoppingCart, Server, CheckCircle2 } from 'lucide-react';
 import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
 import { TiltCard } from '../ui/TiltCard';
@@ -67,6 +67,7 @@ const CASE_STORIES: CaseStory[] = [
 
 export const TestimonialsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const [activeStoryIndex, setActiveStoryIndex] = useState<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -153,17 +154,27 @@ export const TestimonialsSection: React.FC = () => {
 
         {/* 3 Quantified Case Studies Grid with 3D Tilt & Specular Glare */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {CASE_STORIES.map((item, index) => (
-            <div key={item.id} className="case-card h-full">
-              <TiltCard
-                maxTilt={6}
-                scale={1.02}
-                showBorderBeam={index === 0}
-                borderBeamDuration={9}
-                spotlightColor="rgba(210, 41, 49, 0.08)"
-                borderColor="rgba(210, 41, 49, 0.45)"
-                className="p-8 rounded-2xl border border-[#DCE4EC] hover:border-[#D22931]/60 bg-white shadow-2xs hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full"
+          {CASE_STORIES.map((item, index) => {
+            const isSelected = activeStoryIndex === index;
+            return (
+              <div
+                key={item.id}
+                className="case-card h-full"
+                onMouseEnter={() => setActiveStoryIndex(index)}
               >
+                <TiltCard
+                  maxTilt={6}
+                  scale={1.02}
+                  showBorderBeam={isSelected}
+                  borderBeamDuration={9}
+                  spotlightColor="rgba(210, 41, 49, 0.12)"
+                  borderColor="rgba(210, 41, 49, 0.55)"
+                  className={`p-8 rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full ${
+                    isSelected
+                      ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
+                      : 'border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                  }`}
+                >
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-bold text-[#020626]">
@@ -212,7 +223,8 @@ export const TestimonialsSection: React.FC = () => {
                 </div>
               </TiltCard>
             </div>
-          ))}
+          );
+        })}
         </div>
 
         {/* Executive Testimonial Quote Card with Border Beam & Ambient Motion */}
