@@ -1,10 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Layers, Users, Zap, Compass, CheckCircle2, Building2, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { TiltCard } from '../ui/TiltCard';
+import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 
 export const HomePathways: React.FC = () => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
   const [activePathwayIndex, setActivePathwayIndex] = useState<number>(0);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const cleanHeading = animateMaskedLines(headingRef.current, {
+      trigger: section,
+      start: 'top 84%',
+      duration: 0.85,
+      stagger: 0.1,
+    });
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        section.querySelectorAll('.pathway-card-anim'),
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.72,
+          stagger: 0.06,
+          ease: SYM_EASE.snappy,
+          scrollTrigger: {
+            trigger: section.querySelector('.pathway-grid'),
+            start: 'top 86%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }, section);
+
+    return () => {
+      cleanHeading();
+      ctx.revert();
+    };
+  }, []);
   const pathways = [
     {
       title: 'Enterprise Solutions',
@@ -66,15 +104,21 @@ export const HomePathways: React.FC = () => {
   ];
 
   return (
-    <section className="py-14 sm:py-18 bg-[#EBF2F7] border-t border-[#DCE4EC] relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="py-14 sm:py-18 bg-[#EBF2F7] border-t border-[#DCE4EC] relative overflow-hidden"
+    >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         <div className="max-w-3xl mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
             <span>Explore Hitech Advisors</span>
           </div>
-          <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
+          <h2
+            ref={headingRef}
+            className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight"
+          >
             Dedicated Practices.{' '}
-            <span className="text-[#D22931] font-display font-extrabold inline-block">
+            <span className="text-[#D22931] font-display font-extrabold">
               One Accountable Partner.
             </span>
           </h2>
@@ -83,53 +127,47 @@ export const HomePathways: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="pathway-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {pathways.map((item, idx) => {
             const isSelected = activePathwayIndex === idx;
             return (
               <Link
                 key={item.path}
                 to={item.path}
-                className="group block h-full"
+                className="pathway-card-anim group block h-full"
                 onMouseEnter={() => setActivePathwayIndex(idx)}
               >
-                <TiltCard
-                  maxTilt={6}
-                  scale={1.02}
-                  showBorderBeam={isSelected}
-                  borderBeamDuration={10}
-                  spotlightColor="rgba(210, 41, 49, 0.1)"
-                  borderColor="rgba(210, 41, 49, 0.5)"
-                  className={`h-full p-8 rounded-2xl transition-all duration-300 flex flex-col justify-between ${
+                <div
+                  className={`h-full p-6 sm:p-8 rounded-2xl border transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between ${
                     isSelected
-                      ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
-                      : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                      ? 'bg-white border-[#D22931] shadow-xl -translate-y-1.5'
+                      : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg hover:-translate-y-1'
                   }`}
                 >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-11 h-11 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
-                      {item.icon}
+                  <div>
+                    <div className="flex items-center justify-between mb-5 sm:mb-6">
+                      <div className="w-11 h-11 rounded-xl bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center transition-colors duration-300 group-hover:border-[#D22931]/30">
+                        {item.icon}
+                      </div>
+                      <span className="text-[11px] font-semibold text-[#020626] bg-[#EBF2F7] border border-[#DCE4EC] px-3 py-1 rounded-full group-hover:border-[#D22931]/30 transition-colors">
+                        {item.tag}
+                      </span>
                     </div>
-                    <span className="text-[11px] font-semibold text-[#020626] bg-[#EBF2F7] border border-[#DCE4EC] px-3 py-1 rounded-full group-hover:border-[#D22931]/30 transition-colors">
-                      {item.tag}
-                    </span>
+
+                    <h3 className="font-display font-bold text-xl text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-[#556070] leading-relaxed">{item.desc}</p>
                   </div>
 
-                  <h3 className="font-display font-bold text-xl text-[#020626] group-hover:text-[#D22931] transition-colors leading-snug mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-[#556070] leading-relaxed">{item.desc}</p>
+                  <div className="pt-5 sm:pt-6 mt-5 sm:mt-6 border-t border-[#DCE4EC] flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#020626] group-hover:text-[#D22931] transition-colors">
+                    <span className="sym-link-underline">{item.cta}</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                  </div>
                 </div>
-
-                <div className="pt-6 mt-6 border-t border-[#DCE4EC] flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#020626] group-hover:text-[#D22931] transition-colors">
-                  <span>{item.cta}</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-                </div>
-              </TiltCard>
-            </Link>
-          );
-        })}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

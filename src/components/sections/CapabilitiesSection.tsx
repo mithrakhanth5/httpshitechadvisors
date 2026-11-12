@@ -8,7 +8,7 @@ import {
   ArrowRight,
   Sparkles,
 } from 'lucide-react';
-import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 
 interface CapabilitiesSectionProps {
   onSelectCapability: (helpArea: string) => void;
@@ -119,24 +119,27 @@ const CAPABILITIES: CapabilityCard[] = [
 
 export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSelectCapability }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
+    const cleanupLines = animateMaskedLines(titleRef.current, { trigger: section });
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         section.querySelectorAll('.cap-header-anim'),
-        { opacity: 0, y: 24 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.7,
+          duration: 0.72,
           stagger: 0.08,
-          ease: EDITORIAL_EASE,
+          ease: SYM_EASE.snappy,
           scrollTrigger: {
             trigger: section,
-            start: 'top 88%',
+            start: 'top 86%',
             toggleActions: 'play none none none',
           },
         }
@@ -148,19 +151,22 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
         {
           opacity: 1,
           y: 0,
-          duration: 0.65,
-          stagger: 0.1,
-          ease: 'power2.out',
+          duration: 0.72,
+          stagger: 0.09,
+          ease: SYM_EASE.snappy,
           scrollTrigger: {
             trigger: section.querySelector('.cap-grid'),
-            start: 'top 88%',
+            start: 'top 86%',
             toggleActions: 'play none none none',
           },
         }
       );
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      cleanupLines();
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -176,7 +182,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
             <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
             <span>Delivery Engine &middot; Four Connected Capabilities</span>
           </div>
-          <h2 className="cap-header-anim font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
+          <h2 ref={titleRef} className="font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
             How we <span className="text-[#D22931]">deliver.</span>
           </h2>
           <p className="cap-header-anim text-base sm:text-lg text-[#556070] mt-4 leading-relaxed">
@@ -258,7 +264,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
                       onClick={() => onSelectCapability(cap.helpArea)}
                       className="group/btn inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-white hover:text-[#FAC344] transition-colors cursor-pointer"
                     >
-                      <span>{cap.ctaText}</span>
+                      <span><span className="sym-link-underline">{cap.ctaText}</span></span>
                       <ArrowRight className="w-3.5 h-3.5 text-[#D22931] transition-transform group-hover/btn:translate-x-1" />
                     </button>
                   </div>

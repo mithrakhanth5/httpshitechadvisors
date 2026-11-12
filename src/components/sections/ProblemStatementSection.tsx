@@ -1,55 +1,48 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FileSpreadsheet, Bot, ShieldAlert } from 'lucide-react';
-import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 import { hitechContent } from '../../data/hitechContent';
-import { TiltCard } from '../ui/TiltCard';
 
 export const ProblemStatementSection: React.FC = () => {
   const { problemStatement } = hitechContent;
   const sectionRef = useRef<HTMLElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
   const [activeProblemIndex, setActiveProblemIndex] = useState<number>(0);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
+    const cleanHeading = animateMaskedLines(headingRef.current, {
+      trigger: section,
+      start: 'top 84%',
+      duration: 0.85,
+      stagger: 0.1,
+    });
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        section.querySelector('.problem-header'),
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: EDITORIAL_EASE,
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
-          },
-        }
-      );
-
-      gsap.fromTo(
         section.querySelectorAll('.problem-card'),
-        { opacity: 0, y: 40, scale: 0.98 },
+        { opacity: 0, y: 28 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.85,
-          stagger: 0.12,
-          ease: 'power3.out',
+          duration: 0.78,
+          stagger: 0.1,
+          ease: SYM_EASE.snappy,
           scrollTrigger: {
             trigger: section.querySelector('.problem-cards-grid'),
-            start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
+            start: 'top 86%',
+            toggleActions: 'play none none none',
           },
         }
       );
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      cleanHeading();
+      ctx.revert();
+    };
   }, []);
 
   const cardIcons = [
@@ -77,12 +70,15 @@ export const ProblemStatementSection: React.FC = () => {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#DCE4EC] text-xs font-bold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
             <span>The Reality of Enterprise Technology</span>
           </div>
-          <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
+          <h2
+            ref={headingRef}
+            className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight"
+          >
             {problemStatement.headline}
           </h2>
         </div>
 
-        <div className="problem-cards-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="problem-cards-grid grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {problemStatement.cards.map((card, index) => {
             const isSelected = activeProblemIndex === index;
             return (
@@ -91,26 +87,20 @@ export const ProblemStatementSection: React.FC = () => {
                 className="problem-card h-full"
                 onMouseEnter={() => setActiveProblemIndex(index)}
               >
-                <TiltCard
-                  maxTilt={6}
-                  scale={1.02}
-                  showBorderBeam={isSelected}
-                  borderBeamDuration={10}
-                  spotlightColor="rgba(210, 41, 49, 0.12)"
-                  borderColor="rgba(210, 41, 49, 0.5)"
-                  className={`p-6 sm:p-7 rounded-2xl transition-all duration-300 flex flex-col justify-between group h-full cursor-pointer ${
+                <div
+                  className={`p-6 sm:p-7 rounded-2xl border transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between group h-full cursor-pointer ${
                     isSelected
-                      ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
-                      : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                      ? 'bg-white border-[#D22931] shadow-xl -translate-y-1.5'
+                      : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg hover:-translate-y-1'
                   }`}
                 >
                   <div>
-                    {/* Google-Inspired 3D Isometric Conceptual Image Header */}
+                    {/* 3D Conceptual Cube Image (Preserved) */}
                     <div className="relative h-44 w-full rounded-xl overflow-hidden mb-5 bg-[#020626] border border-[#DCE4EC] shadow-inner">
                       <img
                         src={problemImages[index]}
                         alt={card.title}
-                        className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#020626]/80 via-transparent to-transparent pointer-events-none" />
@@ -129,7 +119,7 @@ export const ProblemStatementSection: React.FC = () => {
                   <p className="text-sm text-[#556070] leading-relaxed pt-4 border-t border-[#DCE4EC]">
                     {card.body}
                   </p>
-                </TiltCard>
+                </div>
               </div>
             );
           })}

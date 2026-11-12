@@ -27,10 +27,10 @@ function AnimatedAppRoutes({ onOpenDiscuss }: { onOpenDiscuss: (area?: string) =
     <AnimatePresence mode="wait">
       <motion.main
         key={location.pathname}
-        initial={{ opacity: 0, y: 24, scale: 0.995, filter: 'blur(3px)' }}
-        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-        exit={{ opacity: 0, y: -20, scale: 0.995, filter: 'blur(3px)' }}
-        transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
         className="relative w-full"
       >
         <Routes location={location}>
@@ -94,7 +94,7 @@ export function App() {
       <HashRouter>
         <ScrollToTop />
         <PageTransitionOverlay />
-        <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-hidden">
+        <div className="relative min-h-screen bg-white text-[#020626] selection:bg-[#D22931] selection:text-white font-sans antialiased overflow-x-clip">
           {/* 1. Header & Navigation (Blurs on scroll with Sticky Announcement & Red Locked Indicator) */}
           <Navbar onOpenDiscuss={() => handleOpenDiscuss('not-sure')} />
 

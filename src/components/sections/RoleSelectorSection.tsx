@@ -1,7 +1,15 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowRight, UserCheck, Sparkles, CheckCircle2, ShieldCheck, Compass, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  ArrowRight,
+  UserCheck,
+  Sparkles,
+  CheckCircle2,
+  ShieldCheck,
+  Compass,
+  Plus,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { gsap, animateMaskedLines } from '../../lib/gsap';
 import { BorderBeam } from '../ui/BorderBeam';
 import { hitechContent } from '../../data/hitechContent';
 
@@ -11,83 +19,45 @@ interface RoleSelectorSectionProps {
 
 export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSelectRole }) => {
   const { roleSelector } = hitechContent;
-  const [[activeRoleIndex, direction], setRole] = useState<[number, number]>([0, 1]);
+  const [activeRoleIndex, setActiveRoleIndex] = useState<number>(0);
   const sectionRef = useRef<HTMLElement | null>(null);
-  const touchStartX = useRef<number | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
 
   const activeRole = roleSelector.roles[activeRoleIndex];
 
-  const goToRole = useCallback((newIndex: number) => {
-    setRole(([curr]) => [newIndex, newIndex > curr ? 1 : -1]);
+  useEffect(() => {
+    const cleanHeading = animateMaskedLines(headingRef.current, {
+      trigger: sectionRef.current,
+      start: 'top 84%',
+      duration: 0.85,
+      stagger: 0.1,
+    });
+    return () => cleanHeading();
   }, []);
 
-  const nextRole = useCallback(() => {
-    setRole(([curr]) => [(curr + 1) % roleSelector.roles.length, 1]);
-  }, [roleSelector.roles.length]);
-
-  const prevRole = useCallback(() => {
-    setRole(([curr]) => [(curr - 1 + roleSelector.roles.length) % roleSelector.roles.length, -1]);
-  }, [roleSelector.roles.length]);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX.current - touchEndX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) nextRole();
-      else prevRole();
-    }
-    touchStartX.current = null;
-  };
-
-  const slideVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 30 : -30,
-      opacity: 0,
-      filter: 'blur(4px)',
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      filter: 'blur(0px)',
-      transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] as const },
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? -30 : 30,
-      opacity: 0,
-      filter: 'blur(4px)',
-      transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] as const },
-    }),
-  };
-
+  // Re-trigger staggered bullet reveal on desktop panel change using GSAP
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
+    const bullets = section.querySelectorAll('.role-stage-bullet');
+    if (bullets.length === 0) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        section.querySelector('.role-header'),
-        { opacity: 0, y: 30 },
+        bullets,
+        { opacity: 0, y: 10 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          ease: EDITORIAL_EASE,
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
-          },
+          duration: 0.45,
+          stagger: 0.05,
+          ease: 'power3.out',
         }
       );
     }, section);
 
     return () => ctx.revert();
-  }, []);
+  }, [activeRoleIndex]);
 
   return (
     <section
@@ -97,92 +67,41 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="role-header max-w-3xl mb-10 sm:mb-14">
-          <h2 className="font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
+        <div className="role-header max-w-3xl mb-8 sm:mb-12">
+          <h2
+            ref={headingRef}
+            className="font-display font-extrabold text-[clamp(1.85rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight"
+          >
             Start with your <span className="text-[#D22931]">role.</span>
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#556070] leading-relaxed">
+          <p className="mt-3 text-sm sm:text-lg text-[#556070] leading-relaxed">
             {roleSelector.subhead}
           </p>
         </div>
 
-        {/* Mobile Horizontal Pill Rail with Auto-Swipe & Indicator (< lg) */}
-        <div className="lg:hidden mb-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#556070]">
-              Select Mandate ({activeRoleIndex + 1}/6)
-            </span>
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={prevRole}
-                className="p-1.5 rounded-lg bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 text-[#020626] transition-colors"
-                aria-label="Previous Mandate"
+        {/* MOBILE: Symmetry-Style Compact Inline 6-Role Accordion (< lg) */}
+        <div className="lg:hidden space-y-2.5">
+          {roleSelector.roles.map((item, index) => {
+            const isOpen = activeRoleIndex === index;
+            return (
+              <div
+                key={item.role}
+                className={`rounded-2xl border transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
+                  isOpen
+                    ? 'bg-white border-[#D22931] shadow-lg'
+                    : 'bg-white/85 border-[#DCE4EC] hover:border-[#D22931]/40'
+                }`}
               >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={nextRole}
-                className="p-1.5 rounded-lg bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 text-[#020626] transition-colors"
-                aria-label="Next Mandate"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory -mx-6 px-6 sm:-mx-10 sm:px-10">
-            {roleSelector.roles.map((item, index) => {
-              const isSelected = activeRoleIndex === index;
-              return (
                 <button
-                  key={item.role}
-                  onClick={() => goToRole(index)}
-                  className={`snap-start flex-shrink-0 px-3.5 py-2 rounded-xl text-xs font-sans font-semibold transition-all duration-300 flex items-center gap-2 border cursor-pointer ${
-                    isSelected
-                      ? 'bg-[#020626] text-white border-white/20 shadow-md ring-2 ring-[#D22931]/30 scale-[1.02]'
-                      : 'bg-white text-[#556070] border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs'
-                  }`}
+                  type="button"
+                  onClick={() => setActiveRoleIndex(index)}
+                  aria-expanded={isOpen}
+                  className="w-full p-4 text-left flex items-center justify-between gap-3 cursor-pointer"
                 >
-                  <span
-                    className={`w-5 h-5 rounded-md font-mono text-[10px] font-bold flex items-center justify-center transition-colors ${
-                      isSelected ? 'bg-[#D22931] text-white' : 'bg-[#EBF2F7] text-[#556070]'
-                    }`}
-                  >
-                    0{index + 1}
-                  </span>
-                  <span className="whitespace-nowrap">{item.role}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Symmetry-Inspired Split-Screen Persona Showcase (Replaces 3x3 square boxes) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
-          {/* Left Column: Interactive Role Selector Stack (Hidden on mobile, 5 cols on desktop) */}
-          <div className="hidden lg:flex lg:col-span-5 flex-col justify-between gap-3 h-full">
-            {roleSelector.roles.map((item, index) => {
-              const isSelected = activeRoleIndex === index;
-              return (
-                <button
-                  key={item.role}
-                  onClick={() => goToRole(index)}
-                  onMouseEnter={() => goToRole(index)}
-                  className={`w-full p-4 sm:p-5 rounded-2xl text-left transition-all duration-300 flex items-center justify-between gap-4 cursor-pointer border ${
-                    isSelected
-                      ? 'bg-white border-[#D22931] shadow-xl ring-2 ring-[#D22931]/15 -translate-y-0.5'
-                      : 'bg-white/70 hover:bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs hover:shadow-md'
-                  }`}
-                  aria-label={`Select ${item.role}`}
-                >
-                  <div className="flex items-center gap-3.5 min-w-0">
-                    {/* Tactile Keycap Badge */}
+                  <div className="flex items-center gap-3 min-w-0">
                     <span
-                      className={`font-mono font-bold text-xs px-2.5 py-1.5 rounded-xl flex-shrink-0 transition-colors ${
-                        isSelected
-                          ? 'bg-[#D22931] text-white shadow-xs'
-                          : 'bg-[#EBF2F7] text-[#556070] border border-[#DCE4EC]'
+                      className={`w-7 h-7 rounded-lg font-mono text-xs font-bold flex items-center justify-center flex-shrink-0 transition-colors ${
+                        isOpen ? 'bg-[#D22931] text-white' : 'bg-[#EBF2F7] text-[#556070]'
                       }`}
                     >
                       0{index + 1}
@@ -190,108 +109,196 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
                     <div className="min-w-0">
                       <h3
                         className={`font-display font-bold text-base leading-tight truncate transition-colors ${
-                          isSelected ? 'text-[#D22931]' : 'text-[#020626]'
+                          isOpen ? 'text-[#D22931]' : 'text-[#020626]'
                         }`}
                       >
                         {item.role}
                       </h3>
-                      <p className="text-xs text-[#556070] mt-0.5 truncate">
-                        Connects to {item.linksTo}
+                      <p className="text-[11px] text-[#556070] truncate mt-0.5">
+                        {item.linksTo}
                       </p>
                     </div>
                   </div>
+                  <Plus
+                    className={`w-4 h-4 flex-shrink-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen ? 'rotate-45 text-[#D22931]' : 'text-[#556070]'
+                    }`}
+                  />
+                </button>
 
-                  {/* Active Indicator Pip */}
-                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                <div className="sym-accordion-panel" data-open={isOpen ? 'true' : 'false'}>
+                  <div className="sym-accordion-inner">
+                    <div className="px-4 pb-4 pt-1">
+                      <div className="rounded-xl bg-[#020626] text-white p-4 space-y-3 border border-white/10">
+                        <p className="text-xs sm:text-sm text-white/85 leading-relaxed">
+                          {item.focus}
+                        </p>
+                        <div className="grid grid-cols-1 gap-1.5 pt-2 border-t border-white/10 text-[11px] text-white/90">
+                          <div className="flex items-center gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] flex-shrink-0" />
+                            <span>Direct Senior Partner engagement</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <ShieldCheck className="w-3.5 h-3.5 text-[#FAC344] flex-shrink-0" />
+                            <span>Vendor-neutral selection &amp; delivery</span>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => onSelectRole(item.helpArea)}
+                          className="sym-btn w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#D22931] hover:bg-[#b52027] text-white font-display font-bold text-xs uppercase tracking-wider cursor-pointer"
+                        >
+                          <span>Discuss This Mandate</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* DESKTOP: Symmetry Section 6 Accordion List (Left) + Live Mandate Stage (Right) */}
+        <div className="hidden lg:grid lg:grid-cols-12 gap-10 items-stretch">
+          <div className="lg:col-span-5 flex flex-col justify-between gap-2.5 h-full">
+            {roleSelector.roles.map((item, index) => {
+              const isSelected = activeRoleIndex === index;
+              return (
+                <div
+                  key={item.role}
+                  className={`rounded-2xl border transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
+                    isSelected
+                      ? 'bg-white border-[#D22931] shadow-xl -translate-y-0.5'
+                      : 'bg-white/75 hover:bg-white border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setActiveRoleIndex(index)}
+                    onMouseEnter={() => setActiveRoleIndex(index)}
+                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
+                    aria-label={`Select ${item.role}`}
+                    aria-expanded={isSelected}
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <span
+                        className={`font-mono font-bold text-xs px-2.5 py-1.5 rounded-xl flex-shrink-0 transition-colors ${
+                          isSelected
+                            ? 'bg-[#D22931] text-white shadow-xs'
+                            : 'bg-[#EBF2F7] text-[#556070] border border-[#DCE4EC]'
+                        }`}
+                      >
+                        0{index + 1}
+                      </span>
+                      <div className="min-w-0">
+                        <h3
+                          className={`font-display font-bold text-base leading-tight truncate transition-colors ${
+                            isSelected ? 'text-[#D22931]' : 'text-[#020626]'
+                          }`}
+                        >
+                          {item.role}
+                        </h3>
+                        <p className="text-xs text-[#556070] mt-0.5 truncate">
+                          Connects to {item.linksTo}
+                        </p>
+                      </div>
+                    </div>
+
                     <span
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        isSelected ? 'bg-[#D22931] shadow-[0_0_8px_#D22931] scale-125' : 'bg-[#DCE4EC]'
+                      className={`w-2.5 h-2.5 rounded-full flex-shrink-0 transition-transform duration-400 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                        isSelected
+                          ? 'bg-[#D22931] shadow-[0_0_8px_#D22931] scale-110'
+                          : 'bg-[#DCE4EC] scale-75'
                       }`}
                     />
+                  </button>
+
+                  {/* Symmetry Grid 0fr -> 1fr inline expandable focus preview */}
+                  <div className="sym-accordion-panel" data-open={isSelected ? 'true' : 'false'}>
+                    <div className="sym-accordion-inner">
+                      <div className="px-5 pb-4 pt-0 text-xs text-[#3A4A5A] border-t border-[#DCE4EC]/70 mt-1 pt-2.5 leading-relaxed">
+                        {item.focus}
+                      </div>
+                    </div>
                   </div>
-                </button>
+                </div>
               );
             })}
           </div>
 
-          {/* Right Column: Responsive Tactile Showcase Card (7 cols on desktop, full width on mobile) */}
-          <div
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            className="lg:col-span-7 bg-[#020626] text-white rounded-3xl sm:rounded-[32px] p-6 sm:p-10 lg:p-12 shadow-2xl border border-white/10 relative overflow-hidden flex flex-col justify-between h-full min-h-0 sm:min-h-[460px] lg:min-h-[480px]"
-          >
+          <div className="lg:col-span-7 bg-[#020626] text-white rounded-[32px] p-10 lg:p-12 shadow-2xl border border-white/10 relative overflow-hidden flex flex-col justify-between h-full min-h-[480px]">
             <BorderBeam size={280} duration={10} colorFrom="#D22931" colorTo="#FAC344" />
-
-            {/* Ambient Red Glow in Background */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#D22931]/20 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-            <AnimatePresence custom={direction} mode="wait">
+            <AnimatePresence mode="wait">
               <motion.div
                 key={activeRole.role}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 className="relative z-10 space-y-6 flex flex-col justify-between h-full"
               >
                 <div>
-                  {/* Status Banner */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 mb-5 sm:mb-6">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white/10 text-[#FAC344] text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md">
+                  <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#FAC344] text-xs font-mono font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md">
                       <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
                       Executive Mandate 0{activeRoleIndex + 1}
                     </span>
-                    <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-mono text-white/60">
-                      <span className="w-2 h-2 rounded-full bg-[#40aa4a] animate-pulse" />
+                    <span className="inline-flex items-center gap-2 text-xs font-mono text-white/60">
+                      <span className="relative flex h-2 w-2">
+                        <span className="sym-pulse-ring absolute inline-flex h-full w-full rounded-full bg-[#40aa4a] opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-[#40aa4a]" />
+                      </span>
                       Senior Advisory Pod Ready
                     </span>
                   </div>
 
-                  <h3 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight leading-snug">
+                  <h3 className="font-display font-extrabold text-3xl lg:text-4xl text-white tracking-tight leading-snug">
                     {activeRole.role}
                   </h3>
 
-                  <p className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-lg text-white/80 leading-relaxed">
+                  <p className="mt-4 text-base lg:text-lg text-white/80 leading-relaxed">
                     {activeRole.focus}
                   </p>
                 </div>
 
-                {/* Hitech Engagement Framework Pillars */}
-                <div className="space-y-3 pt-5 sm:pt-6 border-t border-white/10">
+                <div className="space-y-3 pt-6 border-t border-white/10">
                   <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#FAC344]">
                     How Hitech Executes for this Mandate
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="role-stage-bullet flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
                       <CheckCircle2 className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
                       <span>Direct Senior Partner engagement from day one</span>
                     </div>
-                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
+                    <div className="role-stage-bullet flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
                       <ShieldCheck className="w-4 h-4 text-[#FAC344] mt-0.5 flex-shrink-0" />
                       <span>Objective vendor-neutral technology selection</span>
                     </div>
-                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
+                    <div className="role-stage-bullet flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
                       <Compass className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
                       <span>Production engineering with zero handoff loss</span>
                     </div>
-                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
+                    <div className="role-stage-bullet flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
                       <UserCheck className="w-4 h-4 text-[#FAC344] mt-0.5 flex-shrink-0" />
                       <span>Knowledge transfer so internal teams own the system</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Bottom CTA Row */}
-                <div className="pt-5 sm:pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+                <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
                   <div className="text-xs font-mono text-white/60">
                     <span>Practice: </span>
                     <strong className="text-white font-semibold">{activeRole.linksTo}</strong>
                   </div>
 
                   <button
+                    type="button"
                     onClick={() => onSelectRole(activeRole.helpArea)}
-                    className="inline-flex items-center gap-2.5 px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-[#D22931] hover:bg-[#b52027] text-white font-display font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:shadow-2xl cursor-pointer hover:scale-105 active:scale-95 duration-200"
+                    className="sym-btn inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#D22931] hover:bg-[#b52027] text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-2xl cursor-pointer"
                   >
                     <span>Discuss This Mandate</span>
                     <ArrowRight className="w-4 h-4" />

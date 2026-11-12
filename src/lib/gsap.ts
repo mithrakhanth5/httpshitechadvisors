@@ -1,20 +1,30 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
+import { CustomEase } from 'gsap/CustomEase';
 
-// Register GreenSock plugins
+// Register GreenSock plugins once in browser context
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase);
+  CustomEase.create('symSnappy', 'M0,0 C0.16,1 0.3,1 1,1');
+  CustomEase.create('symSmooth', 'M0,0 C0.22,1 0.36,1 1,1');
+  CustomEase.create('symPop', 'M0,0 C0.34,1.56 0.64,1 1,1');
+  CustomEase.create('symFloat', 'M0,0 C0.37,0 0.63,1 1,1');
 }
 
 /**
- * Editorial ease per Section 6: Subtle and purposeful (fade-and-rise on scroll)
+ * Symmetry-trained GSAP easing tokens mapped from CustomEase curves
  */
-export const EDITORIAL_EASE = 'power3.out';
-export const SMOOTH_SPRING_EASE = 'expo.out';
+export const SYM_EASE = {
+  snappy: 'symSnappy',
+  smooth: 'symSmooth',
+  pop: 'symPop',
+  float: 'symFloat',
+} as const;
 
-/**
- * Continuous bi-directional scroll entrance config (plays on scroll down and re-engages on scroll up)
- */
+export const EDITORIAL_EASE = SYM_EASE.snappy;
+export const SMOOTH_SPRING_EASE = SYM_EASE.smooth;
+
 export const BIDIRECTIONAL_SCROLL_CONFIG = {
   start: 'top 88%',
   end: 'bottom 12%',
@@ -22,7 +32,70 @@ export const BIDIRECTIONAL_SCROLL_CONFIG = {
 };
 
 /**
- * High-end 3D kinetic text reveal: words rotate and rise with power4 deceleration
+ * Symmetry-style masked line reveal using GSAP 3.15 SplitText (`mask: "lines"`).
+ * Automatically respects prefers-reduced-motion via gsap.matchMedia().
+ */
+export function animateMaskedLines(
+  target: HTMLElement | null,
+  options: {
+    trigger?: HTMLElement | null;
+    start?: string;
+    delay?: number;
+    duration?: number;
+    stagger?: number;
+    immediate?: boolean;
+  } = {}
+): () => void {
+  if (!target) return () => {};
+
+  const {
+    trigger = target,
+    start = 'top 84%',
+    delay = 0,
+    duration = 0.88,
+    stagger = 0.1,
+    immediate = false,
+  } = options;
+
+  let splitInstance: SplitText | null = null;
+  const mm = gsap.matchMedia();
+
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    splitInstance = SplitText.create(target, {
+      type: 'lines',
+      mask: 'lines',
+      autoSplit: true,
+      onSplit: (self) => {
+        gsap.fromTo(
+          self.lines,
+          { yPercent: 108 },
+          {
+            yPercent: 0,
+            duration,
+            delay,
+            stagger,
+            ease: SYM_EASE.snappy,
+            scrollTrigger: immediate
+              ? undefined
+              : {
+                  trigger: trigger || target,
+                  start,
+                  toggleActions: 'play none none none',
+                },
+          }
+        );
+      },
+    });
+  });
+
+  return () => {
+    splitInstance?.revert();
+    mm.revert();
+  };
+}
+
+/**
+ * High-end 3D kinetic text reveal preserved for backward compatibility
  */
 export function animate3DTextReveal(
   targets: gsap.DOMTarget,
@@ -33,24 +106,21 @@ export function animate3DTextReveal(
     trigger?: gsap.DOMTarget;
   } = {}
 ) {
-  const { delay = 0, duration = 1.05, stagger = 0.07, trigger } = options;
+  const { delay = 0, duration = 0.95, stagger = 0.08, trigger } = options;
 
   return gsap.fromTo(
     targets,
     {
-      y: 35,
-      rotateX: 18,
+      y: 32,
       opacity: 0,
-      transformOrigin: 'bottom center',
     },
     {
       y: 0,
-      rotateX: 0,
       opacity: 1,
       duration,
       delay,
       stagger,
-      ease: 'power3.out',
+      ease: SYM_EASE.snappy,
       scrollTrigger: trigger
         ? {
             trigger,
@@ -62,7 +132,7 @@ export function animate3DTextReveal(
 }
 
 /**
- * Smooth fade-and-rise entrance for cards, paragraphs, or containers
+ * Calm fade-and-rise entrance using Symmetry's snappy bezier deceleration
  */
 export function animateFadeUp(
   targets: gsap.DOMTarget,
@@ -72,29 +142,37 @@ export function animateFadeUp(
     y?: number;
     trigger?: gsap.DOMTarget;
     stagger?: number;
+    once?: boolean;
   } = {}
 ) {
-  const { delay = 0, duration = 0.75, y = 28, trigger, stagger = 0.08 } = options;
+  const {
+    delay = 0,
+    duration = 0.72,
+    y = 24,
+    trigger,
+    stagger = 0.08,
+    once = false,
+  } = options;
 
   return gsap.fromTo(
     targets,
     {
       opacity: 0,
       y,
-      scale: 0.98,
     },
     {
       opacity: 1,
       y: 0,
-      scale: 1,
       duration,
       delay,
       stagger,
-      ease: EDITORIAL_EASE,
+      ease: SYM_EASE.snappy,
       scrollTrigger: trigger
         ? {
             trigger,
-            ...BIDIRECTIONAL_SCROLL_CONFIG,
+            start: 'top 88%',
+            end: 'bottom 12%',
+            toggleActions: once ? 'play none none none' : 'play reverse play reverse',
           }
         : undefined,
     }
@@ -102,7 +180,7 @@ export function animateFadeUp(
 }
 
 /**
- * Rolling odometer counter animation for metrics with bi-directional replay
+ * Rolling odometer counter animation for metrics
  */
 export function animateCounterRoll(
   target: HTMLElement,
@@ -115,18 +193,18 @@ export function animateCounterRoll(
     trigger?: gsap.DOMTarget;
   } = {}
 ) {
-  const { duration = 1.8, decimals = 0, prefix = '', suffix = '', trigger } = options;
+  const { duration = 1.6, decimals = 0, prefix = '', suffix = '', trigger } = options;
   const obj = { val: 0 };
 
   return gsap.to(obj, {
     val: targetValue,
     duration,
-    ease: 'power3.out',
+    ease: SYM_EASE.snappy,
     scrollTrigger: trigger
       ? {
           trigger,
           start: 'top 88%',
-          toggleActions: 'restart none none reverse',
+          toggleActions: 'play none none none',
         }
       : undefined,
     onUpdate: () => {
@@ -135,4 +213,4 @@ export function animateCounterRoll(
   });
 }
 
-export { gsap, ScrollTrigger };
+export { gsap, ScrollTrigger, SplitText, CustomEase };

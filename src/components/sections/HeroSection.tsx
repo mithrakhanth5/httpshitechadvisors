@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { MagneticButton } from '../ui/MagneticButton';
 import { AnimatedCounter } from '../ui/AnimatedCounter';
 import { HeroConnectedNetwork } from '../animations/HeroConnectedNetwork';
-import { gsap, animate3DTextReveal } from '../../lib/gsap';
+import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 
 interface HeroSectionProps {
   onOpenDiscuss: () => void;
@@ -20,40 +19,44 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
     const hero = heroRef.current;
     if (!hero) return;
 
+    const cleanHeading = animateMaskedLines(headlineRef.current, {
+      immediate: true,
+      delay: 0.14,
+      duration: 0.95,
+      stagger: 0.12,
+    });
+
     const ctx = gsap.context(() => {
-      // 1. Eyebrow badge entrance
+      // 1. Eyebrow badge pop-in (Symmetry overshoot ease)
       gsap.fromTo(
         hero.querySelector('.hero-eyebrow'),
-        { opacity: 0, y: -20, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.85, delay: 0.1, ease: 'power3.out' }
+        { opacity: 0, y: -14, scale: 0.94 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, delay: 0.05, ease: SYM_EASE.pop }
       );
 
-      // 2. Kinetic 3D Text Reveal for Headline
-      if (headlineRef.current) {
-        const words = headlineRef.current.querySelectorAll('.hero-word');
-        animate3DTextReveal(words, { delay: 0.2, duration: 1.05, stagger: 0.07 });
-      }
-
-      // 3. Subtext fade-up reveal
+      // 2. Subtext entrance
       if (subtextRef.current) {
         gsap.fromTo(
           subtextRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.9, delay: 0.5, ease: 'power3.out' }
+          { opacity: 0, y: 22 },
+          { opacity: 1, y: 0, duration: 0.8, delay: 0.34, ease: SYM_EASE.snappy }
         );
       }
 
-      // 4. CTA buttons gently float up
+      // 3. CTA buttons entrance
       if (ctaRef.current) {
         gsap.fromTo(
           ctaRef.current,
-          { opacity: 0, y: 25 },
-          { opacity: 1, y: 0, duration: 0.85, delay: 0.7, ease: 'power3.out' }
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.78, delay: 0.44, ease: SYM_EASE.snappy }
         );
       }
     }, hero);
 
-    return () => ctx.revert();
+    return () => {
+      cleanHeading();
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -74,18 +77,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
           </span>
         </div>
 
-        {/* Staggered 3D Text Reveal Headline with Full Descender Clearance for "Strategy" (g & y) */}
+        {/* Headline with GSAP SplitText Line Mask Reveal */}
         <h1
           ref={headlineRef}
-          className="font-display font-extrabold text-[clamp(2.75rem,6.5vw,5.5rem)] text-[#020626] leading-[1.14] tracking-tight max-w-5xl [perspective:1000px] pb-3"
+          className="font-display font-extrabold text-[clamp(2.5rem,6.4vw,5.4rem)] text-[#020626] leading-[1.12] tracking-tight max-w-5xl pb-2"
         >
-          <span className="hero-word inline-block mr-3 sm:mr-4 will-change-transform">Strategy</span>
-          <span className="hero-word inline-block mr-3 sm:mr-4 will-change-transform">That</span>
-          <span className="hero-word inline-block mr-3 sm:mr-0 will-change-transform">Connects</span>
-          <br className="hidden sm:inline" />
-          <span className="hero-word inline-block mr-3 sm:mr-4 will-change-transform">to</span>
-          <span className="hero-word inline-block text-[#D22931] will-change-transform">
-            Execution.
+          <span>Strategy That Connects</span>
+          <br className="hidden sm:inline" />{' '}
+          <span>
+            to <span className="text-[#D22931]">Execution.</span>
           </span>
         </h1>
 
@@ -96,23 +96,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenDiscuss }) => {
           </p>
         </div>
 
-        {/* Magnetic CTA Group */}
+        {/* Symmetry Tactile CTA Group */}
         <div
           ref={ctaRef}
           className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-5"
         >
-          <MagneticButton
-            variant="primary"
+          <button
+            type="button"
             onClick={onOpenDiscuss}
-            className="text-sm font-bold uppercase tracking-wider !py-4 !px-8 shadow-lg hover:shadow-2xl"
+            className="sym-btn inline-flex items-center gap-2.5 text-sm font-bold uppercase tracking-wider py-4 px-8 rounded-xl bg-[#D22931] hover:bg-[#b52027] text-white shadow-lg hover:shadow-2xl cursor-pointer"
           >
             <span>Discuss a Challenge</span>
             <ArrowRight className="w-4 h-4" />
-          </MagneticButton>
+          </button>
 
           <Link
             to="/solutions"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-[#020626] hover:text-[#D22931] bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 py-4 px-7 rounded-xl transition-all duration-300 shadow-2xs hover:shadow-md cursor-pointer hover:scale-105"
+            className="sym-btn inline-flex items-center gap-2 text-sm font-semibold text-[#020626] hover:text-[#D22931] bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 py-4 px-7 rounded-xl shadow-2xs hover:shadow-md cursor-pointer"
           >
             <span>Explore Our Solutions</span>
           </Link>

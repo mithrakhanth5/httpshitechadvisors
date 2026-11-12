@@ -1,7 +1,17 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Bot, Cloud, Shield, Database, LayoutGrid, CheckCircle2, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Bot,
+  Cloud,
+  Shield,
+  Database,
+  LayoutGrid,
+  CheckCircle2,
+  ArrowRight,
+  Sparkles,
+  Plus,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { gsap, animateMaskedLines } from '../../lib/gsap';
 import { BorderBeam } from '../ui/BorderBeam';
 
 interface ServicesGridProps {
@@ -25,11 +35,12 @@ interface ServiceCard {
 const SERVICES: ServiceCard[] = [
   {
     id: 'ai',
-    icon: <Bot className="w-6 h-6 text-[#D22931]" />,
+    icon: <Bot className="w-5 h-5 text-[#D22931]" />,
     title: 'AI Adoption & Governed Agents',
     tag: 'Flagship Practice',
     badge: 'High Demand Practice',
-    description: 'Move AI from experimental proofs-of-concept into high-throughput production with autonomous agents and multi-step workflows that execute real work safely under enterprise governance.',
+    description:
+      'Move AI from experimental proofs-of-concept into high-throughput production with autonomous agents and multi-step workflows that execute real work safely under enterprise governance.',
     deliverablesHeader: 'CANONICAL DELIVERABLES',
     deliverables: [
       'AI Strategy & Readiness Assessment',
@@ -39,15 +50,16 @@ const SERVICES: ServiceCard[] = [
     ],
     tools: ['OpenAI', 'Anthropic Claude', 'Google Gemini', 'LangChain'],
     leftFooter: 'Senior Pod Delivery',
-    ctaText: 'DISCUSS PRACTICE →',
+    ctaText: 'Discuss Practice',
   },
   {
     id: 'data',
-    icon: <Database className="w-6 h-6 text-[#D22931]" />,
+    icon: <Database className="w-5 h-5 text-[#D22931]" />,
     title: 'Data & Customer Intelligence',
     tag: 'Modern Foundations',
     badge: 'High-Throughput Pipelines',
-    description: 'Bring your fragmented enterprise data together into one trusted view of customers and operations, ready for executive decisions and production AI.',
+    description:
+      'Bring your fragmented enterprise data together into one trusted view of customers and operations, ready for executive decisions and production AI.',
     deliverablesHeader: 'CANONICAL DELIVERABLES',
     deliverables: [
       'Unified Customer Profiles & CDPs',
@@ -57,15 +69,16 @@ const SERVICES: ServiceCard[] = [
     ],
     tools: ['Snowflake', 'Databricks', 'BigQuery', 'Microsoft Fabric'],
     leftFooter: 'Zero Data Drift',
-    ctaText: 'DISCUSS PRACTICE →',
+    ctaText: 'Discuss Practice',
   },
   {
     id: 'crm-erp',
-    icon: <LayoutGrid className="w-6 h-6 text-[#D22931]" />,
+    icon: <LayoutGrid className="w-5 h-5 text-[#D22931]" />,
     title: 'CRM, ERP & Business Applications',
     tag: 'Core Enterprise Systems',
     badge: 'Mission-Critical Operations',
-    description: 'Choose, implement and connect the mission-critical business systems that run your operations, with rigorous change enablement so your team actually adopts them.',
+    description:
+      'Choose, implement and connect the mission-critical business systems that run your operations, with rigorous change enablement so your team actually adopts them.',
     deliverablesHeader: 'CANONICAL DELIVERABLES',
     deliverables: [
       'Platform Strategy & Unbiased Selection',
@@ -75,15 +88,16 @@ const SERVICES: ServiceCard[] = [
     ],
     tools: ['Salesforce', 'NetSuite', 'Microsoft Dynamics', 'HubSpot'],
     leftFooter: 'Proven User Adoption',
-    ctaText: 'DISCUSS PRACTICE →',
+    ctaText: 'Discuss Practice',
   },
   {
     id: 'cybersecurity',
-    icon: <Shield className="w-6 h-6 text-[#D22931]" />,
+    icon: <Shield className="w-5 h-5 text-[#D22931]" />,
     title: 'Cybersecurity & Risk',
     tag: 'Defense & Compliance',
     badge: 'Zero-Trust Readiness',
-    description: 'Find your real security exposure across cloud endpoints, remediate the vulnerability backlog that matters most, and demonstrate board-level readiness.',
+    description:
+      'Find your real security exposure across cloud endpoints, remediate the vulnerability backlog that matters most, and demonstrate board-level readiness.',
     deliverablesHeader: 'CANONICAL DELIVERABLES',
     deliverables: [
       'Security Posture & Exposure Review',
@@ -93,15 +107,16 @@ const SERVICES: ServiceCard[] = [
     ],
     tools: ['CrowdStrike', 'Microsoft Defender', 'Wiz', 'Splunk'],
     leftFooter: '60% Faster Remediation',
-    ctaText: 'DISCUSS PRACTICE →',
+    ctaText: 'Discuss Practice',
   },
   {
     id: 'it-operations',
-    icon: <Cloud className="w-6 h-6 text-[#D22931]" />,
+    icon: <Cloud className="w-5 h-5 text-[#D22931]" />,
     title: 'IT Operations & Cloud',
     tag: 'Infrastructure & Scale',
     badge: '99.99% Availability',
-    description: 'Run resilient IT infrastructure from the internal service desk to multi-cloud architectures with optimized unit economics and zero critical downtime.',
+    description:
+      'Run resilient IT infrastructure from the internal service desk to multi-cloud architectures with optimized unit economics and zero critical downtime.',
     deliverablesHeader: 'CANONICAL DELIVERABLES',
     deliverables: [
       'IT Service Management (ITSM) Workflow Design',
@@ -111,126 +126,50 @@ const SERVICES: ServiceCard[] = [
     ],
     tools: ['ServiceNow', 'AWS', 'Microsoft Azure', 'Google Cloud'],
     leftFooter: 'Production Reliability',
-    ctaText: 'DISCUSS PRACTICE →',
+    ctaText: 'Discuss Practice',
   },
 ];
 
 export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [[currentIdx, direction], setSlide] = useState<[number, number]>([0, 1]);
-  const [isHovered, setIsHovered] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const [currentIdx, setCurrentIdx] = useState<number>(0);
 
-  const nextSlide = useCallback(() => {
-    setSlide(([curr]) => [(curr + 1) % SERVICES.length, 1]);
-    setProgress(0);
-  }, []);
+  const currentService = SERVICES[currentIdx];
 
-  const prevSlide = useCallback(() => {
-    setSlide(([curr]) => [(curr - 1 + SERVICES.length) % SERVICES.length, -1]);
-    setProgress(0);
-  }, []);
-
-  const goToSlide = useCallback((targetIdx: number) => {
-    setSlide(([curr]) => [targetIdx, targetIdx > curr ? 1 : -1]);
-    setProgress(0);
-  }, []);
-
-  const touchStartX = useRef<number | null>(null);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX.current - touchEndX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) nextSlide();
-      else prevSlide();
-    }
-    touchStartX.current = null;
-  };
-
-  // Medium-speed auto-sliding loop with instant hover-to-hold
   useEffect(() => {
-    if (isHovered) return; // Hold right where it was whenever cursor is inside!
+    const cleanHeading = animateMaskedLines(headingRef.current, {
+      trigger: sectionRef.current,
+      start: 'top 84%',
+      duration: 0.85,
+      stagger: 0.1,
+    });
+    return () => cleanHeading();
+  }, []);
 
-    const stepMs = 50;
-    const totalMs = 5500; // Medium-speed 5.5s per solution slide
-    const increment = (stepMs / totalMs) * 100;
-
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          nextSlide();
-          return 0;
-        }
-        return prev + increment;
-      });
-    }, stepMs);
-
-    return () => clearInterval(timer);
-  }, [isHovered, nextSlide]);
-
+  // Re-trigger staggered deliverable items when desktop practice swaps
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
+    const rows = section.querySelectorAll('.service-deliverable-row');
+    if (rows.length === 0) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        section.querySelectorAll('.services-header-anim'),
-        { opacity: 0, y: 30 },
+        rows,
+        { opacity: 0, x: 10 },
         {
           opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: EDITORIAL_EASE,
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
-          },
+          x: 0,
+          duration: 0.42,
+          stagger: 0.05,
+          ease: 'power3.out',
         }
       );
     }, section);
 
     return () => ctx.revert();
-  }, []);
-
-  const currentService = SERVICES[currentIdx];
-
-  // Medium motion slide variants
-  const slideVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 80 : -80,
-      opacity: 0,
-      scale: 0.98,
-      filter: 'blur(4px)',
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-      filter: 'blur(0px)',
-      transition: {
-        duration: 0.65, // Medium motion speed per user instruction
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? -80 : 80,
-      opacity: 0,
-      scale: 0.98,
-      filter: 'blur(4px)',
-      transition: {
-        duration: 0.55,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    }),
-  };
+  }, [currentIdx]);
 
   return (
     <section
@@ -240,124 +179,175 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="max-w-3xl mb-10 sm:mb-12">
-          <h2 className="services-header-anim font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
+        <div className="max-w-3xl mb-8 sm:mb-12">
+          <h2
+            ref={headingRef}
+            className="font-display font-extrabold text-[clamp(1.85rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight"
+          >
             Core Solution <span className="text-[#D22931]">Practices.</span>
           </h2>
-          <p className="services-header-anim text-base sm:text-lg text-[#556070] mt-3 leading-relaxed">
+          <p className="text-sm sm:text-lg text-[#556070] mt-3 leading-relaxed">
             Select a practice below to inspect deliverables and supported platforms.
           </p>
         </div>
 
-        {/* Mobile Indicator + Prev/Next Controls (< sm) */}
-        <div className="sm:hidden flex items-center justify-between mb-3">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#556070]">
-            Practice 0{currentIdx + 1} of 05
-          </span>
-          <div className="flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={prevSlide}
-              className="p-1.5 rounded-lg bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 text-[#020626] transition-colors"
-              aria-label="Previous Practice"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={nextSlide}
-              className="p-1.5 rounded-lg bg-white border border-[#DCE4EC] hover:border-[#D22931]/40 text-[#020626] transition-colors"
-              aria-label="Next Practice"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* 5-Practice Interactive Selector Tabs */}
-        <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory -mx-6 px-6 sm:-mx-0 sm:px-0 sm:flex-wrap">
-          {SERVICES.map((s, idx) => {
-            const isSelected = idx === currentIdx;
+        {/* MOBILE: Compact Vertical Symmetry Accordion (< lg) */}
+        <div className="lg:hidden space-y-3">
+          {SERVICES.map((service, idx) => {
+            const isOpen = idx === currentIdx;
             return (
-              <button
-                key={s.id}
-                onClick={() => goToSlide(idx)}
-                onMouseEnter={() => {
-                  goToSlide(idx);
-                  setIsHovered(true);
-                }}
-                className={`snap-start flex-shrink-0 whitespace-nowrap relative px-4 py-2.5 rounded-2xl text-xs font-sans font-semibold transition-all cursor-pointer flex items-center gap-2 overflow-hidden ${
-                  isSelected
-                    ? 'bg-[#020626] text-white shadow-lg border border-white/20 -translate-y-0.5'
-                    : 'bg-white hover:bg-[#F8FAFC] text-[#556070] border border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs'
+              <div
+                key={service.id}
+                className={`rounded-2xl border transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
+                  isOpen
+                    ? 'bg-[#F8FAFC] border-[#D22931] shadow-lg'
+                    : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40'
                 }`}
               >
-                {/* Active Slide Timer Progress Fill */}
-                {isSelected && !isHovered && (
-                  <motion.div
-                    style={{ width: `${progress}%` }}
-                    className="absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-[#D22931] to-[#FAC344]"
+                <button
+                  type="button"
+                  onClick={() => setCurrentIdx(idx)}
+                  aria-expanded={isOpen}
+                  className="w-full p-4 text-left flex items-center justify-between gap-3 cursor-pointer"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 border ${
+                        isOpen
+                          ? 'bg-white border-[#D22931]/30'
+                          : 'bg-[#EBF2F7] border-[#DCE4EC]'
+                      }`}
+                    >
+                      {service.icon}
+                    </div>
+                    <div className="min-w-0">
+                      <span className="block text-[10px] font-bold uppercase tracking-wider text-[#D22931]">
+                        {service.tag}
+                      </span>
+                      <h3 className="font-display font-bold text-base text-[#020626] leading-tight truncate">
+                        {service.title}
+                      </h3>
+                    </div>
+                  </div>
+                  <Plus
+                    className={`w-4 h-4 flex-shrink-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen ? 'rotate-45 text-[#D22931]' : 'text-[#556070]'
+                    }`}
                   />
-                )}
+                </button>
 
-                <span
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    isSelected ? 'bg-[#D22931] shadow-[0_0_8px_#D22931]' : 'bg-[#DCE4EC]'
-                  }`}
-                />
-                <span>{s.title.split('&')[0].trim()}</span>
-              </button>
+                <div className="sym-accordion-panel" data-open={isOpen ? 'true' : 'false'}>
+                  <div className="sym-accordion-inner">
+                    <div className="px-4 pb-4">
+                      <div className="rounded-xl bg-[#020626] text-white p-4 space-y-3.5 border border-white/10">
+                        <p className="text-xs sm:text-sm text-white/85 leading-relaxed">
+                          {service.description}
+                        </p>
+
+                        <div className="space-y-2 pt-2.5 border-t border-white/10">
+                          <div className="text-[10px] font-bold uppercase tracking-wider text-[#FAC344]">
+                            {service.deliverablesHeader}
+                          </div>
+                          {service.deliverables.map((del) => (
+                            <div
+                              key={del}
+                              className="flex items-start gap-2 text-xs text-white/90"
+                            >
+                              <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] mt-0.5 flex-shrink-0" />
+                              <span>{del}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {service.tools.map((tool) => (
+                            <span
+                              key={tool}
+                              className="px-2.5 py-0.5 rounded-md bg-white/10 text-white/90 text-[11px] border border-white/10"
+                            >
+                              {tool}
+                            </span>
+                          ))}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => onSelectDiscipline(service.id)}
+                          className="sym-btn w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#D22931] hover:bg-[#b52027] text-white font-bold text-xs uppercase tracking-wider cursor-pointer"
+                        >
+                          <span>{service.ctaText}</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>
 
-        {/* Sequential Sliding Showcase Card (Exact Balanced Layout from Image) */}
-        <div
-          className="relative w-full"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="relative rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 lg:p-12 bg-gradient-to-br from-[#020626] to-[#0a1133] text-white border border-white/15 shadow-2xl overflow-hidden min-h-0 sm:min-h-[440px] lg:min-h-[480px] flex flex-col justify-between">
-            {/* Subtle Red Specular Glare in Top Center as in screenshot */}
-            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-48 bg-[#D22931]/20 blur-[90px] rounded-full pointer-events-none" />
+        {/* DESKTOP: Interactive Practice Tabs + Crisp Stage Showcase (>= lg) */}
+        <div className="hidden lg:block">
+          <div className="flex items-center gap-3 mb-8 flex-wrap">
+            {SERVICES.map((s, idx) => {
+              const isSelected = idx === currentIdx;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setCurrentIdx(idx)}
+                  onMouseEnter={() => setCurrentIdx(idx)}
+                  className={`sym-btn px-4 py-2.5 rounded-2xl text-xs font-sans font-semibold flex items-center gap-2 border cursor-pointer ${
+                    isSelected
+                      ? 'bg-[#020626] text-white shadow-lg border-white/20'
+                      : 'bg-white hover:bg-[#F8FAFC] text-[#556070] border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs'
+                  }`}
+                >
+                  <span
+                    className={`w-2 h-2 rounded-full transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                      isSelected
+                        ? 'bg-[#D22931] shadow-[0_0_8px_#D22931] scale-125'
+                        : 'bg-[#DCE4EC] scale-90'
+                    }`}
+                  />
+                  <span>{s.title.split('&')[0].trim()}</span>
+                </button>
+              );
+            })}
+          </div>
 
-            {/* Dynamic BorderBeam */}
+          <div className="relative rounded-[32px] p-10 lg:p-12 bg-gradient-to-br from-[#020626] to-[#0a1133] text-white border border-white/15 shadow-2xl overflow-hidden min-h-[430px] flex flex-col justify-between">
+            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-48 bg-[#D22931]/20 blur-[90px] rounded-full pointer-events-none" />
             <BorderBeam size={280} duration={10} colorFrom="#D22931" colorTo="#FAC344" />
 
-            <AnimatePresence custom={direction} mode="wait">
+            <AnimatePresence mode="wait">
               <motion.div
                 key={currentService.id}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center h-full my-auto"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="relative z-10 grid grid-cols-12 gap-12 items-center h-full my-auto"
               >
-                {/* Left Column: Practice Identity, Title, Description, Ecosystem */}
-                <div className="lg:col-span-7 space-y-5 sm:space-y-6">
-                  {/* Badges */}
-                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#D22931]/20 text-[#FAC344] text-[11px] sm:text-xs font-semibold uppercase tracking-wider border border-[#D22931]/30">
+                {/* Left Column */}
+                <div className="col-span-7 space-y-6">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D22931]/20 text-[#FAC344] text-xs font-semibold uppercase tracking-wider border border-[#D22931]/30">
                       <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
                       {currentService.tag}
                     </span>
-                    <span className="text-[11px] sm:text-xs text-white/60">{currentService.badge}</span>
+                    <span className="text-xs text-white/60">{currentService.badge}</span>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-5xl text-white tracking-tight leading-snug">
+                  <h3 className="font-display font-extrabold text-3xl lg:text-5xl text-white tracking-tight leading-snug">
                     {currentService.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-sm sm:text-base text-white/80 leading-relaxed max-w-2xl">
+                  <p className="text-base text-white/80 leading-relaxed max-w-2xl">
                     {currentService.description}
                   </p>
 
-                  {/* Ecosystem Row */}
                   <div className="pt-2 flex flex-wrap items-center gap-2">
                     <span className="text-xs text-white/50 mr-2">Ecosystem:</span>
                     {currentService.tools.map((tool) => (
@@ -371,36 +361,38 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                   </div>
                 </div>
 
-                {/* Right Column: Nested Frosted Card */}
-                <div className="lg:col-span-5 bg-white/5 p-5 sm:p-8 rounded-2xl border border-white/10 space-y-4 sm:space-y-6 shadow-inner backdrop-blur-sm">
+                {/* Right Column */}
+                <div className="col-span-5 bg-white/5 p-8 rounded-2xl border border-white/10 space-y-6 shadow-inner backdrop-blur-sm">
                   <div className="text-xs font-semibold uppercase tracking-wider text-[#FAC344]">
                     {currentService.deliverablesHeader}
                   </div>
 
-                  {/* Deliverables Checklist with Staggered Visual Pop */}
                   <div className="space-y-3.5">
                     {currentService.deliverables.map((del) => (
-                      <div key={del} className="flex items-start gap-2.5 text-xs sm:text-sm font-medium text-white/90">
+                      <div
+                        key={del}
+                        className="service-deliverable-row flex items-start gap-2.5 text-sm font-medium text-white/90"
+                      >
                         <CheckCircle2 className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
                         <span>{del}</span>
                       </div>
                     ))}
                   </div>
 
-                  {/* Bottom Action Footer */}
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
                     <span className="font-semibold text-[#FAC344]">
                       {currentService.leftFooter}
                     </span>
                     <button
+                      type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         onSelectDiscipline(currentService.id);
                       }}
-                      className="inline-flex items-center gap-1.5 font-bold uppercase tracking-wider text-[#FAC344] hover:text-white transition-colors cursor-pointer group"
+                      className="sym-link-underline inline-flex items-center gap-1.5 font-bold uppercase tracking-wider text-[#FAC344] hover:text-white transition-colors cursor-pointer group"
                     >
                       <span>{currentService.ctaText}</span>
-                      <ArrowRight className="w-4 h-4 text-[#FAC344] group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4 text-[#FAC344] group-hover:translate-x-1 transition-transform inline-block" />
                     </button>
                   </div>
                 </div>

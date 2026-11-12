@@ -1,19 +1,51 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { HitechLogo } from '../ui/HitechLogo';
+import { gsap, SYM_EASE } from '../../lib/gsap';
 
 interface FooterProps {
   onOpenDiscuss: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
+  const footerRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        footer.querySelectorAll('.footer-col-anim'),
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.72,
+          stagger: 0.08,
+          ease: SYM_EASE.snappy,
+          scrollTrigger: {
+            trigger: footer,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }, footer);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <footer className="w-full bg-[#020626] text-white border-t border-white/10 pt-20 pb-12 overflow-hidden">
+    <footer
+      ref={footerRef}
+      className="w-full bg-[#020626] text-white border-t border-white/10 pt-20 pb-12 overflow-hidden"
+    >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           {/* Column 1: Brand & Contact Info */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="footer-col-anim lg:col-span-2 space-y-6">
             <Link to="/" className="flex items-center gap-3 group text-decoration-none">
               <HitechLogo className="w-10 h-10 group-hover:scale-105 transition-transform duration-300" />
               <div className="flex flex-col">
@@ -76,38 +108,38 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
           </div>
 
           {/* Column 2: Solutions */}
-          <div className="space-y-4">
+          <div className="footer-col-anim space-y-4">
             <h4 className="font-display font-bold text-xs uppercase tracking-wider text-[#FAC344]">
               Solutions
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <Link to="/solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
                   AI Adoption &amp; Autonomous Agents
                 </Link>
               </li>
               <li>
-                <Link to="/solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
                   Cloud Architecture &amp; Migration
                 </Link>
               </li>
               <li>
-                <Link to="/solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
                   Cybersecurity &amp; Risk Governance
                 </Link>
               </li>
               <li>
-                <Link to="/solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
                   Data &amp; Customer Intelligence
                 </Link>
               </li>
               <li>
-                <Link to="/solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
                   ERP &amp; CRM Business Applications
                 </Link>
               </li>
               <li>
-                <Link to="/solutions" className="hover:text-white transition-colors">
+                <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
                   Product Modernization &amp; Engineering
                 </Link>
               </li>
@@ -115,38 +147,38 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
           </div>
 
           {/* Column 3: Capabilities & Methodology */}
-          <div className="space-y-4">
+          <div className="footer-col-anim space-y-4">
             <h4 className="font-display font-bold text-xs uppercase tracking-wider text-[#FAC344]">
               How We Deliver
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <Link to="/methodology" className="hover:text-white transition-colors">
+                <Link to="/methodology" className="sym-link-underline hover:text-white transition-colors">
                   Strategic Diagnosis
                 </Link>
               </li>
               <li>
-                <Link to="/methodology" className="hover:text-white transition-colors">
+                <Link to="/methodology" className="sym-link-underline hover:text-white transition-colors">
                   Target Architecture
                 </Link>
               </li>
               <li>
-                <Link to="/methodology" className="hover:text-white transition-colors">
+                <Link to="/methodology" className="sym-link-underline hover:text-white transition-colors">
                   Hands-On Delivery
                 </Link>
               </li>
               <li>
-                <Link to="/methodology" className="hover:text-white transition-colors">
+                <Link to="/methodology" className="sym-link-underline hover:text-white transition-colors">
                   Operational Handover
                 </Link>
               </li>
               <li>
-                <Link to="/capabilities" className="hover:text-white transition-colors">
+                <Link to="/capabilities" className="sym-link-underline hover:text-white transition-colors">
                   Senior Embedded Practitioners
                 </Link>
               </li>
               <li>
-                <Link to="/capabilities" className="hover:text-white transition-colors">
+                <Link to="/capabilities" className="sym-link-underline hover:text-white transition-colors">
                   Zero Handoff Loss Doctrine
                 </Link>
               </li>
@@ -154,7 +186,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
           </div>
 
           {/* Column 4: Executive Community & Connect */}
-          <div className="space-y-4">
+          <div className="footer-col-anim space-y-4">
             <h4 className="font-display font-bold text-xs uppercase tracking-wider text-[#FAC344]">
               Executive Community
             </h4>
@@ -162,26 +194,26 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
               <li>
                 <Link
                   to="/events"
-                  className="hover:text-white transition-colors text-left flex items-center gap-1 text-[#FAC344]"
+                  className="sym-link-underline hover:text-white transition-colors text-left inline-flex items-center gap-1 text-[#FAC344]"
                 >
                   <span>Seattle Executive Roundtable</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </Link>
               </li>
               <li>
-                <Link to="/events" className="hover:text-white transition-colors">
+                <Link to="/events" className="sym-link-underline hover:text-white transition-colors">
                   Perspectives &amp; Insights
                 </Link>
               </li>
               <li>
-                <Link to="/results" className="hover:text-white transition-colors">
+                <Link to="/results" className="sym-link-underline hover:text-white transition-colors">
                   Verified Client Case Studies
                 </Link>
               </li>
               <li>
                 <button
                   onClick={onOpenDiscuss}
-                  className="hover:text-white transition-colors text-left cursor-pointer"
+                  className="sym-link-underline hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Discuss an Enterprise Challenge
                 </button>

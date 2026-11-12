@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Award, Briefcase, ChevronRight, UserCheck } from 'lucide-react';
-import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
+import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 import { hitechContent, type LeaderItem } from '../../data/hitechContent';
 
 interface ExecutiveLeadershipSectionProps {
@@ -9,24 +9,28 @@ interface ExecutiveLeadershipSectionProps {
 
 export const ExecutiveLeadershipSection: React.FC<ExecutiveLeadershipSectionProps> = ({ onOpenDiscuss }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
   const leaders: LeaderItem[] = hitechContent.leadershipTeam || [];
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
+    const cleanupLines = animateMaskedLines(titleRef.current, { trigger: section });
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        section.querySelector('.lead-header'),
-        { opacity: 0, y: 24 },
+        section.querySelectorAll('.lead-header-anim'),
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.7,
-          ease: EDITORIAL_EASE,
+          duration: 0.72,
+          stagger: 0.08,
+          ease: SYM_EASE.snappy,
           scrollTrigger: {
             trigger: section,
-            start: 'top 88%',
+            start: 'top 86%',
             toggleActions: 'play none none none',
           },
         }
@@ -38,19 +42,22 @@ export const ExecutiveLeadershipSection: React.FC<ExecutiveLeadershipSectionProp
         {
           opacity: 1,
           y: 0,
-          duration: 0.65,
-          stagger: 0.08,
-          ease: 'power2.out',
+          duration: 0.72,
+          stagger: 0.075,
+          ease: SYM_EASE.snappy,
           scrollTrigger: {
             trigger: section.querySelector('.lead-grid'),
-            start: 'top 88%',
+            start: 'top 86%',
             toggleActions: 'play none none none',
           },
         }
       );
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      cleanupLines();
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -61,15 +68,15 @@ export const ExecutiveLeadershipSection: React.FC<ExecutiveLeadershipSectionProp
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="lead-header max-w-3xl mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
+        <div className="max-w-3xl mb-12 sm:mb-16">
+          <div className="lead-header-anim inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF2F7] border border-[#DCE4EC] text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-4 shadow-2xs">
             <UserCheck className="w-3.5 h-3.5 text-[#D22931]" />
             <span>Senior Leadership &middot; Hands-on Practitioners</span>
           </div>
-          <h2 className="font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
+          <h2 ref={titleRef} className="font-display font-extrabold text-[clamp(2rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight">
             The partners who frame the strategy <span className="text-[#D22931]">execute the build.</span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
+          <p className="lead-header-anim mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
             Our firm was founded on a simple premise: enterprise clients deserve seasoned practitioners who have built and scaled systems at Amazon, AT&amp;T, and leading technology organizations—not theoretical slide decks or junior staffing handoffs.
           </p>
         </div>
@@ -136,7 +143,7 @@ export const ExecutiveLeadershipSection: React.FC<ExecutiveLeadershipSectionProp
           {onOpenDiscuss && (
             <button
               onClick={() => onOpenDiscuss('strategy')}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#020626] hover:bg-[#D22931] text-white font-display font-bold text-xs uppercase tracking-wider transition-all shadow-sm hover:shadow-lg flex-shrink-0 cursor-pointer"
+              className="sym-btn inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#020626] hover:bg-[#D22931] text-white font-display font-bold text-xs uppercase tracking-wider shadow-sm hover:shadow-lg flex-shrink-0 cursor-pointer"
             >
               <span>Speak with a Partner</span>
               <ChevronRight className="w-4 h-4" />

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Building2, Shield, Cloud, Database, ShoppingBag, Globe, Cpu, Smartphone } from 'lucide-react';
+import { gsap, SYM_EASE } from '../../lib/gsap';
 
 interface ClientLogo {
   name: string;
@@ -81,10 +82,58 @@ const CLIENT_PARTNERS: ClientLogo[] = [
 ];
 
 export const LogoMarquee: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
   const marqueeItems = [...CLIENT_PARTNERS, ...CLIENT_PARTNERS];
 
+  useEffect(() => {
+    const container = containerRef.current;
+    const track = trackRef.current;
+    if (!container || !track) return;
+
+    const mm = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        // Symmetry Section 5 Conveyor Drop Entrance
+        gsap.fromTo(
+          track.querySelectorAll('.marquee-tile'),
+          { y: -24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.025,
+            duration: 0.8,
+            ease: SYM_EASE.snappy,
+            scrollTrigger: {
+              trigger: container,
+              start: 'top 90%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+
+        // Seamless GSAP Infinite Track Conveyor (slows down smoothly on hover)
+        tweenRef.current = gsap.to(track, {
+          xPercent: -50,
+          duration: 32,
+          ease: 'none',
+          repeat: -1,
+        });
+      });
+    }, container);
+
+    return () => {
+      mm.revert();
+      ctx.revert();
+    };
+  }, []);
+
   return (
-    <div className="w-full bg-[#EBF2F7] py-12 border-y border-[#DCE4EC] overflow-hidden">
+    <div
+      ref={containerRef}
+      className="w-full bg-[#EBF2F7] py-12 border-y border-[#DCE4EC] overflow-hidden"
+    >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10 mb-7 text-center">
         <p className="text-xs font-semibold uppercase tracking-widest text-[#556070] flex items-center justify-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
@@ -93,12 +142,16 @@ export const LogoMarquee: React.FC = () => {
         </p>
       </div>
 
-      <div className="relative w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
-        <div className="animate-marquee py-2 flex items-center gap-6">
+      <div
+        onMouseEnter={() => tweenRef.current?.timeScale(0.22)}
+        onMouseLeave={() => tweenRef.current?.timeScale(1)}
+        className="relative w-full overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_96px,_black_calc(100%-96px),transparent_100%)]"
+      >
+        <div ref={trackRef} className="py-2 flex w-max items-center gap-5">
           {marqueeItems.map((item, index) => (
             <div
               key={`${item.name}-${index}`}
-              className="flex items-center gap-3.5 px-5 py-3 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs hover:border-[#D22931]/40 hover:shadow-sm transition-all duration-300 flex-shrink-0 group cursor-default"
+              className="marquee-tile flex items-center gap-3.5 px-5 py-3 rounded-xl bg-white border border-[#DCE4EC] shadow-2xs hover:border-[#D22931]/40 hover:shadow-md hover:-translate-y-1 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] flex-shrink-0 group cursor-default"
             >
               <div className="w-7 h-7 rounded-lg bg-[#EBF2F7] border border-[#DCE4EC] flex items-center justify-center text-[#020626] group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                 {item.icon}

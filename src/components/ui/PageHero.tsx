@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { motion } from 'motion/react';
-import { MagneticButton } from './MagneticButton';
+import { animateMaskedLines, gsap, SYM_EASE } from '../../lib/gsap';
 
 interface PageHeroProps {
   badge: string;
@@ -22,8 +21,60 @@ export const PageHero: React.FC<PageHeroProps> = ({
   ctaText = 'Discuss a Challenge',
   visual,
 }) => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const cleanHeading = animateMaskedLines(headingRef.current, {
+      immediate: true,
+      delay: 0.1,
+      duration: 0.88,
+      stagger: 0.1,
+    });
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        section.querySelector('.ph-badge'),
+        { opacity: 0, y: -12, scale: 0.94 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.65, ease: SYM_EASE.pop }
+      );
+      gsap.fromTo(
+        section.querySelector('.ph-desc'),
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.75, delay: 0.22, ease: SYM_EASE.snappy }
+      );
+      const ctaEl = section.querySelector('.ph-cta');
+      if (ctaEl) {
+        gsap.fromTo(
+          ctaEl,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.72, delay: 0.32, ease: SYM_EASE.snappy }
+        );
+      }
+      const visualEl = section.querySelector('.ph-visual');
+      if (visualEl) {
+        gsap.fromTo(
+          visualEl,
+          { opacity: 0, y: 24, scale: 0.98 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.82, delay: 0.18, ease: SYM_EASE.snappy }
+        );
+      }
+    }, section);
+
+    return () => {
+      cleanHeading();
+      ctx.revert();
+    };
+  }, [title, highlightTitle, badge]);
+
   return (
-    <section className="relative pt-32 pb-14 sm:pb-18 bg-white border-b border-[#DCE4EC] overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative pt-32 pb-14 sm:pb-18 bg-white border-b border-[#DCE4EC] overflow-hidden"
+    >
       {/* Floating Ambient Light Accents */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div className="absolute -top-[25%] left-[20%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#D22931]/8 to-[#FAC344]/8 blur-[120px] animate-ambient-blob-1" />
@@ -35,127 +86,79 @@ export const PageHero: React.FC<PageHeroProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Left Column: Narrative Content & CTA */}
             <div className="lg:col-span-6 flex flex-col items-start text-left">
-              {/* Eyebrow Badge with Spring Float */}
-              <motion.div
-                initial={{ opacity: 0, y: -16, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-2xs text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-6 backdrop-blur-md"
-              >
+              <div className="ph-badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-2xs text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-6 backdrop-blur-md">
                 <Sparkles className="w-3.5 h-3.5 text-[#D22931]" />
                 <span dangerouslySetInnerHTML={{ __html: badge }} />
-              </motion.div>
+              </div>
 
-              {/* Display Headline with Stagger */}
-              <motion.h1
-                initial={{ opacity: 0, y: 26, filter: 'blur(4px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.75, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+              <h1
+                ref={headingRef}
                 className="font-display font-extrabold text-[clamp(2.25rem,4.5vw,3.75rem)] text-[#020626] leading-[1.14] tracking-tight pb-3"
               >
                 {title}{' '}
                 {highlightTitle && (
-                  <span className="text-[#D22931] font-display font-extrabold inline-block">
+                  <span className="text-[#D22931] font-display font-extrabold">
                     {highlightTitle}
                   </span>
                 )}
-              </motion.h1>
+              </h1>
 
-              {/* Narrative Description Fade Up */}
-              <motion.p
-                initial={{ opacity: 0, y: 20, filter: 'blur(3px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.75, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-3 text-base sm:text-lg text-[#556070] leading-relaxed max-w-xl"
-              >
+              <p className="ph-desc mt-3 text-base sm:text-lg text-[#556070] leading-relaxed max-w-xl">
                 {description}
-              </motion.p>
+              </p>
 
-              {/* Quick Action CTA with Magnetic Spring */}
               {onOpenDiscuss && (
-                <motion.div
-                  initial={{ opacity: 0, y: 18, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.75, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
-                  className="mt-8 flex items-center gap-4"
-                >
-                  <MagneticButton
-                    variant="primary"
+                <div className="ph-cta mt-8 flex items-center gap-4">
+                  <button
+                    type="button"
                     onClick={onOpenDiscuss}
-                    className="text-xs font-bold uppercase tracking-wider !py-3.5 !px-7 shadow-md hover:shadow-xl transition-shadow"
+                    className="sym-btn inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider py-3.5 px-7 rounded-xl bg-[#D22931] hover:bg-[#b52027] text-white shadow-md hover:shadow-xl cursor-pointer group"
                   >
                     <span>{ctaText}</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </MagneticButton>
-                </motion.div>
+                  </button>
+                </div>
               )}
             </div>
 
-            {/* Right Column: Dynamic Interactive Bespoke Animation */}
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-6 w-full flex items-center justify-center lg:justify-end"
-            >
+            <div className="ph-visual lg:col-span-6 w-full flex items-center justify-center lg:justify-end">
               {visual}
-            </motion.div>
+            </div>
           </div>
         ) : (
           <div className="text-center flex flex-col items-center max-w-[1240px] mx-auto">
-            {/* Eyebrow Badge with Spring Float */}
-            <motion.div
-              initial={{ opacity: 0, y: -16, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-2xs text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-6 backdrop-blur-md"
-            >
+            <div className="ph-badge inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 border border-[#DCE4EC] shadow-2xs text-xs font-semibold uppercase tracking-wider text-[#D22931] mb-6 backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-[#D22931]" />
               <span dangerouslySetInnerHTML={{ __html: badge }} />
-            </motion.div>
+            </div>
 
-            {/* Display Headline with Stagger */}
-            <motion.h1
-              initial={{ opacity: 0, y: 26, filter: 'blur(4px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.75, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display font-extrabold text-[clamp(2.5rem,5.5vw,4.5rem)] text-[#020626] leading-[1.12] tracking-tight max-w-4xl pb-3"
+            <h1
+              ref={headingRef}
+              className="font-display font-extrabold text-[clamp(2.35rem,5.4vw,4.4rem)] text-[#020626] leading-[1.12] tracking-tight max-w-4xl pb-3"
             >
               {title}{' '}
               {highlightTitle && (
-                <span className="text-[#D22931] font-display font-extrabold inline-block">
+                <span className="text-[#D22931] font-display font-extrabold">
                   {highlightTitle}
                 </span>
               )}
-            </motion.h1>
+            </h1>
 
-            {/* Narrative Description Fade Up */}
-            <motion.p
-              initial={{ opacity: 0, y: 20, filter: 'blur(3px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.75, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-4 max-w-2xl text-base sm:text-lg lg:text-xl text-[#556070] leading-relaxed"
-            >
+            <p className="ph-desc mt-4 max-w-2xl text-base sm:text-lg lg:text-xl text-[#556070] leading-relaxed">
               {description}
-            </motion.p>
+            </p>
 
-            {/* Quick Action CTA with Magnetic Spring */}
             {onOpenDiscuss && (
-              <motion.div
-                initial={{ opacity: 0, y: 18, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.75, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-8 flex items-center justify-center gap-4"
-              >
-                <MagneticButton
-                  variant="primary"
+              <div className="ph-cta mt-8 flex items-center justify-center gap-4">
+                <button
+                  type="button"
                   onClick={onOpenDiscuss}
-                  className="text-xs font-bold uppercase tracking-wider !py-3.5 !px-7 shadow-md hover:shadow-xl transition-shadow"
+                  className="sym-btn inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider py-3.5 px-7 rounded-xl bg-[#D22931] hover:bg-[#b52027] text-white shadow-md hover:shadow-xl cursor-pointer group"
                 >
                   <span>{ctaText}</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </MagneticButton>
-              </motion.div>
+                </button>
+              </div>
             )}
           </div>
         )}

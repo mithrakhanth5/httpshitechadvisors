@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { ArrowUpRight, Quote, ShieldCheck, ShoppingCart, Server, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { gsap, EDITORIAL_EASE } from '../../lib/gsap';
-import { TiltCard } from '../ui/TiltCard';
+import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 import { BorderBeam } from '../ui/BorderBeam';
 import { AnimatedCounter } from '../ui/AnimatedCounter';
 import { hitechContent } from '../../data/hitechContent';
@@ -69,6 +68,8 @@ const CASE_STORIES: CaseStory[] = [
 
 export const TestimonialsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const glowOrbRef = useRef<HTMLDivElement | null>(null);
   const [activeStoryIndex, setActiveStoryIndex] = useState<number>(0);
   const [quoteIdx, setQuoteIdx] = useState<number>(0);
   const [isQuoteHovered, setIsQuoteHovered] = useState<boolean>(false);
@@ -91,63 +92,74 @@ export const TestimonialsSection: React.FC = () => {
     const section = sectionRef.current;
     if (!section) return;
 
+    const cleanupLines = animateMaskedLines(titleRef.current, { trigger: section });
+
     const ctx = gsap.context(() => {
-      // Header reveal with bi-directional scroll
       gsap.fromTo(
-        section.querySelector('.cases-header'),
-        { opacity: 0, y: 30 },
+        section.querySelectorAll('.cases-header-anim'),
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          ease: EDITORIAL_EASE,
+          duration: 0.72,
+          ease: SYM_EASE.snappy,
           scrollTrigger: {
             trigger: section,
-            start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
+            start: 'top 86%',
+            toggleActions: 'play none none none',
           },
         }
       );
 
-      // Quantified Story Cards reveal with bi-directional scroll
       gsap.fromTo(
         section.querySelectorAll('.case-card'),
-        { opacity: 0, y: 40, scale: 0.98 },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.85,
-          stagger: 0.12,
-          ease: 'power3.out',
+          duration: 0.75,
+          stagger: 0.1,
+          ease: SYM_EASE.snappy,
           scrollTrigger: {
             trigger: section.querySelector('.case-card'),
-            start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
+            start: 'top 86%',
+            toggleActions: 'play none none none',
           },
         }
       );
 
-      // Quote card reveal with bi-directional scroll
       gsap.fromTo(
         section.querySelector('.testimonial-quote-box'),
-        { opacity: 0, scale: 0.97, y: 35 },
+        { opacity: 0, y: 28 },
         {
           opacity: 1,
-          scale: 1,
           y: 0,
-          duration: 0.9,
-          ease: EDITORIAL_EASE,
+          duration: 0.85,
+          ease: SYM_EASE.snappy,
           scrollTrigger: {
             trigger: section.querySelector('.testimonial-quote-box'),
-            start: 'top 88%',
-            toggleActions: 'play reverse play reverse',
+            start: 'top 86%',
+            toggleActions: 'play none none none',
           },
         }
       );
+
+      if (glowOrbRef.current) {
+        gsap.to(glowOrbRef.current, {
+          y: 12,
+          x: -10,
+          duration: 4.5,
+          repeat: -1,
+          yoyo: true,
+          ease: SYM_EASE.float,
+        });
+      }
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      cleanupLines();
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -158,16 +170,16 @@ export const TestimonialsSection: React.FC = () => {
     >
       <div className="relative max-w-[1300px] mx-auto px-6 sm:px-10">
         {/* Section Header */}
-        <div className="cases-header max-w-3xl mb-10 sm:mb-12">
-          <h2 className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
+        <div className="max-w-3xl mb-10 sm:mb-12">
+          <h2 ref={titleRef} className="font-display font-extrabold text-[clamp(1.85rem,4vw,3.25rem)] text-[#020626] leading-tight tracking-tight">
             Client impact by the <span className="text-[#D22931]">numbers.</span>
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#556070] leading-relaxed">
+          <p className="cases-header-anim mt-3 text-base sm:text-lg text-[#556070] leading-relaxed">
             Highlighted production case studies and verified references from our client leadership partners.
           </p>
         </div>
 
-        {/* 3 Quantified Case Studies Grid with 3D Tilt & Specular Glare */}
+        {/* 3 Quantified Case Studies Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {CASE_STORIES.map((item, index) => {
             const isSelected = activeStoryIndex === index;
@@ -177,17 +189,11 @@ export const TestimonialsSection: React.FC = () => {
                 className="case-card h-full"
                 onMouseEnter={() => setActiveStoryIndex(index)}
               >
-                <TiltCard
-                  maxTilt={6}
-                  scale={1.02}
-                  showBorderBeam={isSelected}
-                  borderBeamDuration={9}
-                  spotlightColor="rgba(210, 41, 49, 0.12)"
-                  borderColor="rgba(210, 41, 49, 0.55)"
-                  className={`p-8 rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between h-full ${
+                <div
+                  className={`p-8 rounded-2xl border transition-[transform,border-color,box-shadow,background-color] duration-300 cursor-pointer flex flex-col justify-between h-full group ${
                     isSelected
-                      ? 'bg-white border-[#D22931] shadow-2xl ring-2 ring-[#D22931]/15 -translate-y-1'
-                      : 'border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg'
+                      ? 'bg-white border-[#D22931] shadow-xl ring-2 ring-[#D22931]/15 -translate-y-1'
+                      : 'border-[#DCE4EC] bg-[#EBF2F7] hover:border-[#D22931]/40 shadow-2xs hover:shadow-lg hover:-translate-y-1'
                   }`}
                 >
                 <div>
@@ -232,11 +238,11 @@ export const TestimonialsSection: React.FC = () => {
                   </div>
 
                   <div className="flex items-center justify-between text-xs font-bold text-[#020626] group-hover:text-[#D22931]">
-                    <span>Read the story &rarr;</span>
+                    <span className="sym-link-underline">Read the story &rarr;</span>
                     <ArrowUpRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </div>
-              </TiltCard>
+              </div>
             </div>
           );
         })}
@@ -249,12 +255,19 @@ export const TestimonialsSection: React.FC = () => {
           onMouseLeave={() => setIsQuoteHovered(false)}
         >
           <BorderBeam size={260} duration={14} colorFrom="#FAC344" colorTo="#D22931" />
-          <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-[#FAC344]/15 blur-[90px] pointer-events-none animate-ambient-blob-1" />
+          <div
+            ref={glowOrbRef}
+            className="absolute -top-16 -right-16 w-72 h-72 rounded-full bg-[#FAC344]/15 blur-[90px] pointer-events-none"
+          />
 
           {/* Top Row: Category + Verified Client Selector Tabs */}
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-            <div className="flex items-center gap-2 text-[#FAC344]">
+            <div className="flex items-center gap-2.5 text-[#FAC344]">
               <Quote className="w-7 h-7 opacity-75" />
+              <span className="relative flex h-2 w-2">
+                <span className="sym-pulse-ring absolute inset-0 rounded-full bg-[#FAC344]/60" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FAC344]" />
+              </span>
               <span className="text-xs font-semibold uppercase tracking-widest text-white/70">
                 Verified Executive References &middot; Client Perspectives
               </span>

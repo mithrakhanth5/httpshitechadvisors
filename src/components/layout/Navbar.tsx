@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { HitechLogo } from '../ui/HitechLogo';
 
@@ -64,10 +64,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 ${
+      data-stuck={isScrolled ? 'true' : 'false'}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-[#DCE4EC] py-3'
-          : 'bg-white border-b border-[#DCE4EC]/70 py-4'
+          ? 'bg-white/78 backdrop-blur-[14px] backdrop-saturate-[160%] shadow-xs border-b border-[#DCE4EC] py-3'
+          : 'bg-white/95 border-b border-[#DCE4EC]/70 py-4'
       }`}
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10 flex items-center justify-between gap-6">
@@ -87,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
         <nav className="hidden lg:flex items-center gap-7" aria-label="Primary Navigation">
           <Link
             to="/"
-            className={`text-sm transition-colors py-1.5 ${
+            className={`sym-link-underline text-sm transition-colors py-1.5 ${
               location.pathname === '/'
                 ? 'text-[#D22931] font-semibold'
                 : 'text-[#3A4A5A] hover:text-[#020626] font-medium'
@@ -107,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
               <Link
                 to="/solutions"
                 onClick={() => setOpenSolutionsPath(null)}
-                className={`text-sm transition-colors ${
+                className={`sym-link-underline text-sm transition-colors ${
                   isSolutionsGroupActive
                     ? 'text-[#D22931] font-semibold'
                     : 'text-[#3A4A5A] hover:text-[#020626] font-medium'
@@ -167,7 +168,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm transition-colors py-1.5 ${
+                className={`sym-link-underline text-sm transition-colors py-1.5 ${
                   isActive
                     ? 'text-[#D22931] font-semibold'
                     : 'text-[#3A4A5A] hover:text-[#020626] font-medium'
@@ -184,14 +185,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
           <button
             type="button"
             onClick={onOpenDiscuss}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#020626] hover:bg-[#D22931] text-white text-xs font-bold uppercase tracking-wider transition-colors duration-200 shadow-xs cursor-pointer"
+            className="sym-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#020626] hover:bg-[#D22931] text-white text-xs font-bold uppercase tracking-wider shadow-xs cursor-pointer"
           >
             <span>Discuss a Challenge</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Symmetry-Style 2-Bar Morphing Mobile Menu Button */}
         <button
           type="button"
           onClick={() =>
@@ -199,16 +200,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
               prev === location.pathname ? null : location.pathname
             )
           }
-          className="lg:hidden p-2 rounded-lg text-[#020626] hover:bg-[#EBF2F7] transition-colors cursor-pointer"
+          className="lg:hidden w-10 h-10 rounded-full border border-[#DCE4EC] bg-white/80 hover:bg-[#EBF2F7] active:scale-[0.88] flex flex-col items-center justify-center gap-[5px] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] cursor-pointer"
           aria-label="Toggle Navigation"
+          aria-expanded={isMobileOpen}
         >
-          {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          <span
+            className={`block w-3.5 h-[1.5px] bg-[#020626] rounded-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              isMobileOpen ? 'translate-y-[3.25px] rotate-45' : ''
+            }`}
+          />
+          <span
+            className={`block w-3.5 h-[1.5px] bg-[#020626] rounded-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+              isMobileOpen ? '-translate-y-[3.25px] -rotate-45' : ''
+            }`}
+          />
         </button>
       </div>
 
-      {/* Clean Mobile Dropdown Drawer */}
+      {/* Smooth Mobile Dropdown Drawer */}
       {isMobileOpen && (
-        <div className="lg:hidden bg-white border-t border-[#DCE4EC] px-6 py-5 space-y-4 shadow-lg">
+        <div className="lg:hidden bg-white/96 backdrop-blur-[14px] border-t border-[#DCE4EC] px-6 py-5 space-y-4 shadow-lg animate-smooth-fade-in">
           <nav className="flex flex-col space-y-1">
             {mobileLinks.map((link) => {
               const isActive = location.pathname === link.path;
