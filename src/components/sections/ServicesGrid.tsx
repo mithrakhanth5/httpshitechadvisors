@@ -7,9 +7,9 @@ import {
   LayoutGrid,
   CheckCircle2,
   ArrowRight,
-  Plus,
 } from 'lucide-react';
-import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
+import { animateMaskedLines } from '../../lib/gsap';
+import { useStickyStackDeck } from '../../lib/useStickyStackDeck';
 import { BorderBeam } from '../ui/BorderBeam';
 
 interface ServicesGridProps {
@@ -130,10 +130,14 @@ const SERVICES: ServiceCard[] = [
 
 export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const desktopHeaderRef = useRef<HTMLDivElement | null>(null);
+  const mobileHeadingRef = useRef<HTMLDivElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const sentinelRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const slotRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLElement | null)[]>([]);
+  const shadeRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [currentIdx, setCurrentIdx] = useState<number>(0);
-
-  const currentService = SERVICES[currentIdx];
 
   useEffect(() => {
     const cleanHeading = animateMaskedLines(headingRef.current, {
@@ -145,195 +149,85 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
     return () => cleanHeading();
   }, []);
 
-  // Symmetry-trained GSAP transition when desktop practice swaps
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+  useStickyStackDeck(
+    {
+      sectionRef,
+      desktopHeaderRef,
+      mobileHeadingRef,
+      sentinelRefs,
+      slotRefs,
+      cardRefs,
+      shadeRefs,
+    },
+    SERVICES.length,
+    {
+      desktopOffsetStep: 10,
+      mobileOffsetStep: 8,
+      desktopScaleStep: 0.028,
+      mobileScaleStep: 0.024,
+      desktopShadeStep: 0.06,
+      mobileShadeStep: 0.05,
+      onActiveIndexChange: setCurrentIdx,
+    }
+  );
 
-    const ctx = gsap.context(() => {
-      const stageTitle = section.querySelector('.service-stage-title');
-      if (stageTitle) {
-        gsap.fromTo(
-          stageTitle,
-          { yPercent: 105 },
-          { yPercent: 0, duration: 0.48, ease: SYM_EASE.snappy }
-        );
-      }
-
-      const desc = section.querySelector('.service-stage-desc');
-      if (desc) {
-        gsap.fromTo(
-          desc,
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.44, delay: 0.05, ease: SYM_EASE.snappy }
-        );
-      }
-
-      const pills = section.querySelectorAll('.service-chip-pill');
-      if (pills.length > 0) {
-        gsap.fromTo(
-          pills,
-          { opacity: 0, scale: 0.9, y: 6 },
-          {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            duration: 0.36,
-            stagger: 0.035,
-            ease: SYM_EASE.pop,
-          }
-        );
-      }
-
-      const rows = section.querySelectorAll('.service-deliverable-row');
-      if (rows.length > 0) {
-        gsap.fromTo(
-          rows,
-          { opacity: 0, x: 12 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.44,
-            stagger: 0.045,
-            ease: SYM_EASE.snappy,
-          }
-        );
-      }
-    }, section);
-
-    return () => ctx.revert();
-  }, [currentIdx]);
+  const scrollToPractice = (idx: number) => {
+    const sentinel = sentinelRefs.current[idx] ?? slotRefs.current[idx];
+    if (!sentinel) return;
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    const headerEl = isDesktop ? desktopHeaderRef.current : mobileHeadingRef.current;
+    const stickyTop = isDesktop ? 72 : 60;
+    const offsetStep = isDesktop ? 10 : 8;
+    const gap = isDesktop ? 12 : 8;
+    const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 170;
+    const dockTop = Math.round(stickyTop + headerHeight + gap + idx * offsetStep);
+    const sentinelDocTop = sentinel.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({
+      top: Math.max(0, sentinelDocTop - dockTop + 6),
+      behavior: 'smooth',
+    });
+    setCurrentIdx(idx);
+  };
 
   return (
     <section
       ref={sectionRef}
       id="solutions"
-      className="py-14 sm:py-20 bg-white relative overflow-hidden"
+      className="py-12 sm:py-16 bg-white relative"
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-8 sm:mb-12">
-          <h2
-            ref={headingRef}
-            className="font-display font-extrabold text-[clamp(1.85rem,4.5vw,3.5rem)] text-[#020626] leading-tight tracking-tight"
+        {/* Sticky Header & Practice Filter Bar: z-30 stays strictly above rising cards */}
+        <div
+          ref={desktopHeaderRef}
+          className="contents md:block md:sticky md:top-[72px] md:z-30 md:bg-white md:pt-2 md:pb-4 md:after:pointer-events-none md:after:block md:after:absolute md:after:inset-x-0 md:after:top-full md:after:h-4 md:after:bg-gradient-to-b md:after:from-white md:after:to-transparent"
+        >
+          <div
+            ref={mobileHeadingRef}
+            className="sticky top-[60px] z-30 bg-white pt-1.5 pb-2.5 md:static md:bg-transparent md:p-0 after:pointer-events-none after:block md:after:hidden after:absolute after:inset-x-0 after:top-full after:h-3 after:bg-gradient-to-b after:from-white after:to-transparent"
           >
-            Core Solution <span className="text-[#D22931]">Practices.</span>
-          </h2>
-          <p className="text-sm sm:text-lg text-[#556070] mt-3 leading-relaxed">
-            Select a practice below to inspect deliverables and supported platforms.
+            <h2
+              ref={headingRef}
+              className="font-display font-extrabold text-[clamp(1.75rem,4vw,3rem)] text-[#020626] leading-tight tracking-tight"
+            >
+              Core Solution <span className="text-[#D22931]">Practices.</span>
+            </h2>
+          </div>
+
+          <p className="text-sm sm:text-base text-[#556070] mt-1.5 leading-relaxed max-w-3xl">
+            Scroll through each stacked practice card or select a pillar below to jump directly to its deliverables and ecosystem.
           </p>
-        </div>
 
-        {/* MOBILE: Compact Vertical Symmetry Accordion (< lg) */}
-        <div className="lg:hidden space-y-3">
-          {SERVICES.map((service, idx) => {
-            const isOpen = idx === currentIdx;
-            return (
-              <div
-                key={service.id}
-                className={`rounded-2xl border transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${
-                  isOpen
-                    ? 'bg-[#F8FAFC] border-[#D22931] shadow-lg'
-                    : 'bg-white border-[#DCE4EC] hover:border-[#D22931]/40'
-                }`}
-              >
-                <button
-                  type="button"
-                  onClick={() => setCurrentIdx(idx)}
-                  aria-expanded={isOpen}
-                  className="w-full p-4 text-left flex items-center justify-between gap-3 cursor-pointer"
-                >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 border ${
-                        isOpen
-                          ? 'bg-white border-[#D22931]/30'
-                          : 'bg-[#EBF2F7] border-[#DCE4EC]'
-                      }`}
-                    >
-                      {service.icon}
-                    </div>
-                    <div className="min-w-0">
-                      <span className="block text-[10px] font-bold uppercase tracking-wider text-[#D22931]">
-                        {service.tag}
-                      </span>
-                      <h3 className="font-display font-bold text-base text-[#020626] leading-tight truncate">
-                        {service.title}
-                      </h3>
-                    </div>
-                  </div>
-                  <Plus
-                    className={`w-4 h-4 flex-shrink-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      isOpen ? 'rotate-45 text-[#D22931]' : 'text-[#556070]'
-                    }`}
-                  />
-                </button>
-
-                <div className="sym-accordion-panel" data-open={isOpen ? 'true' : 'false'}>
-                  <div className="sym-accordion-inner">
-                    <div className="px-4 pb-4">
-                      <div className="rounded-xl bg-[#020626] text-white p-4 space-y-3.5 border border-white/10">
-                        <p className="text-xs sm:text-sm text-white/85 leading-relaxed">
-                          {service.description}
-                        </p>
-
-                        <div className="space-y-2 pt-2.5 border-t border-white/10">
-                          <div className="text-[10px] font-bold uppercase tracking-wider text-[#FAC344]">
-                            {service.deliverablesHeader}
-                          </div>
-                          {service.deliverables.map((del) => (
-                            <div
-                              key={del}
-                              className="flex items-start gap-2 text-xs text-white/90"
-                            >
-                              <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] mt-0.5 flex-shrink-0" />
-                              <span>{del}</span>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="flex flex-wrap gap-1.5 pt-1">
-                          {service.tools.map((tool) => (
-                            <span
-                              key={tool}
-                              className="px-2.5 py-0.5 rounded-md bg-white/10 text-white/90 text-[11px] border border-white/10"
-                            >
-                              {tool}
-                            </span>
-                          ))}
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() => onSelectDiscipline(service.id)}
-                          className="sym-btn w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-[#D22931] hover:bg-[#b52027] text-white font-bold text-xs uppercase tracking-wider cursor-pointer"
-                        >
-                          <span>{service.ctaText}</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* DESKTOP: Interactive Practice Tabs + Crisp Stage Showcase (>= lg) */}
-        <div className="hidden lg:block">
-          <div className="flex items-center gap-3 mb-8 flex-wrap">
+          <div className="flex items-center gap-2 sm:gap-2.5 mt-4 flex-wrap">
             {SERVICES.map((s, idx) => {
               const isSelected = idx === currentIdx;
               return (
                 <button
                   key={s.id}
                   type="button"
-                  onClick={() => setCurrentIdx(idx)}
-                  onMouseEnter={() => setCurrentIdx(idx)}
-                  className={`sym-btn px-4 py-2.5 rounded-2xl text-xs font-sans font-semibold flex items-center gap-2 border cursor-pointer ${
+                  onClick={() => scrollToPractice(idx)}
+                  className={`sym-btn px-3.5 py-2 rounded-full text-xs font-sans font-semibold flex items-center gap-2 border cursor-pointer transition-all duration-300 ${
                     isSelected
-                      ? 'bg-[#020626] text-white shadow-lg border-white/20'
+                      ? 'bg-[#020626] text-white shadow-md border-[#020626]'
                       : 'bg-white hover:bg-[#F8FAFC] text-[#556070] border-[#DCE4EC] hover:border-[#D22931]/40 shadow-2xs'
                   }`}
                 >
@@ -349,85 +243,138 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
               );
             })}
           </div>
+        </div>
 
-          <div className="relative rounded-[32px] p-10 lg:p-12 bg-gradient-to-br from-[#020626] to-[#0a1133] text-white border border-white/15 shadow-2xl overflow-hidden min-h-[430px] flex flex-col justify-between">
-            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-48 bg-[#D22931]/20 blur-[90px] rounded-full pointer-events-none" />
-            <BorderBeam size={280} duration={10} colorFrom="#D22931" colorTo="#FAC344" />
+        {/* Sticky Stacking Solution Practice Deck: isolated in z-10 beneath z-30 header */}
+        <div
+          className="relative z-10 mt-5 md:mt-6"
+          style={{ ['--cards' as string]: SERVICES.length }}
+        >
+          {SERVICES.map((service, idx) => {
+            const isLast = idx === SERVICES.length - 1;
+            const isActive = idx === currentIdx;
+            const indexLabel = `0${idx + 1}`;
 
-            <div
-              key={currentService.id}
-              className="relative z-10 grid grid-cols-12 gap-12 items-center h-full my-auto"
-            >
-              {/* Left Column */}
-              <div className="col-span-7 space-y-6">
-                <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono">
-                  <span className="font-bold uppercase tracking-wider text-[#FAC344]">
-                    {currentService.tag}
-                  </span>
-                  <span className="text-white/30">&middot;</span>
-                  <span className="text-white/65">{currentService.badge}</span>
-                </div>
-
-                <div className="overflow-hidden pb-[0.22em] -mb-[0.22em]">
-                  <h3 className="service-stage-title font-display font-extrabold text-3xl lg:text-5xl text-white tracking-tight leading-snug will-change-transform">
-                    {currentService.title}
-                  </h3>
-                </div>
-
-                <p className="service-stage-desc text-base text-white/80 leading-relaxed max-w-2xl">
-                  {currentService.description}
-                </p>
-
-                <div className="pt-2 flex flex-wrap items-center gap-2">
-                  <span className="text-xs text-white/50 mr-2">Ecosystem:</span>
-                  {currentService.tools.map((tool) => (
-                    <span
-                      key={tool}
-                      className="service-chip-pill px-3 py-1 rounded-lg bg-white/10 text-white text-xs font-medium border border-white/10"
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="col-span-5 bg-white/5 p-8 rounded-2xl border border-white/10 space-y-6 shadow-inner backdrop-blur-sm">
-                <div className="text-xs font-semibold uppercase tracking-wider text-[#FAC344]">
-                  {currentService.deliverablesHeader}
-                </div>
-
-                <div className="space-y-3.5">
-                  {currentService.deliverables.map((del) => (
-                    <div
-                      key={del}
-                      className="service-deliverable-row flex items-start gap-2.5 text-sm font-medium text-white/90"
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
-                      <span>{del}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                  <span className="font-semibold text-[#FAC344]">
-                    {currentService.leftFooter}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onSelectDiscipline(currentService.id);
+            return (
+              <React.Fragment key={service.id}>
+                {/* Non-sticky flow sentinel keeps ScrollTrigger scrub & pill jump offsets exact */}
+                <div
+                  ref={(el) => {
+                    sentinelRefs.current[idx] = el;
+                  }}
+                  aria-hidden="true"
+                  className="h-0 w-full pointer-events-none"
+                />
+                <div
+                  ref={(el) => {
+                    slotRefs.current[idx] = el;
+                  }}
+                  style={{ zIndex: idx + 1 }}
+                  className="sticky will-change-transform"
+                >
+                  <article
+                    ref={(el) => {
+                      cardRefs.current[idx] = el;
                     }}
-                    className="sym-link-underline inline-flex items-center gap-1.5 font-bold uppercase tracking-wider text-[#FAC344] hover:text-white transition-colors cursor-pointer group"
+                    className="relative rounded-2xl md:rounded-[28px] p-6 sm:p-8 lg:p-10 bg-gradient-to-br from-[#020626] to-[#0a1133] text-white border border-white/15 shadow-2xl overflow-hidden will-change-transform"
                   >
-                    <span>{currentService.ctaText}</span>
-                    <ArrowRight className="w-4 h-4 text-[#FAC344] group-hover:translate-x-1 transition-transform inline-block" />
-                  </button>
+                    {/* Receding dark veil when newer cards dock on top */}
+                    <div
+                      ref={(el) => {
+                        shadeRefs.current[idx] = el;
+                      }}
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 bg-[#010314] opacity-0 z-20"
+                    />
+
+                    <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-48 bg-[#D22931]/20 blur-[90px] rounded-full pointer-events-none" />
+                    {isActive && (
+                      <BorderBeam size={260} duration={10} colorFrom="#D22931" colorTo="#FAC344" />
+                    )}
+
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+                      {/* Left Column */}
+                      <div className="lg:col-span-7 space-y-4 sm:space-y-5">
+                        <div className="flex flex-wrap items-center gap-2.5 text-[11px] sm:text-xs font-mono">
+                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-white/10 border border-white/15 text-white font-bold">
+                            {indexLabel}
+                          </span>
+                          <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-white/10 border border-white/15">
+                            {service.icon}
+                          </span>
+                          <span className="font-bold uppercase tracking-wider text-[#FAC344]">
+                            {service.tag}
+                          </span>
+                          <span className="text-white/30">&middot;</span>
+                          <span className="text-white/65">{service.badge}</span>
+                        </div>
+
+                        <h3 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-[40px] text-white tracking-tight leading-snug">
+                          {service.title}
+                        </h3>
+
+                        <p className="text-xs sm:text-sm lg:text-base text-white/80 leading-relaxed max-w-2xl">
+                          {service.description}
+                        </p>
+
+                        <div className="pt-1 flex flex-wrap items-center gap-2">
+                          <span className="text-xs text-white/50 mr-1">Ecosystem:</span>
+                          {service.tools.map((tool) => (
+                            <span
+                              key={tool}
+                              className="px-2.5 py-1 rounded-lg bg-white/10 text-white text-[11px] sm:text-xs font-medium border border-white/10"
+                            >
+                              {tool}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Right Column: Canonical Deliverables */}
+                      <div className="lg:col-span-5 bg-white/5 p-5 sm:p-7 rounded-2xl border border-white/10 space-y-4 sm:space-y-5 shadow-inner backdrop-blur-sm">
+                        <div className="text-[11px] font-semibold uppercase tracking-wider text-[#FAC344]">
+                          {service.deliverablesHeader}
+                        </div>
+
+                        <div className="space-y-2.5 sm:space-y-3">
+                          {service.deliverables.map((del) => (
+                            <div
+                              key={del}
+                              className="flex items-start gap-2.5 text-xs sm:text-sm font-medium text-white/90"
+                            >
+                              <CheckCircle2 className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
+                              <span>{del}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="pt-3.5 border-t border-white/10 flex items-center justify-between gap-3 text-xs">
+                          <span className="font-semibold text-[#FAC344]">
+                            {service.leftFooter}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onSelectDiscipline(service.id);
+                            }}
+                            className="sym-link-underline inline-flex items-center gap-1.5 font-bold uppercase tracking-wider text-white hover:text-[#FAC344] transition-colors cursor-pointer group"
+                          >
+                            <span>{service.ctaText}</span>
+                            <ArrowRight className="w-4 h-4 text-[#D22931] group-hover:translate-x-1 transition-transform inline-block" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
                 </div>
-              </div>
-            </div>
-          </div>
+                <div
+                  aria-hidden="true"
+                  className={isLast ? 'h-[120px] md:h-[180px]' : 'h-[80px] md:h-[132px]'}
+                />
+              </React.Fragment>
+            );
+          })}
         </div>
       </div>
     </section>

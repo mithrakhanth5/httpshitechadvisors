@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
-import { ScrollTrigger, animateMaskedLines, gsap } from '../../lib/gsap';
+import { animateMaskedLines, gsap } from '../../lib/gsap';
+import { useStickyStackDeck } from '../../lib/useStickyStackDeck';
 
 export interface StackCardItem {
   id: string;
@@ -51,6 +52,19 @@ export const SymmetryStackTransition: React.FC<SymmetryStackTransitionProps> = (
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const shadeRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  useStickyStackDeck(
+    {
+      sectionRef,
+      desktopHeaderRef,
+      mobileHeadingRef,
+      sentinelRefs,
+      slotRefs,
+      cardRefs,
+      shadeRefs,
+    },
+    cards.length
+  );
+
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const heading = headingRef.current;
@@ -87,157 +101,9 @@ export const SymmetryStackTransition: React.FC<SymmetryStackTransitionProps> = (
           );
         }
       });
-
-      const computeStackTop = (isDesktop: boolean) => {
-        if (isDesktop) {
-          const headerEl = desktopHeaderRef.current;
-          const stickyTop = 72;
-          const measuredHeight = headerEl ? headerEl.getBoundingClientRect().height : 204;
-          return Math.round(stickyTop + measuredHeight + 12);
-        }
-        const mobileEl = mobileHeadingRef.current;
-        const stickyTop = 60;
-        const measuredHeight = mobileEl ? mobileEl.getBoundingClientRect().height : 78;
-        return Math.round(stickyTop + measuredHeight + 8);
-      };
-
-      // Helper to set up receding card depth & shade per responsive breakpoint
-      const setupDeckScrub = (
-        isDesktop: boolean,
-        offsetStep: number,
-        scaleStep: number,
-        shadeStep: number
-      ) => {
-        const cardsSnapshot = [...cardRefs.current];
-        const shadesSnapshot = [...shadeRefs.current];
-        const slotsSnapshot = [...slotRefs.current];
-        const sentinelsSnapshot = [...sentinelRefs.current];
-        const transitionCount = Math.max(0, cards.length - 1);
-        const stepProgress = new Array<number>(transitionCount).fill(0);
-
-        let activeStackTop = computeStackTop(isDesktop);
-
-        const syncSlotTops = () => {
-          activeStackTop = computeStackTop(isDesktop);
-          slotsSnapshot.forEach((slotEl, idx) => {
-            if (!slotEl) return;
-            slotEl.style.top = `${activeStackTop + idx * offsetStep}px`;
-          });
-        };
-
-        const applyCardTransforms = () => {
-          cardsSnapshot.forEach((cardEl, idx) => {
-            if (!cardEl || idx >= cards.length - 1) return;
-
-            let cumulativeDepth = 0;
-            for (let stepIdx = idx; stepIdx < stepProgress.length; stepIdx += 1) {
-              cumulativeDepth += stepProgress[stepIdx];
-            }
-
-            const targetScale = Math.max(0.88, 1 - cumulativeDepth * scaleStep);
-            gsap.set(cardEl, {
-              scale: targetScale,
-              transformOrigin: '50% 0%',
-              force3D: true,
-            });
-
-            const shadeEl = shadesSnapshot[idx];
-            if (shadeEl) {
-              gsap.set(shadeEl, {
-                opacity: Math.min(0.16, cumulativeDepth * shadeStep),
-              });
-            }
-          });
-        };
-
-        syncSlotTops();
-        applyCardTransforms();
-
-        ScrollTrigger.addEventListener('refreshInit', syncSlotTops);
-
-        for (let k = 0; k < transitionCount; k += 1) {
-          const incomingSentinel = sentinelsSnapshot[k + 1] ?? slotsSnapshot[k + 1];
-          if (!incomingSentinel) continue;
-
-          ScrollTrigger.create({
-            trigger: incomingSentinel,
-            start: 'top 92%',
-            end: () => `top ${activeStackTop + (k + 1) * offsetStep}px`,
-            scrub: true,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              stepProgress[k] = self.progress;
-              applyCardTransforms();
-            },
-            onRefresh: (self) => {
-              stepProgress[k] = self.progress;
-              applyCardTransforms();
-            },
-          });
-        }
-
-        // Keep final front card crisply at scale 1
-        const lastCard = cardsSnapshot[cards.length - 1];
-        if (lastCard) {
-          gsap.set(lastCard, { scale: 1, clearProps: 'transform' });
-        }
-
-        return () => {
-          ScrollTrigger.removeEventListener('refreshInit', syncSlotTops);
-          cardsSnapshot.forEach((cardEl) => {
-            if (cardEl) gsap.set(cardEl, { clearProps: 'transform' });
-          });
-          shadesSnapshot.forEach((shadeEl) => {
-            if (shadeEl) gsap.set(shadeEl, { clearProps: 'opacity' });
-          });
-        };
-      };
-
-      mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () =>
-        setupDeckScrub(true, 14, 0.036, 0.055)
-      );
-
-      mm.add('(max-width: 767px) and (prefers-reduced-motion: no-preference)', () =>
-        setupDeckScrub(false, 10, 0.03, 0.05)
-      );
-
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-        const baseTop = computeStackTop(isDesktop);
-        slotRefs.current.forEach((slotEl, idx) => {
-          if (!slotEl) return;
-          slotEl.style.top = `${baseTop + idx * (isDesktop ? 14 : 10)}px`;
-        });
-        cardRefs.current.forEach((cardEl) => {
-          if (cardEl) gsap.set(cardEl, { clearProps: 'transform' });
-        });
-        shadeRefs.current.forEach((shadeEl) => {
-          if (shadeEl) gsap.set(shadeEl, { opacity: 0 });
-        });
-      });
     }, section);
 
-    let resizeObserver: ResizeObserver | undefined;
-    if (typeof ResizeObserver !== 'undefined') {
-      resizeObserver = new ResizeObserver(() => {
-        ScrollTrigger.refresh();
-      });
-      if (desktopHeaderRef.current) resizeObserver.observe(desktopHeaderRef.current);
-      if (mobileHeadingRef.current) resizeObserver.observe(mobileHeadingRef.current);
-    }
-
-    if (typeof document !== 'undefined' && document.fonts?.ready) {
-      document.fonts.ready.then(() => {
-        ScrollTrigger.refresh();
-      });
-    }
-    const refreshTimer = window.setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 500);
-
     return () => {
-      resizeObserver?.disconnect();
-      window.clearTimeout(refreshTimer);
       cleanHeading();
       mm.revert();
       ctx.revert();
