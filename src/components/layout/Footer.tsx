@@ -46,16 +46,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           {/* Column 1: Brand & Contact Info */}
           <div className="footer-col-anim lg:col-span-2 space-y-6">
-            <Link to="/" className="flex items-center gap-3 group text-decoration-none">
-              <HitechLogo className="w-10 h-10 group-hover:scale-105 transition-transform duration-300" />
-              <div className="flex flex-col">
-                <span className="font-display font-bold text-lg leading-tight tracking-tight text-white group-hover:text-[#FAC344] transition-colors">
-                  Hitech Advisors
-                </span>
-                <span className="text-[11px] font-sans font-semibold text-white/60 uppercase tracking-wider">
-                  Business &amp; Technology Solutions
-                </span>
-              </div>
+            <Link
+              to="/"
+              className="inline-flex flex-col items-start gap-1.5 group text-decoration-none"
+              aria-label="Hitech Advisors Home"
+            >
+              <HitechLogo
+                variant="reverse"
+                className="h-12 sm:h-[52px] w-auto transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02] origin-left"
+              />
+              <span className="text-[11px] font-sans font-semibold text-white/60 uppercase tracking-wider">
+                Business &amp; Technology Solutions
+              </span>
             </Link>
 
             <p className="text-sm text-white/75 leading-relaxed max-w-sm">

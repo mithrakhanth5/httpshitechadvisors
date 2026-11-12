@@ -135,16 +135,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
       }`}
     >
       <div className="max-w-[1300px] mx-auto px-6 sm:px-10 flex items-center justify-between gap-6">
-        {/* Brand Logo & Wordmark */}
+        {/* Brand Logo Lockup */}
         <Link
           to="/"
-          className="flex items-center gap-2.5 group flex-shrink-0"
+          className="flex items-center group flex-shrink-0"
           aria-label="Hitech Advisors Home"
         >
-          <HitechLogo className="w-8 h-8" />
-          <span className="font-display font-extrabold text-lg leading-none tracking-tight text-[#020626] group-hover:text-[#D22931] transition-colors">
-            Hitech Advisors
-          </span>
+          <HitechLogo
+            variant="default"
+            className="h-9 sm:h-10 w-auto transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02] origin-left"
+          />
         </Link>
 
         {/* Simplified Desktop Navigation (Mirrors Original Top-Bar Cadence) */}
