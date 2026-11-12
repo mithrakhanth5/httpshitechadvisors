@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { gsap, SYM_EASE } from '../../lib/gsap';
 import { HitechLogo } from '../ui/HitechLogo';
 
 interface NavbarProps {
@@ -12,6 +13,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
   const [openMobilePath, setOpenMobilePath] = useState<string | null>(null);
   const [openSolutionsPath, setOpenSolutionsPath] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const dropdownPanelRef = useRef<HTMLDivElement | null>(null);
+  const mobileDrawerRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
   const isMobileOpen = openMobilePath === location.pathname;
   const isSolutionsOpen = openSolutionsPath === location.pathname;
@@ -61,6 +64,66 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // GSAP Symmetry-trained dropdown unfold & link stagger
+  useEffect(() => {
+    if (!isSolutionsOpen || !dropdownPanelRef.current) return;
+    const panel = dropdownPanelRef.current;
+    const items = panel.querySelectorAll('.nav-sub-item');
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        panel,
+        { opacity: 0, y: -8, scale: 0.98 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.28, ease: SYM_EASE.snappy }
+      );
+      if (items.length > 0) {
+        gsap.fromTo(
+          items,
+          { opacity: 0, x: -8 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.3,
+            stagger: 0.045,
+            ease: SYM_EASE.snappy,
+          }
+        );
+      }
+    }, panel);
+
+    return () => ctx.revert();
+  }, [isSolutionsOpen]);
+
+  // GSAP Symmetry-trained mobile drawer link stagger
+  useEffect(() => {
+    if (!isMobileOpen || !mobileDrawerRef.current) return;
+    const drawer = mobileDrawerRef.current;
+    const links = drawer.querySelectorAll('.mobile-nav-item');
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        drawer,
+        { opacity: 0, y: -8 },
+        { opacity: 1, y: 0, duration: 0.28, ease: SYM_EASE.snappy }
+      );
+      if (links.length > 0) {
+        gsap.fromTo(
+          links,
+          { opacity: 0, y: 10 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.34,
+            stagger: 0.032,
+            ease: SYM_EASE.snappy,
+          }
+        );
+      }
+    }, drawer);
+
+    return () => ctx.revert();
+  }, [isMobileOpen]);
 
   return (
     <header
@@ -138,8 +201,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
             </div>
 
             {isSolutionsOpen && (
-              <div className="absolute left-0 top-full pt-2 w-56 z-50">
-                <div className="bg-white rounded-xl border border-[#DCE4EC] shadow-xl py-2 overflow-hidden">
+              <div className="absolute left-0 top-full pt-2 w-64 z-50">
+                <div
+                  ref={dropdownPanelRef}
+                  className="bg-white/98 backdrop-blur-[14px] rounded-2xl border border-[#DCE4EC] shadow-xl py-2 overflow-hidden"
+                >
                   {solutionsSubLinks.map((sub) => {
                     const isSubActive = location.pathname === sub.path;
                     return (
@@ -147,13 +213,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
                         key={sub.path}
                         to={sub.path}
                         onClick={() => setOpenSolutionsPath(null)}
-                        className={`block px-4 py-2.5 text-sm transition-colors ${
+                        className={`nav-sub-item group flex items-center justify-between px-4 py-2.5 text-sm transition-colors ${
                           isSubActive
                             ? 'bg-[#EBF2F7] text-[#D22931] font-semibold'
                             : 'text-[#3A4A5A] hover:bg-[#F8FAFC] hover:text-[#020626]'
                         }`}
                       >
-                        {sub.label}
+                        <span className="flex items-center gap-2.5">
+                          <span
+                            className={`relative flex h-1.5 w-1.5 rounded-full ${
+                              isSubActive ? 'bg-[#D22931]' : 'bg-[#DCE4EC] group-hover:bg-[#D22931]/60'
+                            }`}
+                          >
+                            {isSubActive && (
+                              <span className="sym-pulse-ring absolute inset-0 rounded-full bg-[#D22931]/60" />
+                            )}
+                          </span>
+                          <span className="sym-link-underline">{sub.label}</span>
+                        </span>
+                        <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] text-[#D22931]" />
                       </Link>
                     );
                   })}
@@ -217,9 +295,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
         </button>
       </div>
 
-      {/* Smooth Mobile Dropdown Drawer */}
+      {/* Smooth GSAP Mobile Dropdown Drawer */}
       {isMobileOpen && (
-        <div className="lg:hidden bg-white/96 backdrop-blur-[14px] border-t border-[#DCE4EC] px-6 py-5 space-y-4 shadow-lg animate-smooth-fade-in">
+        <div
+          ref={mobileDrawerRef}
+          className="lg:hidden bg-white/96 backdrop-blur-[14px] border-t border-[#DCE4EC] px-6 py-5 space-y-4 shadow-lg"
+        >
           <nav className="flex flex-col space-y-1">
             {mobileLinks.map((link) => {
               const isActive = location.pathname === link.path;
@@ -228,13 +309,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
                   key={link.path}
                   to={link.path}
                   onClick={() => setOpenMobilePath(null)}
-                  className={`text-sm font-medium py-2.5 px-3 rounded-lg transition-colors ${
+                  className={`mobile-nav-item flex items-center justify-between text-sm font-medium py-2.5 px-3 rounded-lg transition-colors ${
                     isActive
                       ? 'bg-[#EBF2F7] text-[#D22931] font-semibold'
                       : 'text-[#020626] hover:bg-[#F8FAFC] hover:text-[#D22931]'
                   }`}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  <ArrowRight className={`w-3.5 h-3.5 ${isActive ? 'text-[#D22931]' : 'text-[#556070]/40'}`} />
                 </Link>
               );
             })}
@@ -246,7 +328,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenDiscuss }) => {
                 setOpenMobilePath(null);
                 onOpenDiscuss();
               }}
-              className="w-full py-3 rounded-lg bg-[#020626] hover:bg-[#D22931] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+              className="sym-btn w-full py-3 rounded-lg bg-[#020626] hover:bg-[#D22931] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
             >
               Discuss a Challenge
             </button>

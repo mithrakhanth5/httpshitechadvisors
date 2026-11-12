@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
 import { useLenis } from 'lenis/react';
+import { gsap, ScrollTrigger, SYM_EASE } from '../../lib/gsap';
 
 const ROUTE_LABELS: Record<string, { title: string; subtitle: string; code: string }> = {
   '/': { title: 'EXECUTIVE OVERVIEW', subtitle: 'Strategy That Connects to Execution', code: 'SYS // 00' },
@@ -19,6 +19,12 @@ export const PageTransitionOverlay: React.FC = () => {
   const lenis = useLenis();
   const [isTransitioning, setIsTransitioning] = useState(false);
   const isFirstRender = useRef(true);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const veilRef = useRef<HTMLDivElement | null>(null);
+  const badgeRef = useRef<HTMLSpanElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const subtitleRef = useRef<HTMLParagraphElement | null>(null);
+  const lineRef = useRef<HTMLDivElement | null>(null);
 
   const routeInfo = ROUTE_LABELS[location.pathname] || {
     title: 'HITECH ADVISORS',
@@ -27,7 +33,6 @@ export const PageTransitionOverlay: React.FC = () => {
   };
 
   useEffect(() => {
-    // Skip animation on initial page load
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
@@ -35,87 +40,157 @@ export const PageTransitionOverlay: React.FC = () => {
 
     setIsTransitioning(true);
 
-    // Instant Lenis scroll reset at transition midpoint
-    const scrollTimer = setTimeout(() => {
+    const scrollTimer = window.setTimeout(() => {
       if (lenis) {
         lenis.scrollTo(0, { immediate: true });
       } else {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       }
-    }, 320);
-
-    // Conclude transition and unveil new page
-    const endTimer = setTimeout(() => {
-      setIsTransitioning(false);
-    }, 720);
+      ScrollTrigger.refresh();
+    }, 280);
 
     return () => {
-      clearTimeout(scrollTimer);
-      clearTimeout(endTimer);
+      window.clearTimeout(scrollTimer);
     };
   }, [location.pathname, lenis]);
 
-  return (
-    <AnimatePresence mode="wait">
-      {isTransitioning && (
-        <div
-          className="fixed inset-0 z-[9999] pointer-events-none flex flex-col justify-between overflow-hidden"
-          aria-hidden="true"
-        >
-          {/* 5-Column Staggered Venetian Wave Curtain */}
-          <div className="absolute inset-0 grid grid-cols-5 pointer-events-none">
-            {[0, 1, 2, 3, 4].map((colIndex) => (
-              <motion.div
-                key={colIndex}
-                initial={{ y: '-100%' }}
-                animate={{ y: ['-100%', '0%', '0%', '100%'] }}
-                transition={{
-                  duration: 0.7,
-                  delay: colIndex * 0.04,
-                  times: [0, 0.42, 0.58, 1],
-                  ease: [0.76, 0, 0.24, 1],
-                }}
-                className="relative h-full w-full bg-[#020626] border-r border-white/5 overflow-hidden"
-              >
-                {/* Leading Crimson Razor Edge */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D22931] via-[#FAC344] to-[#D22931]" />
-              </motion.div>
-            ))}
-          </div>
+  useEffect(() => {
+    if (!isTransitioning || !overlayRef.current) return;
 
-          {/* Center Stage Brand Transition Display */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: [0, 1, 1, 0], scale: [0.95, 1, 1, 0.98] }}
-            transition={{
-              duration: 0.55,
-              times: [0, 0.35, 0.65, 1],
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="relative z-10 m-auto flex flex-col items-center justify-center text-center p-6 sm:p-10 max-w-xl"
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReduced) {
+      const quickTimer = window.setTimeout(() => {
+        setIsTransitioning(false);
+        ScrollTrigger.refresh();
+      }, 80);
+      return () => window.clearTimeout(quickTimer);
+    }
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          setIsTransitioning(false);
+          ScrollTrigger.refresh();
+        },
+      });
+
+      gsap.set(veilRef.current, { yPercent: 100 });
+      gsap.set(badgeRef.current, { opacity: 0, scale: 0.9, y: 10 });
+      gsap.set(titleRef.current, { yPercent: 108 });
+      gsap.set(subtitleRef.current, { opacity: 0, y: 12 });
+      gsap.set(lineRef.current, { scaleX: 0, transformOrigin: 'left center' });
+
+      tl.to(veilRef.current, {
+        yPercent: 0,
+        duration: 0.34,
+        ease: SYM_EASE.snappy,
+      })
+        .to(
+          badgeRef.current,
+          { opacity: 1, scale: 1, y: 0, duration: 0.28, ease: SYM_EASE.pop },
+          '-=0.14'
+        )
+        .to(
+          titleRef.current,
+          { yPercent: 0, duration: 0.42, ease: SYM_EASE.snappy },
+          '-=0.22'
+        )
+        .to(
+          subtitleRef.current,
+          { opacity: 1, y: 0, duration: 0.32, ease: SYM_EASE.smooth },
+          '-=0.3'
+        )
+        .to(
+          lineRef.current,
+          { scaleX: 1, duration: 0.34, ease: SYM_EASE.snappy },
+          '-=0.32'
+        )
+        .to(lineRef.current, {
+          scaleX: 0,
+          transformOrigin: 'right center',
+          duration: 0.24,
+          ease: SYM_EASE.smooth,
+        })
+        .to(
+          [titleRef.current, badgeRef.current, subtitleRef.current],
+          {
+            yPercent: -108,
+            opacity: 0,
+            duration: 0.24,
+            ease: SYM_EASE.smooth,
+          },
+          '<'
+        )
+        .to(
+          veilRef.current,
+          {
+            yPercent: -100,
+            duration: 0.36,
+            ease: SYM_EASE.snappy,
+          },
+          '-=0.12'
+        );
+    }, overlayRef);
+
+    return () => ctx.revert();
+  }, [isTransitioning, location.pathname]);
+
+  if (!isTransitioning) return null;
+
+  return (
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden"
+      aria-hidden="true"
+    >
+      {/* Symmetry-Trained Single-Sheet Architectural Veil */}
+      <div
+        ref={veilRef}
+        className="absolute inset-0 bg-[#020626] flex items-center justify-center px-6"
+      >
+        {/* Top Crimson Razor Edge */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#D22931] via-[#FAC344] to-[#D22931]" />
+        {/* Bottom Gold Razor Edge */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#FAC344] via-[#D22931] to-[#FAC344]" />
+
+        {/* Center Stage Masked Typography */}
+        <div className="relative z-10 flex flex-col items-center justify-center text-center max-w-2xl">
+          <span
+            ref={badgeRef}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-mono font-bold tracking-widest text-[#FAC344] mb-4"
           >
-            {/* Destination Headline */}
-            <h2 className="font-display font-extrabold text-2xl sm:text-4xl text-white tracking-tight leading-tight">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D22931]" />
+            <span>{routeInfo.code}</span>
+          </span>
+
+          <div className="overflow-hidden">
+            <h2
+              ref={titleRef}
+              className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight will-change-transform"
+            >
               {routeInfo.title}
             </h2>
+          </div>
 
-            {/* Subtitle */}
-            <p className="text-xs sm:text-sm text-white/70 font-mono tracking-wide mt-2">
-              {routeInfo.subtitle}
-            </p>
+          <p
+            ref={subtitleRef}
+            className="text-xs sm:text-sm text-white/75 font-mono tracking-wide mt-3"
+          >
+            {routeInfo.subtitle}
+          </p>
 
-            {/* Glowing Laser Progress Line */}
-            <div className="w-48 sm:w-64 h-[2px] bg-white/15 rounded-full mt-6 overflow-hidden relative">
-              <motion.div
-                initial={{ x: '-100%' }}
-                animate={{ x: '100%' }}
-                transition={{ duration: 0.65, ease: 'easeInOut' }}
-                className="w-full h-full bg-gradient-to-r from-transparent via-[#D22931] to-[#FAC344] shadow-[0_0_12px_#D22931]"
-              />
-            </div>
-          </motion.div>
+          {/* Symmetry ScaleX Hairline Sweep */}
+          <div className="w-48 sm:w-64 h-[2px] bg-white/15 rounded-full mt-6 overflow-hidden">
+            <div
+              ref={lineRef}
+              className="w-full h-full bg-gradient-to-r from-[#D22931] via-[#FAC344] to-[#D22931]"
+            />
+          </div>
         </div>
-      )}
-    </AnimatePresence>
+      </div>
+    </div>
   );
 };

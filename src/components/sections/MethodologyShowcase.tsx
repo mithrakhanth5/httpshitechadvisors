@@ -9,8 +9,7 @@ import {
   ChevronRight,
   Sparkles,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-import { gsap, animateMaskedLines } from '../../lib/gsap';
+import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 import { LaserCircuit } from '../ui/LaserCircuit';
 import { BorderBeam } from '../ui/BorderBeam';
 
@@ -80,21 +79,21 @@ const STEPS: Step[] = [
 ];
 
 export const MethodologyShowcase: React.FC = () => {
-  const [[activeStep, direction], setPage] = useState<[number, number]>([0, 0]);
+  const [activeStep, setActiveStep] = useState<number>(0);
   const containerRef = useRef<HTMLElement | null>(null);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const touchStartX = useRef<number | null>(null);
 
   const goToStep = useCallback((newStep: number) => {
-    setPage(([curr]) => [newStep, newStep > curr ? 1 : -1]);
+    setActiveStep(newStep);
   }, []);
 
   const nextStep = useCallback(() => {
-    setPage(([curr]) => [(curr + 1) % STEPS.length, 1]);
+    setActiveStep((curr) => (curr + 1) % STEPS.length);
   }, []);
 
   const prevStep = useCallback(() => {
-    setPage(([curr]) => [(curr - 1 + STEPS.length) % STEPS.length, -1]);
+    setActiveStep((curr) => (curr - 1 + STEPS.length) % STEPS.length);
   }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -122,48 +121,59 @@ export const MethodologyShowcase: React.FC = () => {
     return () => cleanHeading();
   }, []);
 
-  // Re-trigger staggered deliverable items cleanly on step change via GSAP
+  // Symmetry-trained GSAP transition cleanly on step change
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-    const chips = container.querySelectorAll('.method-deliverable-chip');
-    if (chips.length === 0) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        chips,
-        { opacity: 0, y: 10 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.4,
-          stagger: 0.05,
-          ease: 'power3.out',
-        }
-      );
+      const stageTitle = container.querySelector('.method-stage-title');
+      if (stageTitle) {
+        gsap.fromTo(
+          stageTitle,
+          { yPercent: 106 },
+          { yPercent: 0, duration: 0.48, ease: SYM_EASE.snappy }
+        );
+      }
+
+      const stageBody = container.querySelector('.method-stage-body');
+      if (stageBody) {
+        gsap.fromTo(
+          stageBody,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.44, delay: 0.05, ease: SYM_EASE.snappy }
+        );
+      }
+
+      const chips = container.querySelectorAll('.method-deliverable-chip');
+      if (chips.length > 0) {
+        gsap.fromTo(
+          chips,
+          { opacity: 0, y: 10 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.42,
+            stagger: 0.05,
+            ease: SYM_EASE.snappy,
+          }
+        );
+      }
+
+      const progressBar = container.querySelector('.method-step-progress');
+      if (progressBar) {
+        gsap.to(progressBar, {
+          scaleX: (activeStep + 1) / STEPS.length,
+          duration: 0.52,
+          ease: SYM_EASE.snappy,
+        });
+      }
     }, container);
 
     return () => ctx.revert();
   }, [activeStep]);
 
   const current = STEPS[activeStep];
-
-  const slideVariants = {
-    enter: (dir: number) => ({
-      x: dir > 0 ? 28 : -28,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      transition: { duration: 0.36, ease: [0.16, 1, 0.3, 1] as const },
-    },
-    exit: (dir: number) => ({
-      x: dir > 0 ? -28 : 28,
-      opacity: 0,
-      transition: { duration: 0.24, ease: [0.16, 1, 0.3, 1] as const },
-    }),
-  };
 
   return (
     <section
@@ -318,69 +328,70 @@ export const MethodologyShowcase: React.FC = () => {
             onTouchEnd={handleTouchEnd}
             className="lg:col-span-7 bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-10 border border-[#DCE4EC] shadow-2xl relative overflow-hidden flex flex-col justify-between h-full min-h-0 lg:min-h-[450px]"
           >
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#EBF2F7]">
+              <div
+                className="method-step-progress h-full bg-gradient-to-r from-[#D22931] to-[#FAC344] origin-left"
+                style={{ transform: `scaleX(${(activeStep + 1) / STEPS.length})` }}
+              />
+            </div>
             <BorderBeam size={260} duration={8} colorFrom="#D22931" colorTo="#FAC344" />
             <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-[#D22931]/8 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-            <AnimatePresence custom={direction} mode="wait">
-              <motion.div
-                key={activeStep}
-                custom={direction}
-                variants={slideVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                className="relative z-10 space-y-4 sm:space-y-6 flex flex-col justify-between h-full"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#D22931]/10 text-[#D22931] shadow-2xs">
-                    {current.icon}
-                  </div>
-                  <span className="font-mono text-xs font-bold text-[#D22931] bg-[#D22931]/10 px-3 py-1 rounded-full uppercase tracking-wider border border-[#D22931]/20 flex items-center gap-1.5">
-                    <Sparkles className="w-3 h-3 text-[#D22931]" />
-                    Phase {current.step} of 04
-                  </span>
+            <div
+              key={activeStep}
+              className="relative z-10 space-y-4 sm:space-y-6 flex flex-col justify-between h-full"
+            >
+              <div className="flex items-center justify-between">
+                <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#D22931]/10 text-[#D22931] shadow-2xs">
+                  {current.icon}
                 </div>
+                <span className="font-mono text-xs font-bold text-[#D22931] bg-[#D22931]/10 px-3 py-1 rounded-full uppercase tracking-wider border border-[#D22931]/20 flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3 text-[#D22931]" />
+                  Phase {current.step} of 04
+                </span>
+              </div>
 
-                <div>
-                  <h3 className="font-display font-extrabold text-xl sm:text-3xl text-[#020626]">
+              <div>
+                <div className="overflow-hidden">
+                  <h3 className="method-stage-title font-display font-extrabold text-xl sm:text-3xl text-[#020626] will-change-transform">
                     {current.name}
                   </h3>
-                  <p className="text-xs sm:text-sm font-semibold text-[#D22931] mt-1">
-                    {current.subtitle}
-                  </p>
                 </div>
-
-                <p className="text-xs sm:text-base text-[#556070] leading-relaxed">
-                  {current.description}
+                <p className="text-xs sm:text-sm font-semibold text-[#D22931] mt-1">
+                  {current.subtitle}
                 </p>
+              </div>
 
-                <div className="pt-3 sm:pt-4 border-t border-[#DCE4EC] space-y-2.5">
-                  <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#020626]">
-                    Key Deliverables
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {current.deliverables.map((item) => (
-                      <div
-                        key={item}
-                        className="method-deliverable-chip flex items-center gap-2 text-xs text-[#020626] font-medium bg-[#EBF2F7] p-2.5 rounded-xl border border-[#DCE4EC] hover:border-[#D22931]/40 transition-colors"
-                      >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] flex-shrink-0" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              <p className="method-stage-body text-xs sm:text-base text-[#556070] leading-relaxed">
+                {current.description}
+              </p>
 
-                <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#020626] text-white flex items-start gap-2.5 sm:gap-3 shadow-md">
-                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#FAC344] mt-0.5 flex-shrink-0">
-                    Result:
-                  </span>
-                  <p className="text-xs sm:text-sm text-white/90 leading-snug font-medium">
-                    {current.takeaway}
-                  </p>
+              <div className="pt-3 sm:pt-4 border-t border-[#DCE4EC] space-y-2.5">
+                <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#020626]">
+                  Key Deliverables
                 </div>
-              </motion.div>
-            </AnimatePresence>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {current.deliverables.map((item) => (
+                    <div
+                      key={item}
+                      className="method-deliverable-chip flex items-center gap-2 text-xs text-[#020626] font-medium bg-[#EBF2F7] p-2.5 rounded-xl border border-[#DCE4EC] hover:border-[#D22931]/40 transition-colors"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#D22931] flex-shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#020626] text-white flex items-start gap-2.5 sm:gap-3 shadow-md">
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#FAC344] mt-0.5 flex-shrink-0">
+                  Result:
+                </span>
+                <p className="text-xs sm:text-sm text-white/90 leading-snug font-medium">
+                  {current.takeaway}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

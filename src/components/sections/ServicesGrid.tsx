@@ -10,8 +10,7 @@ import {
   Sparkles,
   Plus,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-import { gsap, animateMaskedLines } from '../../lib/gsap';
+import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 import { BorderBeam } from '../ui/BorderBeam';
 
 interface ServicesGridProps {
@@ -147,25 +146,60 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
     return () => cleanHeading();
   }, []);
 
-  // Re-trigger staggered deliverable items when desktop practice swaps
+  // Symmetry-trained GSAP transition when desktop practice swaps
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const rows = section.querySelectorAll('.service-deliverable-row');
-    if (rows.length === 0) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        rows,
-        { opacity: 0, x: 10 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.42,
-          stagger: 0.05,
-          ease: 'power3.out',
-        }
-      );
+      const stageTitle = section.querySelector('.service-stage-title');
+      if (stageTitle) {
+        gsap.fromTo(
+          stageTitle,
+          { yPercent: 105 },
+          { yPercent: 0, duration: 0.48, ease: SYM_EASE.snappy }
+        );
+      }
+
+      const desc = section.querySelector('.service-stage-desc');
+      if (desc) {
+        gsap.fromTo(
+          desc,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.44, delay: 0.05, ease: SYM_EASE.snappy }
+        );
+      }
+
+      const pills = section.querySelectorAll('.service-chip-pill');
+      if (pills.length > 0) {
+        gsap.fromTo(
+          pills,
+          { opacity: 0, scale: 0.9, y: 6 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.36,
+            stagger: 0.035,
+            ease: SYM_EASE.pop,
+          }
+        );
+      }
+
+      const rows = section.querySelectorAll('.service-deliverable-row');
+      if (rows.length > 0) {
+        gsap.fromTo(
+          rows,
+          { opacity: 0, x: 12 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.44,
+            stagger: 0.045,
+            ease: SYM_EASE.snappy,
+          }
+        );
+      }
     }, section);
 
     return () => ctx.revert();
@@ -321,83 +355,79 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
             <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[520px] h-48 bg-[#D22931]/20 blur-[90px] rounded-full pointer-events-none" />
             <BorderBeam size={280} duration={10} colorFrom="#D22931" colorTo="#FAC344" />
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentService.id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="relative z-10 grid grid-cols-12 gap-12 items-center h-full my-auto"
-              >
-                {/* Left Column */}
-                <div className="col-span-7 space-y-6">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D22931]/20 text-[#FAC344] text-xs font-semibold uppercase tracking-wider border border-[#D22931]/30">
-                      <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
-                      {currentService.tag}
-                    </span>
-                    <span className="text-xs text-white/60">{currentService.badge}</span>
-                  </div>
+            <div
+              key={currentService.id}
+              className="relative z-10 grid grid-cols-12 gap-12 items-center h-full my-auto"
+            >
+              {/* Left Column */}
+              <div className="col-span-7 space-y-6">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D22931]/20 text-[#FAC344] text-xs font-semibold uppercase tracking-wider border border-[#D22931]/30">
+                    <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
+                    {currentService.tag}
+                  </span>
+                  <span className="text-xs text-white/60">{currentService.badge}</span>
+                </div>
 
-                  <h3 className="font-display font-extrabold text-3xl lg:text-5xl text-white tracking-tight leading-snug">
+                <div className="overflow-hidden">
+                  <h3 className="service-stage-title font-display font-extrabold text-3xl lg:text-5xl text-white tracking-tight leading-snug will-change-transform">
                     {currentService.title}
                   </h3>
-
-                  <p className="text-base text-white/80 leading-relaxed max-w-2xl">
-                    {currentService.description}
-                  </p>
-
-                  <div className="pt-2 flex flex-wrap items-center gap-2">
-                    <span className="text-xs text-white/50 mr-2">Ecosystem:</span>
-                    {currentService.tools.map((tool) => (
-                      <span
-                        key={tool}
-                        className="px-3 py-1 rounded-lg bg-white/10 text-white text-xs font-medium border border-white/10"
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
                 </div>
 
-                {/* Right Column */}
-                <div className="col-span-5 bg-white/5 p-8 rounded-2xl border border-white/10 space-y-6 shadow-inner backdrop-blur-sm">
-                  <div className="text-xs font-semibold uppercase tracking-wider text-[#FAC344]">
-                    {currentService.deliverablesHeader}
-                  </div>
+                <p className="service-stage-desc text-base text-white/80 leading-relaxed max-w-2xl">
+                  {currentService.description}
+                </p>
 
-                  <div className="space-y-3.5">
-                    {currentService.deliverables.map((del) => (
-                      <div
-                        key={del}
-                        className="service-deliverable-row flex items-start gap-2.5 text-sm font-medium text-white/90"
-                      >
-                        <CheckCircle2 className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
-                        <span>{del}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
-                    <span className="font-semibold text-[#FAC344]">
-                      {currentService.leftFooter}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onSelectDiscipline(currentService.id);
-                      }}
-                      className="sym-link-underline inline-flex items-center gap-1.5 font-bold uppercase tracking-wider text-[#FAC344] hover:text-white transition-colors cursor-pointer group"
+                <div className="pt-2 flex flex-wrap items-center gap-2">
+                  <span className="text-xs text-white/50 mr-2">Ecosystem:</span>
+                  {currentService.tools.map((tool) => (
+                    <span
+                      key={tool}
+                      className="service-chip-pill px-3 py-1 rounded-lg bg-white/10 text-white text-xs font-medium border border-white/10"
                     >
-                      <span>{currentService.ctaText}</span>
-                      <ArrowRight className="w-4 h-4 text-[#FAC344] group-hover:translate-x-1 transition-transform inline-block" />
-                    </button>
-                  </div>
+                      {tool}
+                    </span>
+                  ))}
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              </div>
+
+              {/* Right Column */}
+              <div className="col-span-5 bg-white/5 p-8 rounded-2xl border border-white/10 space-y-6 shadow-inner backdrop-blur-sm">
+                <div className="text-xs font-semibold uppercase tracking-wider text-[#FAC344]">
+                  {currentService.deliverablesHeader}
+                </div>
+
+                <div className="space-y-3.5">
+                  {currentService.deliverables.map((del) => (
+                    <div
+                      key={del}
+                      className="service-deliverable-row flex items-start gap-2.5 text-sm font-medium text-white/90"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
+                      <span>{del}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+                  <span className="font-semibold text-[#FAC344]">
+                    {currentService.leftFooter}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSelectDiscipline(currentService.id);
+                    }}
+                    className="sym-link-underline inline-flex items-center gap-1.5 font-bold uppercase tracking-wider text-[#FAC344] hover:text-white transition-colors cursor-pointer group"
+                  >
+                    <span>{currentService.ctaText}</span>
+                    <ArrowRight className="w-4 h-4 text-[#FAC344] group-hover:translate-x-1 transition-transform inline-block" />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
