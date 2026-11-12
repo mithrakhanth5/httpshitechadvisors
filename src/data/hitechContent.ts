@@ -53,8 +53,11 @@ export interface TestimonialItem {
 export interface LeaderItem {
   name: string;
   role: string;
-  background: string;
+  badge: string;
+  background?: string;
   credentials: string;
+  image: string;
+  linkedin?: string;
 }
 
 export const hitechContent = {
@@ -92,51 +95,66 @@ export const hitechContent = {
   leadershipTeam: [
     {
       name: "Haresh Sangani",
-      role: "Founder & Chief Executive Officer",
+      role: "Founder & CEO",
+      badge: "Founder",
       background: "Former Technology Executive at Amazon and AT&T with 25+ years driving enterprise-scale platforms.",
       credentials: "Ex-Amazon · Ex-AT&T · Kirkland, WA",
+      image: "./images/leadership/haresh-sangani.png",
+      linkedin: "https://www.linkedin.com/in/hareshsangani/",
     },
     {
       name: "Lan Wang",
-      role: "Partner & Chief Operating Officer",
-      background: "Leading global operations, client delivery frameworks, and multi-disciplinary consulting pods.",
-      credentials: "Operational Excellence & Global Scaling",
+      role: "Partner & COO",
+      badge: "Partner",
+      credentials: "Operations & Client Delivery",
+      image: "./images/leadership/lan-wang.png",
+      linkedin: "https://www.linkedin.com/in/wanglan3/",
     },
     {
-      name: "Scott E. Snyder",
-      role: "Senior Advisor, AI & Tech Strategy",
-      background: "Advising enterprise leadership on AI governance, high-ROI agent deployment, and architectural roadmaps.",
-      credentials: "Enterprise AI & Digital Strategy",
+      name: "Peter Simonsen",
+      role: "Principal Consultant",
+      badge: "Principal",
+      credentials: "Enterprise Architecture & Systems",
+      image: "./images/leadership/peter-simonsen.png",
+      linkedin: "https://www.linkedin.com/in/petersim/",
     },
     {
-      name: "Robert Mao",
-      role: "Senior Advisor, Cloud Architecture",
-      background: "Specializing in high-throughput distributed systems, multi-cloud migrations, and unit cost optimization.",
-      credentials: "Distributed Systems & Cloud Modernization",
+      name: "Sandeep Krishnamurthy",
+      role: "Principal Consultant",
+      badge: "Principal",
+      credentials: "Advisory & Production Engineering",
+      image: "./images/leadership/sandeep-krishnamurthy.png",
     },
     {
-      name: "Michael J. Miller",
-      role: "Senior Advisor, Enterprise IT Systems",
-      background: "Guiding Fortune 500 CIOs through ERP modernization, CRM integration, and zero-downtime cutovers.",
-      credentials: "Core Business Applications & ITIL",
+      name: "Deborah Steele",
+      role: "Client Partner",
+      badge: "Client Partner",
+      credentials: "Executive Advisory & Relationships",
+      image: "./images/leadership/deborah-steele.png",
+      linkedin: "https://www.linkedin.com/in/steele-deborah/",
     },
     {
-      name: "Jason C. Wright",
-      role: "Principal Consultant, Product & Engineering",
-      background: "Hands-on engineering leader directing custom software development, modern APIs, and embedded teams.",
-      credentials: "Full-Stack Architecture & Microservices",
+      name: "Ruchi Khana",
+      role: "Head of Talent",
+      badge: "Talent Lead",
+      credentials: "Specialist Technical Pods",
+      image: "./images/leadership/ruchi-khana.png",
+      linkedin: "https://www.linkedin.com/in/khannaruchi/",
     },
     {
-      name: "Sarah Lin",
-      role: "Director of Talent Solutions",
-      background: "Curating elite engineering pods, technical screening frameworks, and long-term capability placement.",
-      credentials: "Engineering Pods & Technical Staffing",
+      name: "Taryn Adams",
+      role: "Marketing Manager",
+      badge: "Growth & Brand",
+      credentials: "Go-to-Market & Executive Events",
+      image: "./images/leadership/taryn-adams.png",
+      linkedin: "https://www.linkedin.com/in/tarynmadams/",
     },
     {
-      name: "David Kim",
-      role: "Head of Growth Acceleration",
-      background: "Aligning technology infrastructure with go-to-market velocity, revenue operations, and customer analytics.",
-      credentials: "GTM Architecture & RevOps Funnels",
+      name: "Isha Sangani",
+      role: "Consultant",
+      badge: "Consultant",
+      credentials: "Delivery & Operations Analysis",
+      image: "./images/leadership/isha-sangani.png",
     },
   ] as LeaderItem[],
 
