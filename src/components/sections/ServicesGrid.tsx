@@ -368,7 +368,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                   <span className="text-white/65">{currentService.badge}</span>
                 </div>
 
-                <div className="overflow-hidden">
+                <div className="overflow-hidden pb-[0.22em] -mb-[0.22em]">
                   <h3 className="service-stage-title font-display font-extrabold text-3xl lg:text-5xl text-white tracking-tight leading-snug will-change-transform">
                     {currentService.title}
                   </h3>

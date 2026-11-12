@@ -166,7 +166,7 @@ export const PageTransitionOverlay: React.FC = () => {
             <span>{routeInfo.code}</span>
           </span>
 
-          <div className="overflow-hidden">
+          <div className="overflow-hidden pb-[0.22em] -mb-[0.22em]">
             <h2
               ref={titleRef}
               className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight will-change-transform"

@@ -66,15 +66,27 @@ export function animateMaskedLines(
       mask: 'lines',
       autoSplit: true,
       onSplit: (self) => {
-        gsap.fromTo(
+        self.masks.forEach((maskEl) => {
+          const el = maskEl as HTMLElement;
+          // Give serif descenders (g, y, p, q, j) room below the clip box without altering line pitch
+          el.style.paddingBottom = '0.22em';
+          el.style.marginBottom = '-0.22em';
+        });
+
+        return gsap.fromTo(
           self.lines,
-          { yPercent: 108 },
+          { yPercent: 120 },
           {
             yPercent: 0,
             duration,
             delay,
             stagger,
             ease: SYM_EASE.snappy,
+            onComplete: () => {
+              self.masks.forEach((maskEl) => {
+                (maskEl as HTMLElement).style.overflow = 'visible';
+              });
+            },
             scrollTrigger: immediate
               ? undefined
               : {

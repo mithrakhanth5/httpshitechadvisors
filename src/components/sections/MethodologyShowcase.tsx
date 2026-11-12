@@ -350,7 +350,7 @@ export const MethodologyShowcase: React.FC = () => {
               </div>
 
               <div>
-                <div className="overflow-hidden">
+                <div className="overflow-hidden pb-[0.22em] -mb-[0.22em]">
                   <h3 className="method-stage-title font-display font-extrabold text-xl sm:text-3xl text-[#020626] will-change-transform">
                     {current.name}
                   </h3>
