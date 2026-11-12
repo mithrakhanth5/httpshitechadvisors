@@ -316,7 +316,7 @@ export const ContinuousOwnershipVisual: React.FC = () => {
   return (
     <div
       ref={rootRef}
-      className="relative w-full h-full bg-[#F8FAFC] rounded-lg overflow-hidden select-none"
+      className="relative w-full h-full min-h-[224px] flex-1 bg-[#F8FAFC] rounded-lg overflow-hidden select-none"
     >
       {/* Background SVG Connector Matrix + Orbiting Core */}
       <svg
