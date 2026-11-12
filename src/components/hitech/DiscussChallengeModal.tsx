@@ -8,6 +8,38 @@ interface DiscussChallengeModalProps {
   presetHelpArea?: string;
 }
 
+const COUNTRY_OPTIONS = [
+  'United States',
+  'Canada',
+  'United Kingdom',
+  'Australia',
+  'India',
+  'Singapore',
+  'Germany',
+  'France',
+  'Netherlands',
+  'Switzerland',
+  'United Arab Emirates',
+  'Japan',
+  'Ireland',
+  'Sweden',
+  'Norway',
+  'Denmark',
+  'Finland',
+  'Belgium',
+  'Spain',
+  'Italy',
+  'Poland',
+  'Portugal',
+  'Brazil',
+  'Mexico',
+  'Israel',
+  'South Korea',
+  'New Zealand',
+  'South Africa',
+  'Other',
+];
+
 export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
   isOpen,
   onClose,
@@ -20,14 +52,12 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
     lastName: '',
     workEmail: '',
     company: '',
-    jobTitle: '',
+    country: '',
     phone: '',
     helpArea: presetHelpArea || 'not-sure',
     challenge: '',
-    companySize: '',
-    hearAbout: '',
-    consent: false,
-    marketing: false,
+    optInMarketing: false,
+    optInEvents: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,11 +86,9 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
       !formData.firstName ||
       !formData.lastName ||
       !formData.workEmail ||
-      !formData.company ||
-      !formData.challenge ||
-      !formData.consent
+      !formData.company
     ) {
-      setErrorMsg('Please complete all required fields and accept the Privacy Policy.');
+      setErrorMsg('Please complete all required fields.');
       return;
     }
     setErrorMsg('');
@@ -236,15 +264,20 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-semibold text-[#0B1F33] mb-1">
-                      Job Title
+                      Country
                     </label>
-                    <input
-                      type="text"
-                      value={formData.jobTitle}
-                      onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
-                      placeholder="VP of Engineering"
+                    <select
+                      value={formData.country}
+                      onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                       className="w-full px-3 py-2 rounded-md border border-[#D9E0E6] focus:border-[#D22931] focus:ring-1 focus:ring-[#D22931] focus:outline-none bg-white text-[#0B1F33]"
-                    />
+                    >
+                      <option value="">Select country...</option>
+                      {COUNTRY_OPTIONS.map((country) => (
+                        <option key={country} value={country}>
+                          {country}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-[#0B1F33] mb-1">
@@ -280,7 +313,7 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                 <div>
                   <div className="flex items-center justify-between mb-1">
                     <label className="text-xs font-semibold text-[#0B1F33]">
-                      Tell us about the challenge <span className="text-red-500">*</span>
+                      Tell us about the challenge
                     </label>
                     <span className="text-[11px] text-[#3A4A5A]/60">
                       {formData.challenge.length} / 1000
@@ -289,7 +322,6 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                   <textarea
                     rows={3}
                     maxLength={1000}
-                    required
                     value={formData.challenge}
                     onChange={(e) => setFormData({ ...formData, challenge: e.target.value })}
                     placeholder="Describe your current systems, constraints, team, or timeline..."
@@ -297,67 +329,36 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#020626] mb-1">
-                      Company Size
-                    </label>
-                    <select
-                      value={formData.companySize}
-                      onChange={(e) => setFormData({ ...formData, companySize: e.target.value })}
-                      className="w-full px-3 py-2 rounded-md border border-[#D9E0E6] focus:border-[#D22931] focus:ring-1 focus:ring-[#D22931] focus:outline-none bg-white text-[#020626]"
-                    >
-                      <option value="">Select size...</option>
-                      <option value="1-50">1-50</option>
-                      <option value="51-200">51-200</option>
-                      <option value="201-1000">201-1,000</option>
-                      <option value="1001-5000">1,001-5,000</option>
-                      <option value="5000+">5,000+</option>
-                    </select>
+                <div className="pt-2 space-y-2.5">
+                  <div className="text-xs font-semibold text-[#0B1F33]">
+                    Communication Preferences
                   </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-[#020626] mb-1">
-                      How did you hear about us?
-                    </label>
-                    <select
-                      value={formData.hearAbout}
-                      onChange={(e) => setFormData({ ...formData, hearAbout: e.target.value })}
-                      className="w-full px-3 py-2 rounded-md border border-[#D9E0E6] focus:border-[#D22931] focus:ring-1 focus:ring-[#D22931] focus:outline-none bg-white text-[#020626]"
-                    >
-                      <option value="">Select source...</option>
-                      <option value="Search">Search</option>
-                      <option value="LinkedIn">LinkedIn</option>
-                      <option value="Event">Executive Event</option>
-                      <option value="Referral">Referral</option>
-                      <option value="Hitech Contact">Someone from Hitech contacted me</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-                </div>
 
-                <div className="pt-2 space-y-2">
                   <label className="flex items-start gap-2 cursor-pointer">
                     <input
                       type="checkbox"
-                      required
-                      checked={formData.consent}
-                      onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
+                      checked={formData.optInMarketing}
+                      onChange={(e) =>
+                        setFormData({ ...formData, optInMarketing: e.target.checked })
+                      }
                       className="mt-0.5 rounded text-[#D22931] focus:ring-[#D22931]"
                     />
                     <span className="text-xs text-[#3A4A5A]">
-                      I agree to the <a href="https://hitechadvisors.com/privacy-policy/" target="_blank" rel="noreferrer" className="text-[#D22931] underline">Privacy Policy</a>. <span className="text-red-500">*</span>
+                      Opt In for Marketing Communications
                     </span>
                   </label>
 
                   <label className="flex items-start gap-2 cursor-pointer">
                     <input
                       type="checkbox"
-                      checked={formData.marketing}
-                      onChange={(e) => setFormData({ ...formData, marketing: e.target.checked })}
+                      checked={formData.optInEvents}
+                      onChange={(e) =>
+                        setFormData({ ...formData, optInEvents: e.target.checked })
+                      }
                       className="mt-0.5 rounded text-[#D22931] focus:ring-[#D22931]"
                     />
                     <span className="text-xs text-[#3A4A5A]">
-                      Send me insights and executive event invitations.
+                      Opt In Event Invitations
                     </span>
                   </label>
                 </div>
