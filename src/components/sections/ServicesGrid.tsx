@@ -7,7 +7,6 @@ import {
   LayoutGrid,
   CheckCircle2,
   ArrowRight,
-  Sparkles,
   Plus,
 } from 'lucide-react';
 import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
@@ -361,12 +360,12 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
             >
               {/* Left Column */}
               <div className="col-span-7 space-y-6">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D22931]/20 text-[#FAC344] text-xs font-semibold uppercase tracking-wider border border-[#D22931]/30">
-                    <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
+                <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono">
+                  <span className="font-bold uppercase tracking-wider text-[#FAC344]">
                     {currentService.tag}
                   </span>
-                  <span className="text-xs text-white/60">{currentService.badge}</span>
+                  <span className="text-white/30">&middot;</span>
+                  <span className="text-white/65">{currentService.badge}</span>
                 </div>
 
                 <div className="overflow-hidden">

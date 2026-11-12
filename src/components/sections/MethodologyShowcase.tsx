@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
 } from 'lucide-react';
 import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 import { LaserCircuit } from '../ui/LaserCircuit';
@@ -345,9 +344,8 @@ export const MethodologyShowcase: React.FC = () => {
                 <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#D22931]/10 text-[#D22931] shadow-2xs">
                   {current.icon}
                 </div>
-                <span className="font-mono text-xs font-bold text-[#D22931] bg-[#D22931]/10 px-3 py-1 rounded-full uppercase tracking-wider border border-[#D22931]/20 flex items-center gap-1.5">
-                  <Sparkles className="w-3 h-3 text-[#D22931]" />
-                  Phase {current.step} of 04
+                <span className="font-mono text-xs font-bold text-[#D22931] uppercase tracking-widest">
+                  Phase {current.step} &mdash; 04
                 </span>
               </div>
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { gsap, SYM_EASE, animateMaskedLines } from '../../lib/gsap';
 import { BorderBeam } from '../ui/BorderBeam';
@@ -74,9 +74,8 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
           <div className="cta-float-orb absolute -bottom-32 -right-32 w-96 h-96 rounded-full bg-[#FAC344]/18 blur-[120px] pointer-events-none" />
 
           {/* Eyebrow */}
-          <div className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-xs font-semibold uppercase tracking-wider text-[#FAC344] border border-white/15 mb-6 backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
-            <span>Start the Conversation</span>
+          <div className="relative z-10 text-xs font-mono font-bold uppercase tracking-widest text-[#FAC344] mb-5">
+            Start the Conversation
           </div>
 
           {/* Headline */}

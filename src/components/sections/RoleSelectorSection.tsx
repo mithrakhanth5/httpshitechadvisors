@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   ArrowRight,
   UserCheck,
-  Sparkles,
   CheckCircle2,
   ShieldCheck,
   Compass,
@@ -243,9 +242,8 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
               >
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#FAC344] text-xs font-mono font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md">
-                      <Sparkles className="w-3.5 h-3.5 text-[#FAC344]" />
-                      Executive Mandate 0{activeRoleIndex + 1}
+                    <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#FAC344]">
+                      Executive Mandate &middot; 0{activeRoleIndex + 1}
                     </span>
                     <span className="inline-flex items-center gap-2 text-xs font-mono text-white/60">
                       <span className="relative flex h-2 w-2">
