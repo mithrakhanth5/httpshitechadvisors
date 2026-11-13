@@ -128,10 +128,10 @@ export const ObjectiveArchitectureVisual: React.FC = () => {
   return (
     <div
       ref={rootRef}
-      className="relative w-full h-full flex flex-col justify-between bg-[#F8FAFC] rounded-lg p-3 sm:p-4 overflow-hidden"
+      className="relative w-full h-full flex flex-col justify-between bg-[#F8FAFC] rounded-lg p-2.5 sm:p-3 md:p-3.5 overflow-hidden"
     >
       {/* Top Status Telemetry */}
-      <div className="flex items-center justify-between gap-2 pb-2 border-b border-[#DCE4EC]">
+      <div className="flex items-center justify-between gap-2 pb-1.5 sm:pb-2 border-b border-[#DCE4EC] flex-shrink-0">
         <div className="flex items-center gap-2 min-w-0">
           <span className="relative flex h-2 w-2 flex-shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#40AA4A] opacity-75" />
@@ -148,11 +148,11 @@ export const ObjectiveArchitectureVisual: React.FC = () => {
       </div>
 
       {/* Evaluated Architecture Bars */}
-      <div className="space-y-2 sm:space-y-2.5 my-auto py-1">
+      <div className="space-y-1.5 sm:space-y-2 my-auto py-1">
         {candidates.map((item) => (
           <div
             key={item.name}
-            className={`eval-row relative rounded-lg px-2.5 py-2 border transition-colors ${
+            className={`eval-row relative rounded-lg px-2.5 py-1.5 sm:py-2 border transition-colors ${
               item.winner
                 ? 'bg-white border-[#0B7A7C]/40 shadow-xs overflow-hidden'
                 : 'bg-white/70 border-[#DCE4EC]'
@@ -164,7 +164,7 @@ export const ObjectiveArchitectureVisual: React.FC = () => {
                 className="eval-scan-beam pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-[#40AA4A]/10 to-transparent skew-x-[-20deg]"
               />
             )}
-            <div className="relative z-10 flex items-center justify-between gap-2 mb-1">
+            <div className="relative z-10 flex items-center justify-between gap-2 mb-0.5 sm:mb-1">
               <div className="flex items-center gap-1.5 min-w-0">
                 <span className="text-[11px] sm:text-xs font-bold text-[#020626] truncate">
                   {item.name}
@@ -190,20 +190,20 @@ export const ObjectiveArchitectureVisual: React.FC = () => {
                 style={{ width: `${item.score}%` }}
               />
             </div>
-            <div className="relative z-10 mt-1 text-[10px] text-[#556070] truncate">{item.meta}</div>
+            <div className="relative z-10 mt-0.5 sm:mt-1 text-[9.5px] sm:text-[10px] text-[#556070] truncate">{item.meta}</div>
           </div>
         ))}
       </div>
 
       {/* Animated Criteria Sequence */}
-      <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-[#DCE4EC]">
-        <span className="text-[9px] font-bold uppercase tracking-wider text-[#556070] mr-1">
+      <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 border-t border-[#DCE4EC] flex-shrink-0">
+        <span className="text-[9px] font-bold uppercase tracking-wider text-[#556070] mr-1 flex-shrink-0">
           Scored On:
         </span>
         {['Capital ROI', 'Architecture Fit', 'Zero Vendor Kickback'].map((tag) => (
           <span
             key={tag}
-            className="criteria-chip px-2 py-0.5 rounded-md bg-white border border-[#DCE4EC] text-[10px] font-semibold text-[#3A4A5A]"
+            className="criteria-chip px-2 py-0.5 rounded-md bg-white border border-[#DCE4EC] text-[9.5px] sm:text-[10px] font-semibold text-[#3A4A5A] whitespace-nowrap flex-shrink-0"
           >
             {tag}
           </span>
@@ -393,7 +393,7 @@ export const ContinuousOwnershipVisual: React.FC = () => {
         <div className="leading-tight">
           <div className="text-[11px] font-bold tracking-tight whitespace-nowrap">One Hitech Pod</div>
           <div className="text-[9px] text-white/65 font-mono whitespace-nowrap">
-            Zero Handoff Gap
+            Accountable Delivery
           </div>
         </div>
       </div>
