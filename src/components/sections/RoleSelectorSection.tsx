@@ -278,7 +278,7 @@ export const RoleSelectorSection: React.FC<RoleSelectorSectionProps> = ({ onSele
                     </div>
                     <div className="role-stage-bullet flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
                       <Compass className="w-4 h-4 text-[#D22931] mt-0.5 flex-shrink-0" />
-                      <span>Production engineering with zero handoff loss</span>
+                      <span>Production engineering with continuous accountability</span>
                     </div>
                     <div className="role-stage-bullet flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90">
                       <UserCheck className="w-4 h-4 text-[#FAC344] mt-0.5 flex-shrink-0" />

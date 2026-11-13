@@ -25,55 +25,43 @@ interface Step {
 const STEPS: Step[] = [
   {
     step: '01',
-    name: 'Strategic Diagnosis',
-    subtitle: 'Cut through vendor noise to find the root constraint.',
+    name: 'Discover',
+    subtitle: 'We learn the business problem, not just the technical request.',
     description:
-      'We interview stakeholders, audit architecture debt, evaluate cloud unit economics, and benchmark security exposure. No 80-page generic decks: just the 3 decisions that actually move the business.',
+      'We listen first. We learn the business problem, the stakeholders involved, the systems in place, and what working success needs to look like in practice.',
     icon: <Compass className="w-6 h-6 text-[#D22931]" />,
-    deliverables: ['Executive Constraint Map', 'Architecture Debt Audit', 'Payback & ROI Horizon'],
-    takeaway: 'Clarity on what to build, what to kill, and where to invest.',
+    deliverables: ['Business Context Framing', 'System & Process Audit', 'Value & Risk Assessment'],
+    takeaway: 'A shared understanding of the problem and its true business value.',
   },
   {
     step: '02',
-    name: 'Target Architecture & Alignment',
-    subtitle: 'Design the target state before spending capital.',
+    name: 'Frame',
+    subtitle: 'We define the outcome, the options and the right approach.',
     description:
-      'We architect vendor-neutral systems across cloud, data, and applications. Every integration is mapped with security guardrails, data contracts, and disaster recovery specifications.',
+      'We evaluate options on merit, budget, and scale without vendor bias. We align architecture, roadmap milestones, and team structure before building.',
     icon: <GitMerge className="w-6 h-6 text-[#D22931]" />,
-    deliverables: [
-      'Production System Blueprints',
-      'Security & Compliance Threat Model',
-      'Milestone-Based Execution Roadmap',
-    ],
-    takeaway: 'Board and executive alignment on budget, scope, and technical direction.',
+    deliverables: ['Platform & Architecture Recommendations', 'Scope & Budget Options', 'Milestone Execution Plan'],
+    takeaway: 'Clear decisions, agreed scope, and a roadmap you can stand behind.',
   },
   {
     step: '03',
-    name: 'Hands-On Engineering Delivery',
-    subtitle: 'Senior practitioners embedded in production.',
+    name: 'Deliver',
+    subtitle: 'We build, implement and integrate, with the right team for the work.',
     description:
-      'Our senior engineers write and deploy code alongside your team. We modernize legacy codebases, integrate ERP and CRM pipelines, ship governed AI agents, and secure endpoints with zero downtime.',
+      'We assemble the right combination of consultants and specialists to deliver the solution — whether as advisors, embedded experts, or complete delivery teams.',
     icon: <Rocket className="w-6 h-6 text-[#D22931]" />,
-    deliverables: [
-      'Sprint-Based Production Releases',
-      'Automated CI/CD & IaC Pipelines',
-      'Live Data Sync & Migration Validation',
-    ],
-    takeaway: 'Working systems deployed to production on time and within scope.',
+    deliverables: ['Production Systems Implementation', 'End-to-End Integrations', 'Rigorous Quality Engineering'],
+    takeaway: 'Working software, connected data, and systems in production.',
   },
   {
     step: '04',
-    name: 'Operational Handover & Scale',
-    subtitle: 'Zero handoff loss. Your team owns the outcome.',
+    name: 'Optimize',
+    subtitle: 'We drive adoption, measure the result and improve it.',
     description:
-      'We don’t create permanent dependencies. We train your engineers, document operational runbooks, configure telemetry alerts, and stay accountable until your team operates with complete independence.',
+      'We ensure user adoption, verify outcomes against business benchmarks, and enable your internal team so the results endure long after go-live.',
     icon: <Award className="w-6 h-6 text-[#D22931]" />,
-    deliverables: [
-      'Comprehensive Engineering Runbooks',
-      'Observability & PagerDuty Setup',
-      '30-Day Post-Launch Hypercare',
-    ],
-    takeaway: 'Self-sufficient internal teams with resilient operational infrastructure.',
+    deliverables: ['User Adoption & Training', 'Outcome Verification', 'Team Enablement & Handover'],
+    takeaway: 'Measurable client outcomes and internal independence.',
   },
 ];
 
@@ -188,10 +176,10 @@ export const MethodologyShowcase: React.FC = () => {
               ref={headingRef}
               className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#020626] tracking-tight leading-tight"
             >
-              Four Structured Engagement <span className="text-[#D22931]">Phases.</span>
+              How an engagement <span className="text-[#D22931]">works.</span>
             </h2>
             <p className="text-sm sm:text-lg text-[#556070] mt-3 leading-relaxed">
-              Step through each phase from diagnostic clarity and target architecture to embedded delivery and team ownership.
+              From problem framing through delivery and ongoing optimization — one accountable team from end to end.
             </p>
           </div>
 

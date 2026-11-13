@@ -42,7 +42,7 @@ const CASES: MetricCase[] = [
     client: 'Global Enterprise Moving to SaaS',
     icon: <ShieldCheck className="w-5 h-5 text-[#FAC344]" />,
     narrative: 'Streamlined vulnerability backlogs across international endpoints and established an active 3-year board-approved security roadmap.',
-    outcomes: ['60% cut in time to remediation', 'SOC 2 Type II readiness achieved', 'Continuous exposure defense'],
+    outcomes: ['60% cut in time to remediation', 'Regulatory compliance readiness achieved', 'Continuous exposure defense'],
   },
 ];
 

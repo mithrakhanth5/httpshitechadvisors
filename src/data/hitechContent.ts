@@ -192,7 +192,7 @@ export const hitechContent = {
   announcement: {
     eventTitle: "Executive Roundtable: Production AI & Governance in the Enterprise",
     city: "Seattle, WA",
-    date: "Spring 2026",
+    date: "[UPCOMING EVENT DATE]",
     action: "Request an invitation",
   },
 
@@ -483,14 +483,14 @@ export const hitechContent = {
   eventsAndInsights: {
     headline: "Where technology leaders compare notes.",
     subhead:
-      "Since 2018, our closed-door executive roundtables, co-hosted with J.P. Morgan Private Bank and Pacific Northwest technology leaders, bring CIOs, CTOs, and founders together under Chatham House Rules.",
+      "Since FIRST EVENT YEAR, our executive roundtables and panels have brought Seattle-area leaders together to talk honestly about what AI and technology are changing in their industries.",
     event: {
-      tag: "Next Executive Roundtable",
+      tag: "Executive Roundtable Series",
       title: "Governed AI Agents & Multi-Step Production Workflows",
       location: "Seattle, WA · In Person",
       access: "Invitation Only",
-      date: "Spring 2026",
-      coHost: "Co-sponsored with J.P. Morgan Private Bank",
+      date: "[UPCOMING EVENT DATE]",
+      coHost: "Seattle Technology Ecosystem",
     },
     articles: [
       {
@@ -498,7 +498,7 @@ export const hitechContent = {
         readTime: "6 min read",
         title: "How AI-Driven Operations Are Reshaping Enterprise IT",
         excerpt:
-          "Moving from reactive monitoring to predictive remediation: how modern engineering teams cut MTTR by 60% with intelligent AIOps pipelines.",
+          "Moving from reactive monitoring to predictive remediation: how modern engineering teams improve MTTR with intelligent AIOps pipelines.",
         date: "2026",
       },
       {
@@ -506,7 +506,7 @@ export const hitechContent = {
         readTime: "7 min read",
         title: "Building Resilient Cloud Architectures in 2026: Lessons from the Field",
         excerpt:
-          "Zero downtime isn't luck—it's architecture. Proven patterns for multi-region resilience, failover automation, and cloud cost containment.",
+          "Continuous reliability isn't luck — it's architecture. Proven patterns for multi-region resilience, failover automation, and cloud cost containment.",
         date: "2026",
       },
       {
@@ -514,13 +514,13 @@ export const hitechContent = {
         readTime: "5 min read",
         title: "The Rise of Embedded Engineering: Why Traditional Outsourcing Is Obsolete",
         excerpt:
-          "Why transactional staffing creates technical debt, and how high-velocity embedded squads deliver 3x faster with zero handoff loss.",
+          "Why transactional staffing creates technical debt, and how high-velocity embedded squads deliver faster with continuous accountability.",
         date: "2026",
       },
       {
         category: "Security & Governance",
         readTime: "8 min read",
-        title: "Navigating SOC 2 and HIPAA Compliance in Multi-Cloud Environments",
+        title: "Navigating Enterprise Security and Regulatory Compliance in Multi-Cloud Environments",
         excerpt:
           "A practical blueprint for consolidating endpoint exposure, automating audit evidence collection, and demonstrating board-level readiness.",
         date: "2026",
@@ -546,7 +546,7 @@ export const hitechContent = {
 
   finalCta: {
     headline: "What are you trying to solve?",
-    line: "Share the challenge. A senior consultant will come back to you within one business day, with questions worth answering, not a sales pitch.",
+    line: "Share the challenge. A senior consultant will come back to you within RESPONSE TIME — with questions worth answering, not a sales pitch.",
     button: "Discuss a Challenge",
   },
 
@@ -554,9 +554,8 @@ export const hitechContent = {
     address: "608 State Street South, Kirkland, WA 98033",
     phone: "(425) 284-3315",
     email: "hello@hitechadvisors.com",
-    responseTime: "one business day",
+    responseTime: "RESPONSE TIME",
     linkedIn: "https://www.linkedin.com/company/hitech-advisors/",
-    youtube: "https://www.youtube.com/@hitechadvisors",
   },
 
   helpAreaOptions: [

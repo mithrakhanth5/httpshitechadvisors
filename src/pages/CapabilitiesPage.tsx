@@ -16,7 +16,7 @@ export const CapabilitiesPage: React.FC<CapabilitiesPageProps> = ({ onOpenDiscus
         badge="Delivery Capabilities &middot; Advise to Deliver"
         title="Senior Advisory and Embedded"
         highlightTitle="Engineering."
-        description="From technical architecture to hands-on delivery teams, we provide senior capability that integrates directly into your organization with zero handoff loss."
+        description="From technical architecture to hands-on delivery teams, we provide senior capability that integrates directly into your organization with accountable ownership."
         onOpenDiscuss={() => onOpenDiscuss('capabilities')}
         ctaText="Discuss Capabilities"
       />
@@ -27,9 +27,9 @@ export const CapabilitiesPage: React.FC<CapabilitiesPageProps> = ({ onOpenDiscus
 
       <NextPageBanner
         currentStage="Stage 03 of 07"
-        nextTitle="Delivery Methodology &middot; Four-Phase Framework"
+        nextTitle="How We Work &middot; Four-Phase Delivery"
         nextPath="/methodology"
-        description="Discover our structured delivery methodology: Strategic Diagnosis, Target Architecture, Hands-On Engineering, and Operational Handover."
+        description="Discover our structured four-phase delivery process: Discover, Frame, Deliver, and Optimize."
       />
 
       <CtaBanner onOpenDiscuss={() => onOpenDiscuss('capabilities')} />

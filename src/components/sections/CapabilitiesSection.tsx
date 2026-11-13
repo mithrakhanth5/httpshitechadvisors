@@ -59,8 +59,8 @@ const CAPABILITIES: CapabilityCard[] = [
       'Legacy Modernization & Refactoring',
       'Automated CI/CD & Quality Engineering',
     ],
-    tools: ['TypeScript', 'React', 'Node.js', 'Go', 'Kubernetes'],
-    deliveryModel: 'Embedded Senior Engineering Pod',
+    tools: ['TypeScript', 'React', 'Node.js', 'Go', 'Cloud Infrastructure'],
+    deliveryModel: 'Embedded Senior Engineering Team',
     ctaText: 'Discuss Engineering',
     helpArea: 'product-engineering',
   },
@@ -78,7 +78,7 @@ const CAPABILITIES: CapabilityCard[] = [
       'PLG Telemetry & Conversion Experimentation',
     ],
     tools: ['Salesforce', 'HubSpot', 'Segment', 'Mixpanel', 'BigQuery'],
-    deliveryModel: 'RevOps & Analytics Pod',
+    deliveryModel: 'RevOps & Analytics Team',
     ctaText: 'Discuss Growth',
     helpArea: 'growth',
   },
@@ -89,14 +89,14 @@ const CAPABILITIES: CapabilityCard[] = [
     title: 'Talent & Managed Teams',
     shortTitle: 'Talent & Teams',
     description:
-      'Fractional technical leaders and principal engineering pods embedded directly with zero handoff loss.',
+      'Specialist experts, embedded leaders, and managed teams that scale with you, with clear accountability from day one.',
     deliverables: [
       'Fractional CTO, CPO & VP Engineering',
-      'Autonomous Embedded Engineering Pods',
+      'Autonomous Embedded Engineering Teams',
       'Governance, Sprints & Clean Handover',
     ],
-    tools: ['Principal Architects', 'Staff Engineers', 'Delivery Leads', 'Agile Pods'],
-    deliveryModel: 'Direct Embedded Pod',
+    tools: ['Principal Architects', 'Staff Engineers', 'Delivery Leads', 'Specialist Teams'],
+    deliveryModel: 'Direct Embedded Team',
     ctaText: 'Discuss Talent',
     helpArea: 'talent',
   },
@@ -274,7 +274,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
               </h2>
 
               <p className="text-sm xl:text-base text-[#556070] mt-3 leading-relaxed max-w-md">
-                Scroll to step through our four delivery pillars—senior pods with platform-neutral architecture and zero handoff loss.
+                Scroll to step through our four delivery capabilities — senior specialists with platform-neutral advice and accountable execution.
               </p>
             </div>
 
@@ -418,7 +418,7 @@ export const CapabilitiesSection: React.FC<CapabilitiesSectionProps> = ({ onSele
             How we <span className="text-[#D22931]">deliver.</span>
           </h2>
           <p className="text-sm text-[#556070] mt-2.5 leading-relaxed">
-            Senior pods, platform-neutral architecture, and zero handoff loss.
+            Senior teams, platform-neutral architecture, and accountable delivery.
           </p>
         </div>
 

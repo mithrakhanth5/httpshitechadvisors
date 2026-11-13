@@ -11,7 +11,7 @@ const ROUTE_LABELS: Record<string, { title: string; subtitle: string; code: stri
   '/methodology': { title: 'DELIVERY METHODOLOGY', subtitle: 'Accountable Diagnosis to Production Go-Live', code: 'SYS // 04' },
   '/results': { title: 'PRODUCTION PROOF', subtitle: 'Verified Outcomes & Quantitative Metrics', code: 'SYS // 05' },
   '/industries': { title: 'SECTOR ARCHITECTURES', subtitle: 'Domain Depth Built for Real-World Systems', code: 'SYS // 06' },
-  '/events': { title: 'EXECUTIVE ROUNDTABLE', subtitle: 'Peer Insights & Chatham House AI Forums', code: 'SYS // 07' },
+  '/events': { title: 'EXECUTIVE ROUNDTABLE', subtitle: 'Peer Insights & Executive Leadership Forums', code: 'SYS // 07' },
 };
 
 export const PageTransitionOverlay: React.FC = () => {

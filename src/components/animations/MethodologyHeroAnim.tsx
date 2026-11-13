@@ -42,7 +42,7 @@ const PHASES: StageData[] = [
     icon: <Code2 className="w-5 h-5 text-[#FAC344]" />,
     summary: 'The same senior team architects and builds the solution: writing code, connecting integrations, and testing live systems.',
     deliverable: 'Working Production Systems & CI/CD',
-    accountability: 'Zero Handoff Loss',
+    accountability: 'Continuous Accountability',
   },
   {
     id: 'optimize',
@@ -107,7 +107,7 @@ export const MethodologyHeroAnim: React.FC = () => {
           </span>
         </div>
         <div className="px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[#FAC344] text-xs font-medium">
-          Zero Handoff Loss
+          Continuous Accountability
         </div>
       </div>
 

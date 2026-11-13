@@ -88,7 +88,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenDiscuss }) => {
 
           {/* Subtext */}
           <p className="relative z-10 mt-6 max-w-2xl text-base sm:text-lg text-white/80 leading-relaxed">
-            Share the challenge. A senior consultant will come back to you within one business day, with questions worth answering, not a sales pitch.
+            Share the challenge. A senior consultant will come back to you within <span className="font-semibold text-[#FAC344] underline decoration-[#FAC344]/50 underline-offset-4">RESPONSE TIME</span> — with questions worth answering, not a sales pitch.
           </p>
 
           {/* CTA Buttons */}

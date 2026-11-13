@@ -12,12 +12,12 @@ export const MethodologyPage: React.FC<MethodologyPageProps> = ({ onOpenDiscuss 
   return (
     <div>
       <PageHero
-        badge="Methodology &middot; Zero Handoff Loss"
-        title="Accountable Delivery from Diagnosis to"
-        highlightTitle="Go-Live."
-        description="Our senior partners stay on the work. We combine strategic decision-making with hands-on systems engineering, ensuring zero handoff loss throughout the engagement lifecycle."
+        badge="How We Work &middot; End-to-End Delivery"
+        title="One Accountable Team from Decision to"
+        highlightTitle="Delivery."
+        description="The people who frame the problem stay with it until the result is real. We start with your business problem, recommend the right architecture, and deliver it with the right Hitech team for the work."
         onOpenDiscuss={() => onOpenDiscuss('methodology')}
-        ctaText="Discuss Methodology"
+        ctaText="Discuss How We Work"
       />
 
       <MethodologyShowcase />

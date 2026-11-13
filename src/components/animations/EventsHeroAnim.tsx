@@ -44,7 +44,7 @@ const ROUNDTABLES: RoundtableTopic[] = [
     location: 'Bellevue, WA',
     cohort: 'CISO & Risk Focus',
     title: 'Active Exposure Remediation & Board Readiness',
-    synopsis: 'Defending hybrid multi-cloud estates, clearing high-priority vulnerability backlogs, and demonstrating verified SOC 2/HIPAA compliance.',
+    synopsis: 'Defending hybrid multi-cloud estates, clearing high-priority vulnerability backlogs, and demonstrating verified regulatory and risk compliance.',
     seats: '16 Seats · Security Leaders',
     status: 'Nominations Open',
   },
@@ -102,7 +102,7 @@ export const EventsHeroAnim: React.FC = () => {
         </div>
         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[#FAC344] text-xs font-medium">
           <Lock className="w-3.5 h-3.5 text-[#FAC344]" />
-          <span>Chatham House Rule</span>
+          <span>Executive Peer Discussion</span>
         </div>
       </div>
 

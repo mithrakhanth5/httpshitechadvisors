@@ -83,7 +83,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
             Where technology leaders <span className="text-[#D22931]">compare notes.</span>
           </h2>
           <p className="roundtable-header-anim mt-4 text-base sm:text-lg text-[#556070] leading-relaxed">
-            Closed-door executive roundtables under Chatham House Rules, paired with field notes from active client engagements.
+            Since <span className="font-semibold text-[#020626] underline decoration-[#D22931]/40 underline-offset-4">FIRST EVENT YEAR</span>, our executive roundtables and panels have brought Seattle-area leaders together to talk honestly about what AI and technology are changing in their industries.
           </p>
         </div>
 
@@ -105,27 +105,27 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                       <span className="sym-pulse-ring absolute inset-0 rounded-full bg-[#D22931]/65" />
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D22931]" />
                     </span>
-                    <span>Next Executive Roundtable</span>
+                    <span>Executive Roundtable Series</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/60">
                     <Lock className="w-3.5 h-3.5 text-[#FAC344]" />
-                    Chatham House Rule
+                    Executive Peer Discussion
                   </span>
                 </div>
 
                 <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight leading-snug">
-                  Governed AI Agents &amp; Multi-Step Production Workflows
+                  Why Your Company Needs an AI Brain, and What Goes in It
                 </h3>
 
                 <p className="mt-4 text-sm sm:text-base text-white/75 leading-relaxed">
-                  An intimate, closed-door dinner for 16 technology executives navigating the leap from experimental GenAI proofs-of-concept into high-throughput production with strict enterprise safety guardrails. Co-sponsored with J.P. Morgan Private Bank.
+                  A curated peer conversation for senior technology leaders navigating how AI transitions from experimental software into a trusted, governed layer of organizational intelligence and production capability.
                 </p>
 
                 {/* Event Metadata */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/10">
                   <div className="flex items-center gap-2.5 text-xs text-white/80">
                     <Calendar className="w-4 h-4 text-[#FAC344]" />
-                    <span>Spring 2026</span>
+                    <span className="font-semibold text-[#FAC344]">[DATE PENDING CONFIRMATION]</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-white/80">
                     <MapPin className="w-4 h-4 text-[#FAC344]" />
@@ -133,13 +133,14 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-white/80">
                     <Building className="w-4 h-4 text-[#FAC344]" />
-                    <span>Co-Host: J.P. Morgan Private Bank</span>
+                    <span>Seattle Tech Ecosystem</span>
                   </div>
                 </div>
               </div>
 
               <div className="relative z-10 mt-10 pt-6 flex flex-wrap items-center justify-between gap-4">
                 <button
+                  type="button"
                   onClick={() => onOpenDiscuss('ai')}
                   className="sym-btn inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#D22931] hover:bg-[#b52229] text-white font-display font-bold text-xs uppercase tracking-wider shadow-xl hover:shadow-2xl cursor-pointer group/btn"
                 >
@@ -147,7 +148,7 @@ export const RoundtableSection: React.FC<RoundtableSectionProps> = ({ onOpenDisc
                   <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
                 </button>
                 <span className="text-xs text-white/50">
-                  Limited to VP, CIO, CTO, &amp; CISO roles
+                  Executive Invitation Series
                 </span>
               </div>
             </div>

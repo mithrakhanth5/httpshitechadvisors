@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
+import { MapPin, Phone, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { HitechLogo } from '../ui/HitechLogo';
 import { gsap, SYM_EASE } from '../../lib/gsap';
@@ -95,21 +95,10 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
                   <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64a1.65 1.65 0 0 0-1.66 1.66 1.66 1.66 0 0 0 1.66 1.66 1.66 1.66 0 0 0 1.66-1.66 1.65 1.65 0 0 0-1.66-1.66Z" />
                 </svg>
               </a>
-              <a
-                href="https://www.youtube.com/@hitechadvisors"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/75 hover:text-white hover:border-[#D22931] hover:bg-[#D22931]/20 transition-all duration-200"
-                aria-label="YouTube"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73Z" />
-                </svg>
-              </a>
             </div>
           </div>
 
-          {/* Column 2: Solutions */}
+          {/* Column 2: Solutions per Section 8.1 */}
           <div className="footer-col-anim space-y-4">
             <h4 className="font-display font-bold text-xs uppercase tracking-wider text-[#FAC344]">
               Solutions
@@ -117,17 +106,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
                 <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
-                  AI Adoption &amp; Autonomous Agents
-                </Link>
-              </li>
-              <li>
-                <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
-                  Cloud Architecture &amp; Migration
-                </Link>
-              </li>
-              <li>
-                <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
-                  Cybersecurity &amp; Risk Governance
+                  CRM, ERP &amp; Business Applications
                 </Link>
               </li>
               <li>
@@ -137,107 +116,107 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDiscuss }) => {
               </li>
               <li>
                 <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
-                  ERP &amp; CRM Business Applications
+                  Cybersecurity &amp; Risk
                 </Link>
               </li>
               <li>
                 <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
-                  Product Modernization &amp; Engineering
+                  IT Operations &amp; Cloud
+                </Link>
+              </li>
+              <li>
+                <Link to="/solutions" className="sym-link-underline hover:text-white transition-colors">
+                  AI Adoption &amp; Agents
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Capabilities & Methodology */}
+          {/* Column 3: Capabilities per Section 8.1 */}
           <div className="footer-col-anim space-y-4">
             <h4 className="font-display font-bold text-xs uppercase tracking-wider text-[#FAC344]">
-              How We Deliver
+              Capabilities
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <Link to="/methodology" className="sym-link-underline hover:text-white transition-colors">
-                  Strategic Diagnosis
-                </Link>
-              </li>
-              <li>
-                <Link to="/methodology" className="sym-link-underline hover:text-white transition-colors">
-                  Target Architecture
-                </Link>
-              </li>
-              <li>
-                <Link to="/methodology" className="sym-link-underline hover:text-white transition-colors">
-                  Hands-On Delivery
-                </Link>
-              </li>
-              <li>
-                <Link to="/methodology" className="sym-link-underline hover:text-white transition-colors">
-                  Operational Handover
+                <Link to="/capabilities" className="sym-link-underline hover:text-white transition-colors">
+                  Strategy &amp; Advisory
                 </Link>
               </li>
               <li>
                 <Link to="/capabilities" className="sym-link-underline hover:text-white transition-colors">
-                  Senior Embedded Practitioners
+                  Product &amp; Engineering
                 </Link>
               </li>
               <li>
                 <Link to="/capabilities" className="sym-link-underline hover:text-white transition-colors">
-                  Zero Handoff Loss Doctrine
+                  Growth &amp; Go-to-Market
+                </Link>
+              </li>
+              <li>
+                <Link to="/capabilities" className="sym-link-underline hover:text-white transition-colors">
+                  Talent &amp; Managed Teams
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Executive Community & Connect */}
+          {/* Column 4: Company per Section 8.1 */}
           <div className="footer-col-anim space-y-4">
             <h4 className="font-display font-bold text-xs uppercase tracking-wider text-[#FAC344]">
-              Executive Community
+              Company
             </h4>
             <ul className="space-y-2.5 text-xs text-white/70">
               <li>
-                <Link
-                  to="/events"
-                  className="sym-link-underline hover:text-white transition-colors text-left inline-flex items-center gap-1 text-[#FAC344]"
-                >
-                  <span>Seattle Executive Roundtable</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/events" className="sym-link-underline hover:text-white transition-colors">
-                  Perspectives &amp; Insights
+                <Link to="/methodology" className="sym-link-underline hover:text-white transition-colors">
+                  How We Work
                 </Link>
               </li>
               <li>
                 <Link to="/results" className="sym-link-underline hover:text-white transition-colors">
-                  Verified Client Case Studies
+                  Results
+                </Link>
+              </li>
+              <li>
+                <Link to="/industries" className="sym-link-underline hover:text-white transition-colors">
+                  Industries
+                </Link>
+              </li>
+              <li>
+                <Link to="/events" className="sym-link-underline hover:text-white transition-colors">
+                  Events &amp; Insights
                 </Link>
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={onOpenDiscuss}
                   className="sym-link-underline hover:text-white transition-colors text-left cursor-pointer"
                 >
-                  Discuss an Enterprise Challenge
+                  Contact
                 </button>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Strip */}
+        {/* Bottom Strip per Section 8.1 */}
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
           <div>
-            &copy; 2026 Hitech Advisors Inc. All rights reserved. Registered Kirkland, WA.
+            &copy; 2026 Hitech Advisors. All rights reserved.
           </div>
           <div className="flex items-center gap-6">
             <span className="hover:text-white transition-colors cursor-pointer">
               Privacy Policy
             </span>
             <span className="hover:text-white transition-colors cursor-pointer">
-              Terms of Service
+              Terms of Use
             </span>
             <span className="hover:text-white transition-colors cursor-pointer">
-              Security &amp; Compliance Disclosures
+              Cookie Policy
+            </span>
+            <span className="hover:text-white transition-colors cursor-pointer">
+              Accessibility
             </span>
           </div>
         </div>

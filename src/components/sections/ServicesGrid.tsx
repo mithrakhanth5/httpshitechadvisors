@@ -20,13 +20,11 @@ interface ServiceCard {
   id: string;
   icon: React.ReactNode;
   title: string;
-  tag: string;
-  badge: string;
+  solutionArea: string;
+  focusArea: string;
   description: string;
   deliverablesHeader: string;
   deliverables: string[];
-  tools: string[];
-  leftFooter: string;
   ctaText: string;
 }
 
@@ -34,97 +32,87 @@ const SERVICES: ServiceCard[] = [
   {
     id: 'ai',
     icon: <Bot className="w-5 h-5 text-[#D22931]" />,
-    title: 'AI Adoption & Governed Agents',
-    tag: 'Flagship Practice',
-    badge: 'High Demand Practice',
+    title: 'AI Adoption & Agents',
+    solutionArea: 'Solution Practice 01',
+    focusArea: 'Production AI & Agents',
     description:
-      'Move AI from experimental proofs-of-concept into high-throughput production with autonomous agents and multi-step workflows that execute real work safely under enterprise governance.',
-    deliverablesHeader: 'CANONICAL DELIVERABLES',
+      'Move AI from experimental proofs-of-concept into production — agents and automation that execute real work safely under enterprise governance.',
+    deliverablesHeader: 'Key Solution Capabilities',
     deliverables: [
       'AI Strategy & Readiness Assessment',
-      'AI Agents & Multi-Step Workflows',
+      'Autonomous Agents & Workflow Automation',
       'Enterprise AI Governance & Safety Guardrails',
-      'Fine-Tuned Retrieval & Vector Workflows',
+      'Production Retrieval & Knowledge Pipelines',
     ],
-    tools: ['OpenAI', 'Anthropic Claude', 'Google Gemini', 'LangChain'],
-    leftFooter: 'Senior Pod Delivery',
-    ctaText: 'Discuss Practice',
+    ctaText: 'Explore AI Solutions',
   },
   {
     id: 'data',
     icon: <Database className="w-5 h-5 text-[#D22931]" />,
     title: 'Data & Customer Intelligence',
-    tag: 'Modern Foundations',
-    badge: 'High-Throughput Pipelines',
+    solutionArea: 'Solution Practice 02',
+    focusArea: 'Unified Data Architecture',
     description:
       'Bring your fragmented enterprise data together into one trusted view of customers and operations, ready for executive decisions and production AI.',
-    deliverablesHeader: 'CANONICAL DELIVERABLES',
+    deliverablesHeader: 'Key Solution Capabilities',
     deliverables: [
-      'Unified Customer Profiles & CDPs',
-      'Reliable Multi-Source Data Pipelines',
-      'AI-Ready Data Quality & Governance',
-      'Lakehouse Architecture & Query Optimization',
+      'Unified Customer Data Platforms (CDP)',
+      'Enterprise Data Foundations & Lakehouse',
+      'Data Quality, Governance & Security',
+      'Actionable Analytics & Executive Reporting',
     ],
-    tools: ['Snowflake', 'Databricks', 'BigQuery', 'Microsoft Fabric'],
-    leftFooter: 'Zero Data Drift',
-    ctaText: 'Discuss Practice',
+    ctaText: 'Explore Data Solutions',
   },
   {
     id: 'crm-erp',
     icon: <LayoutGrid className="w-5 h-5 text-[#D22931]" />,
     title: 'CRM, ERP & Business Applications',
-    tag: 'Core Enterprise Systems',
-    badge: 'Mission-Critical Operations',
+    solutionArea: 'Solution Practice 03',
+    focusArea: 'Business Systems Integration',
     description:
-      'Choose, implement and connect the mission-critical business systems that run your operations, with rigorous change enablement so your team actually adopts them.',
-    deliverablesHeader: 'CANONICAL DELIVERABLES',
+      'Choose, implement and connect the mission-critical systems that run your operations, with rigorous change enablement so your teams actually use them.',
+    deliverablesHeader: 'Key Solution Capabilities',
     deliverables: [
-      'Platform Strategy & Unbiased Selection',
-      'CRM/ERP Implementation & Optimization',
-      'Cross-Platform Workflow & Process Automation',
-      'Enterprise Change Enablement & Training',
+      'Platform Evaluation & Unbiased Selection',
+      'CRM & ERP Implementation & Optimization',
+      'Cross-Platform Workflow & Automation',
+      'User Adoption & Change Enablement',
     ],
-    tools: ['Salesforce', 'NetSuite', 'Microsoft Dynamics', 'HubSpot'],
-    leftFooter: 'Proven User Adoption',
-    ctaText: 'Discuss Practice',
+    ctaText: 'Explore Systems Solutions',
   },
   {
     id: 'cybersecurity',
     icon: <Shield className="w-5 h-5 text-[#D22931]" />,
     title: 'Cybersecurity & Risk',
-    tag: 'Defense & Compliance',
-    badge: 'Zero-Trust Readiness',
+    solutionArea: 'Solution Practice 04',
+    focusArea: 'Exposure Remediation & Governance',
     description:
-      'Find your real security exposure across cloud endpoints, remediate the vulnerability backlog that matters most, and demonstrate board-level readiness.',
-    deliverablesHeader: 'CANONICAL DELIVERABLES',
+      'Find your real security exposure across cloud and hybrid environments, prioritize what matters most, and demonstrate board-level control.',
+    deliverablesHeader: 'Key Solution Capabilities',
     deliverables: [
-      'Security Posture & Exposure Review',
-      'Vulnerability Backlog Remediation',
-      'SOC 2 Type II & HIPAA Readiness',
-      'Continuous Threat Surface Monitoring',
+      'Security Exposure & Vulnerability Audit',
+      'Risk-Prioritized Remediation Roadmaps',
+      'Regulatory & Governance Architecture',
+      'Continuous Security Program Design',
     ],
-    tools: ['CrowdStrike', 'Microsoft Defender', 'Wiz', 'Splunk'],
-    leftFooter: '60% Faster Remediation',
-    ctaText: 'Discuss Practice',
+    ctaText: 'Explore Security Solutions',
   },
   {
     id: 'it-operations',
     icon: <Cloud className="w-5 h-5 text-[#D22931]" />,
     title: 'IT Operations & Cloud',
-    tag: 'Infrastructure & Scale',
-    badge: '99.99% Availability',
+    solutionArea: 'Solution Practice 05',
+    focusArea: 'Resilient Cloud Infrastructure',
     description:
-      'Run resilient IT infrastructure from the internal service desk to multi-cloud architectures with optimized unit economics and zero critical downtime.',
-    deliverablesHeader: 'CANONICAL DELIVERABLES',
+      'Run resilient IT infrastructure from the internal service desk to multi-cloud architectures with optimized unit economics and dependable uptime.',
+    deliverablesHeader: 'Key Solution Capabilities',
     deliverables: [
-      'IT Service Management (ITSM) Workflow Design',
-      'Multi-Cloud Architecture & Unit Cost Optimization',
-      'Automated CI/CD & Infrastructure as Code',
-      '24/7 Resilient Operations & Observability',
+      'IT Service Management (ITSM) Workflows',
+      'Multi-Cloud Architecture & Unit Economics',
+      'Automated Infrastructure & CI/CD Pipelines',
+      'Operational Resilience & Observability',
     ],
-    tools: ['ServiceNow', 'AWS', 'Microsoft Azure', 'Google Cloud'],
-    leftFooter: 'Production Reliability',
-    ctaText: 'Discuss Practice',
+    ctaText: 'Explore Cloud Solutions',
   },
 ];
 
@@ -303,10 +291,10 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                             {service.icon}
                           </span>
                           <span className="font-bold uppercase tracking-wider text-[#FAC344]">
-                            {service.tag}
+                            {service.solutionArea}
                           </span>
                           <span className="text-white/30">&middot;</span>
-                          <span className="text-white/65">{service.badge}</span>
+                          <span className="text-white/65">{service.focusArea}</span>
                         </div>
 
                         <h3 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-[40px] text-white tracking-tight leading-snug">
@@ -316,21 +304,9 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
                         <p className="text-xs sm:text-sm lg:text-base text-white/80 leading-relaxed max-w-2xl">
                           {service.description}
                         </p>
-
-                        <div className="pt-1 flex flex-wrap items-center gap-2">
-                          <span className="text-xs text-white/50 mr-1">Ecosystem:</span>
-                          {service.tools.map((tool) => (
-                            <span
-                              key={tool}
-                              className="px-2.5 py-1 rounded-lg bg-white/10 text-white text-[11px] sm:text-xs font-medium border border-white/10"
-                            >
-                              {tool}
-                            </span>
-                          ))}
-                        </div>
                       </div>
 
-                      {/* Right Column: Canonical Deliverables */}
+                      {/* Right Column: Solution Capabilities */}
                       <div className="lg:col-span-5 bg-white/5 p-5 sm:p-7 rounded-2xl border border-white/10 space-y-4 sm:space-y-5 shadow-inner backdrop-blur-sm">
                         <div className="text-[11px] font-semibold uppercase tracking-wider text-[#FAC344]">
                           {service.deliverablesHeader}
@@ -350,7 +326,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onSelectDiscipline }
 
                         <div className="pt-3.5 border-t border-white/10 flex items-center justify-between gap-3 text-xs">
                           <span className="font-semibold text-[#FAC344]">
-                            {service.leftFooter}
+                            Platform-Neutral Recommendation
                           </span>
                           <button
                             type="button"
