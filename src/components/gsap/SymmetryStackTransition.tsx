@@ -250,7 +250,7 @@ export const SymmetryStackTransition: React.FC<SymmetryStackTransitionProps> = (
 
                     {/* Visual Stage */}
                     <div className="md:col-span-7 p-4 pt-0 sm:px-7 sm:pb-6 md:p-8 flex items-center justify-center">
-                      <div className="w-full h-[280px] sm:h-[300px] md:h-[336px] rounded-xl md:rounded-2xl bg-white border border-[#DCE4EC] shadow-xs overflow-hidden relative flex items-stretch justify-center p-2 sm:p-2.5 md:p-3">
+                      <div className="w-full min-h-[300px] sm:min-h-[320px] md:min-h-[350px] h-full rounded-xl md:rounded-2xl bg-white border border-[#DCE4EC] shadow-xs relative flex items-stretch justify-center p-2.5 sm:p-3">
                         {card.renderVisual()}
                       </div>
                     </div>

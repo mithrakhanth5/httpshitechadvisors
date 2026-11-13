@@ -128,7 +128,7 @@ export const ObjectiveArchitectureVisual: React.FC = () => {
   return (
     <div
       ref={rootRef}
-      className="relative w-full h-full flex flex-col justify-between bg-[#F8FAFC] rounded-lg p-2.5 sm:p-3 md:p-3.5 overflow-hidden"
+      className="relative w-full h-full flex flex-col justify-between bg-[#F8FAFC] rounded-lg p-2.5 sm:p-3 md:p-3.5"
     >
       {/* Top Status Telemetry */}
       <div className="flex items-center justify-between gap-2 pb-1.5 sm:pb-2 border-b border-[#DCE4EC] flex-shrink-0">
@@ -529,7 +529,7 @@ export const FlexibleEngagementVisual: React.FC = () => {
   return (
     <div
       ref={rootRef}
-      className="w-full h-full flex flex-col justify-between gap-1.5 bg-[#F8FAFC] rounded-lg p-2.5 sm:p-3.5 overflow-hidden"
+      className="w-full h-full flex flex-col justify-between gap-1.5 bg-[#F8FAFC] rounded-lg p-2.5 sm:p-3.5"
     >
       {/* Engagement Tier Selector Cards */}
       <div className="space-y-1.5">
