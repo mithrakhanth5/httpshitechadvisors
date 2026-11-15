@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { X, CheckCircle, Mail, Phone, MapPin, Loader2 } from 'lucide-react';
 import { hitechContent } from '../../data/hitechContent';
 
+// Google Sheets Web App Endpoint
+const GOOGLE_SHEETS_URL =
+  import.meta.env.VITE_GOOGLE_SHEET_URL ||
+  'https://script.google.com/a/macros/datadrone.biz/s/AKfycbwBN4ndsSvTGKIEEMZi9GUr5JXGR-DOIopIqO2LxNrVt7eLKWvLtu7zXtwVakIAf-gIqQ/exec';
+
 interface DiscussChallengeModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -111,20 +116,24 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
         console.warn('Could not persist to localStorage:', localErr);
       }
 
-      // 2. Real network dispatch to a test inbox endpoint with timeout
+      // 2. Real network dispatch to Google Sheets Web App endpoint with fallback
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 6000);
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
 
       try {
-        await fetch('https://httpbin.org/post', {
+        const targetUrl = GOOGLE_SHEETS_URL || 'https://httpbin.org/post';
+        await fetch(targetUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          mode: 'no-cors', // Prevents CORS preflight redirect blocks from Google Apps Script
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8',
+          },
           body: JSON.stringify(payload),
           signal: controller.signal,
         });
       } catch (netErr) {
         // Fallback: captured in staging inbox
-        console.info('Test inbox network request captured (offline/cors fallback active):', netErr);
+        console.info('Submission network dispatch recorded (staging fallback active):', netErr);
       } finally {
         clearTimeout(timeoutId);
       }
