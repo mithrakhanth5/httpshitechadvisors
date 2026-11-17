@@ -175,7 +175,7 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                 Thank you, we&rsquo;ve got it.
               </h3>
               <p className="text-body max-w-lg mx-auto">
-                A senior consultant will review your note and reply <strong>{contactInfo.responseTime}</strong>.
+                A senior consultant will review your note and reply {contactInfo.responseTime}.
               </p>
             </div>
             <div className="pt-4">
