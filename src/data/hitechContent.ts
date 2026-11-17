@@ -546,7 +546,7 @@ export const hitechContent = {
 
   finalCta: {
     headline: "What are you trying to solve?",
-    line: "Share the challenge. A senior consultant will come back to you within RESPONSE TIME — with questions worth answering, not a sales pitch.",
+    line: "Share the challenge. A senior consultant will come back to you shortly — with questions worth answering, not a sales pitch.",
     button: "Discuss a Challenge",
   },
 
@@ -554,7 +554,7 @@ export const hitechContent = {
     address: "608 State Street South, Kirkland, WA 98033",
     phone: "(425) 284-3315",
     email: "hello@hitechadvisors.com",
-    responseTime: "RESPONSE TIME",
+    responseTime: "shortly",
     linkedIn: "https://www.linkedin.com/company/hitech-advisors/",
   },
 

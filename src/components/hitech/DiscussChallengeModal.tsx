@@ -175,7 +175,7 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                 Thank you, we&rsquo;ve got it.
               </h3>
               <p className="text-body max-w-lg mx-auto">
-                A senior consultant will review your note and reply within <strong>{contactInfo.responseTime}</strong>.
+                A senior consultant will review your note and reply <strong>{contactInfo.responseTime}</strong>.
               </p>
             </div>
             <div className="pt-4">
@@ -201,7 +201,7 @@ export const DiscussChallengeModal: React.FC<DiscussChallengeModalProps> = ({
                 Tell us what you&rsquo;re trying to solve
               </h2>
               <p className="text-xs sm:text-sm text-[#3A4A5A]">
-                Share a few details and a senior consultant will reply within {contactInfo.responseTime}. No sales sequence, just a real conversation about your problem.
+                Share a few details and a senior consultant will reply {contactInfo.responseTime}. No sales sequence, just a real conversation about your problem.
               </p>
             </div>
 
